@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { MENU_DATA } from './config'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 const Navbar = () => {
     const router = useRouter()
     const [mobileMenu, setMobileMenu] = useState(false)
@@ -8,16 +9,16 @@ const Navbar = () => {
         <nav className='select-none fixed top-0 left-0 w-full h-16 bg-white shadow-lg'>
             <div className='w-full h-full py-2 px-10 flex items-center justify-between relative'>
                 <div className='flex gap-8 items-center relative h-full'>
-                    <a href='/' className='text-2xl font-bold'>
+                    <Link href='/' className='text-2xl font-bold'>
                         <img className='h-10' src="/images/logo.png" alt="" />
-                    </a>
+                    </Link>
                     <div className='hidden md:inline-flex gap-8 text-lg font-medium '>
                         {
                             MENU_DATA.map((item, index) => {
                                 return (
-                                    <a href={item.link} key={index} className='cursor-pointer'>
+                                    <Link href={item.link} key={index} className='cursor-pointer'>
                                         {item.text}
-                                    </a>
+                                    </Link>
                                 )
                             })
                         }
@@ -56,9 +57,9 @@ const Navbar = () => {
                             {
                                 MENU_DATA.map((item, index) => {
                                     return (
-                                        <a href={item.link} key={index} className='cursor-pointer'>
+                                        <Link href={item.link} key={index} className='cursor-pointer'>
                                             {item.text}
-                                        </a>
+                                        </Link>
                                     )
                                 })
                             }
