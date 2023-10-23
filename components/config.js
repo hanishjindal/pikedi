@@ -23,3 +23,15 @@ export const MENU_DATA = [
         link: "/"
     }
 ]
+
+
+export const LOGIN_DATA = {
+    forText: "For",
+    signinText: "Sign In",
+    accountText: "Don't have an account?",
+    signupText: "Sign up",
+    editorText: "Editor",
+    editorContent: "Elevate your editing skills and creativity as a Photo Editing Specialist. Join our community and start enhancing stunning photos.",
+    studioText: "Studio",
+    studioContent: "Find the perfect Photo Editor for your studio. Join our platform to connect with talented editing professionals."
+}
