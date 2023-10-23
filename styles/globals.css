@@ -10,24 +10,24 @@
 }
 
 .scrollBar::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
   border-radius: 10px;
   overflow: hidden;
 }
 
 .scrollBar::-webkit-scrollbar-track {
-  background: #b9e9dd;
+  background: #f1f1f1;
   border-radius: 10px;
   overflow: hidden;
 }
 
 .scrollBar::-webkit-scrollbar-thumb {
-  background: #00d3b7;
+  background: #888;
   border-radius: 10px;
 }
 
 .scrollBar::-webkit-scrollbar-thumb:active {
-  background: #00d3b7;
+  background: #555;
 }
 
 /* Chrome, Safari, Edge, Opera */

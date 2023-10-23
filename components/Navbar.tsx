@@ -73,7 +73,7 @@ const Navbar = () => {
                             />
                         </div>
 
-                        <button onClick={() => router.push('/login')} className='cursor-pointer font-semibold text-lg mb-4 py-2 w-full bg-theme rounded-lg'>
+                        <button onClick={() => router.push('/login')} className='cursor-pointer font-semibold text-lg mb-4 py-2 w-full bg-theme rounded-lg text-white'>
                             Sign In
                         </button>
                     </div>
