@@ -15,8 +15,15 @@ const config: Config = {
       },
       backgroundColor: {
         "lightGray": "#F6F6F6",
-        "theme": "#00e8c4"
+        "theme": "#00d3b7",
+        "lighest-theme": "#b9e9dd"
       },
+      textColor: {
+        "theme": "#00d3b7"
+      },
+      gradientColorStops: {
+        "lighest-theme": "#b9e9dd"
+      }
     },
   },
   plugins: [],

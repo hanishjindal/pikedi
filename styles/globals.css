@@ -8,3 +8,7 @@
   box-sizing: border-box;
   outline: none;
 }
+
+button:hover {
+  opacity: 0.8;
+}

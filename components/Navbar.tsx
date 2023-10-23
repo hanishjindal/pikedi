@@ -10,13 +10,13 @@ const Navbar = () => {
             <div className='w-full h-full py-2 px-10 flex items-center justify-between relative'>
                 <div className='flex gap-8 items-center relative h-full'>
                     <Link href='/' className='text-2xl font-bold'>
-                        <img className='h-10' src="/images/logo.png" alt="" />
+                        <img className='h-10' src="/images/logo.svg" alt="" />
                     </Link>
-                    <div className='hidden md:inline-flex gap-8 text-lg font-medium '>
+                    <div className='hidden lg:inline-flex gap-8 text-lg font-medium '>
                         {
                             MENU_DATA.map((item, index) => {
                                 return (
-                                    <Link href={item.link} key={index} className='cursor-pointer'>
+                                    <Link href={item.link} key={index} className='cursor-pointer hover:text-theme'>
                                         {item.text}
                                     </Link>
                                 )
@@ -25,7 +25,7 @@ const Navbar = () => {
                     </div>
                 </div>
 
-                <div className='hidden md:flex items-center gap-6'>
+                <div className='hidden lg:flex lg:items-center gap-6 bg-red'>
                     <div className='py-3 px-5 flex items-center gap-3 bg-lightGray w-[336px] rounded-xl'>
                         <img src="/images/searchIcon.svg" alt="searchIcon" className='w-5 h-5' />
                         <input
@@ -34,40 +34,44 @@ const Navbar = () => {
                             placeholder='Search for anything'
                         />
                     </div>
-                    <button onClick={() => router.push('/login')} className='cursor-pointer font-medium text-lg'>
+                    <button
+                        onClick={() => router.push('/login')}
+                        className='cursor-pointer font-semibold text-lg text-white px-6 py-2 bg-theme rounded-lg'
+                    >
                         Sign In
                     </button>
                 </div>
 
                 {/* For Mobile */}
-                <button
-                    className='md:hidden'
+                <img
+                    className='lg:hidden cursor-pointer'
+                    src="/images/menu-icon.svg"
+                    alt=""
                     onClick={() => { setMobileMenu(!mobileMenu) }}
-                >
-                    <img
-                        src="/images/menu-icon.svg"
-                        alt=""
-                    />
-                </button>
+                />
 
                 {
                     mobileMenu &&
-                    <div className='md:hidden absolute w-full top-full left-0 bg-white px-10 shadow-lg flex flex-col gap-4'>
+                    <div className='lg:hidden absolute w-full top-full left-0 bg-white px-10 shadow-lg flex flex-col gap-4'>
                         <div className='flex flex-col gap-4 text-lg font-medium'>
                             {
                                 MENU_DATA.map((item, index) => {
                                     return (
-                                        <Link href={item.link} key={index} className='cursor-pointer'>
+                                        <Link href={item.link} key={index} className='cursor-pointer hover:text-theme'>
                                             {item.text}
                                         </Link>
                                     )
                                 })
                             }
                         </div>
-                        {/* <div className='py-3 px-10 flex items-center gap-3 bg-[#F6F6F6] w-full'>
-                        <img src="/images/searchIcon.svg" alt="searchIcon" className='w-5 h-5' />
-                        <div className='font-normal text-sm'>Search for anything</div>
-                    </div> */}
+                        <div className='py-3 px-5 flex items-center gap-3 bg-[#F6F6F6] w-full'>
+                            <img src="/images/searchIcon.svg" alt="searchIcon" className='w-5 h-5' />
+                            <input
+                                type='text'
+                                className='font-normal bg-transparent outline-none bottom-0 w-full'
+                                placeholder='Search for anything'
+                            />
+                        </div>
 
                         <button onClick={() => router.push('/login')} className='cursor-pointer font-semibold text-lg mb-4 py-2 w-full bg-theme rounded-lg'>
                             Sign In
