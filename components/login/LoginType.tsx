@@ -18,7 +18,7 @@ const LoginType: React.FC<LoginTypeProps> = ({ who, content }) => {
             </button>
 
             <div className='flex justify-center items-center gap-1'>
-                <span className='text-base font-normal'>Don't have an account?</span>
+                <span className='text-base font-normal'>Don&apos;t have an account?</span>
                 <span className='text-base font-semibold cursor-pointer'>Sign up</span></div>
         </div>
     )
