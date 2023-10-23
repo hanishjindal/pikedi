@@ -4,7 +4,7 @@ import Navbar from '@/components/Navbar'
 
 const page = () => {
     return (
-        <div className='w-screen h-screen overflow-y-scroll'>
+        <div className='w-screen h-screen scrollBar overflow-y-scroll lg:overflow-y-hidden'>
             <Navbar />
             <Login />
         </div>
