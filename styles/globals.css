@@ -42,6 +42,10 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
+button {
+  transition: 200ms;
+}
+
 button:hover {
-  opacity: 0.8;
+  opacity: 0.7;
 }

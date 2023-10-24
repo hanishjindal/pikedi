@@ -2,11 +2,12 @@ import { useState } from 'react'
 import { MENU_DATA } from './config'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import Button from './common/Button'
 const Navbar = () => {
     const router = useRouter()
     const [mobileMenu, setMobileMenu] = useState(false)
     return (
-        <nav className='select-none fixed top-0 left-0 w-full h-16 bg-white shadow-lg'>
+        <nav className='select-none fixed top-0 left-0 w-full h-16 bg-white shadow-lg z-[9999]'>
             <div className='w-full h-full py-2 px-10 flex items-center justify-between relative'>
                 <div className='flex gap-8 items-center relative h-full'>
                     <Link href='/' className='text-2xl font-bold'>
@@ -34,12 +35,13 @@ const Navbar = () => {
                             placeholder='Search for anything'
                         />
                     </div>
-                    <button
-                        onClick={() => router.push('/login')}
-                        className='cursor-pointer font-semibold text-lg text-white px-6 py-2 bg-theme rounded-lg'
+                    <Button
+                        handleClick={() => router.push('/login')}
+                        type='primary'
+                        className='font-semibold text-lg px-6 py-2'
                     >
                         Sign In
-                    </button>
+                    </Button>
                 </div>
 
                 {/* For Mobile */}
@@ -73,9 +75,13 @@ const Navbar = () => {
                             />
                         </div>
 
-                        <button onClick={() => router.push('/login')} className='cursor-pointer font-semibold text-lg mb-4 py-2 w-full bg-theme rounded-lg text-white'>
+                        <Button
+                            handleClick={() => router.push('/login')}
+                            type='primary'
+                            className='font-semibold text-lg mb-4 py-2 w-full'
+                        >
                             Sign In
-                        </button>
+                        </Button>
                     </div>
                 }
             </div>

@@ -19,7 +19,8 @@ const config: Config = {
         "lighest-theme": "#b9e9dd"
       },
       textColor: {
-        "theme": "#00d3b7"
+        "theme": "#00d3b7",
+        "lightGray": "#F6F6F6",
       },
       gradientColorStops: {
         "lighest-theme": "#b9e9dd"
