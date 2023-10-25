@@ -7,42 +7,51 @@ const Navbar = () => {
     const router = useRouter()
     const [mobileMenu, setMobileMenu] = useState(false)
     return (
-        <nav className='select-none w-full h-16 bg-white shadow-lg z-[9999]'>
+        <nav
+            className='sticky top-0 select-none w-full h-16 bg-white shadow-lg z-[9999]'
+            tabIndex={0}
+            onBlur={() => { setMobileMenu(false) }}
+        >
             <div className='w-full h-full py-2 px-10 flex items-center justify-between relative'>
-                <div className='flex gap-8 items-center relative h-full'>
-                    <Link href='/' className='text-2xl font-bold'>
-                        <img className='h-10' src="/images/logo.svg" alt="" />
-                    </Link>
-                    <div className='hidden lg:inline-flex gap-8 text-lg font-medium '>
-                        {
-                            MENU_DATA.map((item, index) => {
-                                return (
-                                    <Link href={item.link} key={index} className='cursor-pointer hover:text-theme'>
-                                        {item.text}
-                                    </Link>
-                                )
-                            })
-                        }
-                    </div>
+                {/* <div className='flex gap-8 items-center relative h-full'> */}
+                <Link href='/' className='text-2xl font-bold'>
+                    <img className='h-10' src="/images/logo.svg" alt="" />
+                </Link>
+                <div className='hidden lg:inline-flex gap-8 text-lg font-medium h-full items-center'>
+                    {
+                        MENU_DATA.map((item, index) => {
+                            return (
+                                <Link
+                                    key={index}
+                                    href={item.link}
+                                    className={`cursor-pointer h-7 ${router.asPath === item.link && "text-theme border-b-2"} hover:text-theme hover:border-b-2 border-theme`}
+                                    onClick={() => { setMobileMenu(false) }}
+                                >
+                                    {item.text}
+                                </Link>
+                            )
+                        })
+                    }
                 </div>
+                {/* </div> */}
 
-                <div className='hidden lg:flex lg:items-center gap-6 bg-red'>
-                    <div className='py-3 px-5 flex items-center gap-3 bg-lightGray w-[336px] rounded-xl'>
+                {/* <div className='hidden lg:flex lg:items-center gap-6 bg-red'> */}
+                {/* <div className='py-3 px-5 flex items-center gap-3 bg-lightGray w-[336px] rounded-xl'>
                         <img src="/images/searchIcon.svg" alt="searchIcon" className='w-5 h-5' />
                         <input
                             type='text'
                             className='font-normal bg-transparent outline-none bottom-0 w-full'
                             placeholder='Search for anything'
                         />
-                    </div>
-                    <Button
-                        handleClick={() => router.push('/login')}
-                        type='primary'
-                        className='font-semibold text-lg px-6 py-2'
-                    >
-                        Sign In
-                    </Button>
-                </div>
+                    </div> */}
+                <Button
+                    handleClick={() => router.push('/login')}
+                    type='primary'
+                    className='hidden lg:flex font-semibold text-lg px-6 py-2'
+                >
+                    Sign In
+                </Button>
+                {/* </div> */}
 
                 {/* For Mobile */}
                 <img
@@ -59,24 +68,32 @@ const Navbar = () => {
                             {
                                 MENU_DATA.map((item, index) => {
                                     return (
-                                        <Link href={item.link} key={index} className='cursor-pointer hover:text-theme'>
+                                        <Link
+                                            key={index}
+                                            href={item.link}
+                                            className={`cursor-pointer ${router.asPath === item.link && "text-theme"} hover:text-theme`}
+                                            onClick={() => { setMobileMenu(false) }}
+                                        >
                                             {item.text}
                                         </Link>
                                     )
                                 })
                             }
                         </div>
-                        <div className='py-3 px-5 flex items-center gap-3 bg-[#F6F6F6] w-full'>
+                        {/* <div className='py-3 px-5 flex items-center gap-3 bg-[#F6F6F6] w-full'>
                             <img src="/images/searchIcon.svg" alt="searchIcon" className='w-5 h-5' />
                             <input
                                 type='text'
                                 className='font-normal bg-transparent outline-none bottom-0 w-full'
                                 placeholder='Search for anything'
                             />
-                        </div>
+                        </div> */}
 
                         <Button
-                            handleClick={() => router.push('/login')}
+                            handleClick={() => {
+                                router.push('/login')
+                                setMobileMenu(false)
+                            }}
                             type='primary'
                             className='font-semibold text-lg mb-4 py-2 w-full'
                         >

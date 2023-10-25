@@ -4,7 +4,7 @@ interface ButtonProps {
     children: React.ReactNode;
     type: 'primary' | 'secondary';
     className: string;
-    handleClick: () => {}
+    handleClick: () => void
 }
 const Button: React.FC<ButtonProps> = ({ children, type, className, handleClick }) => {
     return (

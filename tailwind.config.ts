@@ -18,6 +18,12 @@ const config: Config = {
         "theme": "#00d3b7",
         "lighest-theme": "#b9e9dd"
       },
+      borderColor: {
+        "theme": "#00d3b7",
+      },
+      outlineColor: {
+        "theme": "#00d3b7",
+      },
       textColor: {
         "theme": "#00d3b7",
         "lightGray": "#F6F6F6",

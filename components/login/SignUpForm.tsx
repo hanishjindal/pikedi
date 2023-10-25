@@ -1,5 +1,5 @@
 import Divider from '@/components/common/Divider';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import SyncLoader from "react-spinners/SyncLoader";
@@ -34,6 +34,12 @@ const SignUpForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
             router.push('/')
         }, 1000);
     }
+
+    useEffect(() => {
+        nameRef.current?.focus();
+    }, [])
+
+
     return (
         <div
             className="py-20 px-7 shadow-lg flex justify-center items-center gap-6 lg:gap-8 w-full lg:w-[50%] h-[60%] lg:h-full rounded-lg bg-white relative flex-col"
