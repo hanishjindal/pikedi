@@ -10,7 +10,7 @@ type loginType = 'who' | 'loginEditor' | 'signupEditor' | 'loginStudio' | 'signu
 const Login = () => {
     const [loginFlow, setLoginFlow] = useState<loginType>('who')
     return (
-        <div className='w-full h-[90%]'>
+        <div className='w-full h-full'>
             {loginFlow === 'who' &&
                 <div className="flex flex-col lg:flex-row gap-10 w-full min-h-full h-auto lg:h-full justify-around items-center bg-[#F6F6F6] p-10 bg-gradient-to-b from-lighest-theme to-white overflow-hidden">
                     <LoginType
