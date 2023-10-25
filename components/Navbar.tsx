@@ -7,7 +7,7 @@ const Navbar = () => {
     const router = useRouter()
     const [mobileMenu, setMobileMenu] = useState(false)
     return (
-        <nav className='select-none fixed top-0 left-0 w-full h-16 bg-white shadow-lg z-[9999]'>
+        <nav className='select-none w-full h-16 bg-white shadow-lg z-[9999]'>
             <div className='w-full h-full py-2 px-10 flex items-center justify-between relative'>
                 <div className='flex gap-8 items-center relative h-full'>
                     <Link href='/' className='text-2xl font-bold'>

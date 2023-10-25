@@ -1,8 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Divider from '../common/Divider';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import SyncLoader from "react-spinners/SyncLoader";
+import Input from '../common/Input';
 
 interface LoginFormProps {
     back: () => {}; // Use React.Dispatch to accept setState
@@ -11,12 +12,12 @@ interface LoginFormProps {
 
 const LoginForm: React.FC<LoginFormProps> = ({ back, WhoIsLogin }) => {
     const router = useRouter()
-    const [email, setEmail] = useState<Boolean>(false);
+    const [email, setEmail] = useState<boolean>(false);
     const [emailText, setEmailText] = useState<string>('');
-    const [password, setPassword] = useState<Boolean>(false);
+    const [password, setPassword] = useState<boolean>(false);
     const [passwordText, setPasswordText] = useState<string>('');
     const emailRef = useRef<HTMLInputElement | null>(null);
-    const [isSubmitting, setIsSubmitting] = useState<Boolean>(false)
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
     const passwordRef = useRef<HTMLInputElement | null>(null);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -27,6 +28,14 @@ const LoginForm: React.FC<LoginFormProps> = ({ back, WhoIsLogin }) => {
             router.push('/')
         }, 1000);
     }
+
+    useEffect(() => {
+        setEmail(true)
+        setTimeout(() => {
+            emailRef.current?.focus()
+        }, 0);
+    }, [])
+
 
     return (
         <div
@@ -49,9 +58,17 @@ const LoginForm: React.FC<LoginFormProps> = ({ back, WhoIsLogin }) => {
             </h1>
 
             <form className="border rounded-xl w-full lg:w-1/2" onSubmit={(e) => handleSubmit(e)}>
-                <div
-                    className="m-3 flex flex-col h-8 cursor-text justify-center duration-200"
-                    onClick={(e) => {
+                <Input
+                    name={email}
+                    setName={setEmail}
+                    label='Email'
+                    nameText={emailText}
+                    nameRef={emailRef}
+                    setNameText={setEmailText}
+                    fieldRequired={true}
+                    fieldType='email'
+                    placeholder='enter email'
+                    fieldClick={(e) => {
                         e.stopPropagation();
                         setEmail(true);
                         setPassword(false);
@@ -60,27 +77,21 @@ const LoginForm: React.FC<LoginFormProps> = ({ back, WhoIsLogin }) => {
                             emailRef.current?.focus()
                         }, 0);
                     }}
-                >
-                    <label
-                        htmlFor=""
-                        className={`duration-200 w-14 ${(email || emailText.length) ? 'text-sm' : 'text-lg'} text-gray-500 cursor-text`}
-                    >
-                        Email
-                    </label>
-                    <input
-                        type="email"
-                        required
-                        placeholder="enter email"
-                        className={`${!(email || emailText.length) && 'hidden duration-200'}`}
-                        ref={emailRef}
-                        value={emailText}
-                        onChange={(e) => setEmailText(e.target.value)}
-                    />
-                </div>
+                />
+
                 <Divider type="toe" />
-                <div
-                    className="m-3 flex flex-col h-8 cursor-text  justify-center duration-200 relative"
-                    onClick={(e) => {
+
+                <Input
+                    name={password}
+                    setName={setPassword}
+                    label='Password'
+                    nameText={passwordText}
+                    nameRef={passwordRef}
+                    setNameText={setPasswordText}
+                    fieldRequired={true}
+                    fieldType='password'
+                    placeholder='enter password'
+                    fieldClick={(e) => {
                         e.stopPropagation();
                         setEmail(false);
                         setPassword(true);
@@ -89,35 +100,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ back, WhoIsLogin }) => {
                             passwordRef.current?.focus()
                         }, 0);
                     }}
-                >
-                    <label
-                        htmlFor=""
-                        className={`duration-200 w-14 ${(password || passwordText.length) ? 'text-sm' : 'text-lg'} text-gray-500 cursor-text`}
-                    >
-                        Password
-                    </label>
-                    <input
-                        type="password"
-                        required
-                        placeholder="enter password"
-                        className={`${!(password || passwordText.length) && 'hidden duration-200'} mr-6`}
-                        ref={passwordRef}
-                        value={passwordText}
-                        onChange={(e) => setPasswordText(e.target.value)}
-                    />
-                    <button
-                        type='submit'
-                        className='absolute right-0 cursor-pointer !opacity-100 h-full'
-                        onClick={(e) => { e.stopPropagation() }}
-                    >
-                        {isSubmitting
-                            ?
-                            <SyncLoader size={4} />
-                            :
-                            <img className="w-5 rotate-180" src="/images/back.svg" alt="" />
-                        }
-                    </button>
-                </div>
+                    isSubmitting={isSubmitting}
+                />
             </form>
         </div>
     );

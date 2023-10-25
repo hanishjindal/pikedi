@@ -35,3 +35,7 @@ export const LOGIN_DATA = {
     studioText: "Studio",
     studioContent: "Find the perfect Photo Editor for your studio. Join our platform to connect with talented editing professionals."
 }
+
+export const COPYRIGHT = {
+    text: "Copyright, 2023 (pikedi.in), All rights reserved."
+}

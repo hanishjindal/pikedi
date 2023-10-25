@@ -12,7 +12,7 @@ interface LoginTypeProps {
 const LoginType: React.FC<LoginTypeProps> = ({ who, content, loginButton, signupButton }) => {
     return (
         <div
-            className='py-7 px-8 lg:py-5 lg:px-7 flex flex-col justify-center items-center shadow-lg gap-5 lg:gap-7 w-full lg:w-[45%] h-full rounded-lg bg-white'
+            className='py-7 px-8 lg:py-5 lg:px-7 flex flex-col justify-center items-center shadow-lg gap-5 lg:gap-7 w-full lg:w-[45%] h-full rounded-lg bg-white overflow-hidden'
         >
             <h1 className='font-bold text-3xl lg:text-5xl'>
                 {LOGIN_DATA.forText} <span className='text-theme'>

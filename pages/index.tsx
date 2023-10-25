@@ -1,10 +1,11 @@
-import Image from 'next/image'
-import Navbar from '@/components/Navbar'
+import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 
 export default function Home() {
   return (
-    <div>
+    <div className="flex flex-col justify-between min-h-screen">
       <Navbar />
+      <Footer />
     </div>
   )
 }
