@@ -30,10 +30,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ back, WhoIsLogin }) => {
     }
 
     useEffect(() => {
-        setEmail(true)
-        setTimeout(() => {
-            emailRef.current?.focus()
-        }, 0);
+        emailRef.current?.focus()
     }, [])
 
 
