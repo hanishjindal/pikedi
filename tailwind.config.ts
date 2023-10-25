@@ -23,7 +23,8 @@ const config: Config = {
         "lightGray": "#F6F6F6",
       },
       gradientColorStops: {
-        "lighest-theme": "#b9e9dd"
+        "lighest-theme": "#b9e9dd",
+        "theme": "#00d3b7",
       }
     },
   },

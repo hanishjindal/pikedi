@@ -39,7 +39,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ back, WhoIsLogin }) => {
 
     return (
         <div
-            className="py-7 px-8 lg:py-5 lg:px-7 shadow-lg flex justify-center items-center gap-6 lg:gap-8 w-full lg:w-[45%] h-[60%] lg:h-full rounded-lg bg-white relative flex-col"
+            className="py-20 px-7 shadow-lg flex justify-center items-center gap-6 lg:gap-8 w-full lg:w-[45%] h-[60%] lg:h-full rounded-lg bg-white relative flex-col"
             onClick={() => {
                 setEmail(false);
                 setPassword(false);

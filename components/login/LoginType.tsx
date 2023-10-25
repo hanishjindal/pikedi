@@ -19,7 +19,7 @@ const LoginType: React.FC<LoginTypeProps> = ({ who, content, loginButton, signup
                     {who}
                 </span>
             </h1>
-            <span className='text-center lg:text-base font-medium text-sm lg:px-16'>
+            <span className='text-center lg:text-base font-medium text-xs text-gray-500 lg:px-16'>
                 {content}
             </span>
             <Button

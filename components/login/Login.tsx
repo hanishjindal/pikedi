@@ -10,9 +10,9 @@ type loginType = 'who' | 'loginEditor' | 'signupEditor' | 'loginStudio' | 'signu
 const Login = () => {
     const [loginFlow, setLoginFlow] = useState<loginType>('who')
     return (
-        <div className='w-full h-full'>
+        <div className='w-full lg:h-[80vh]'>
             {loginFlow === 'who' &&
-                <div className="flex flex-col lg:flex-row gap-10 w-full min-h-full h-auto lg:h-full justify-around items-center bg-[#F6F6F6] p-10 bg-gradient-to-b from-lighest-theme to-white overflow-hidden">
+                <div className="flex flex-col lg:flex-row gap-10 w-full min-h-full h-auto lg:h-full justify-around items-center py-10 px-6 sm:px-8 lg:px-10 overflow-hidden">
                     <LoginType
                         who={LOGIN_DATA.editorText}
                         content={LOGIN_DATA.editorContent}
@@ -33,7 +33,7 @@ const Login = () => {
             }
 
             {loginFlow === 'loginEditor' &&
-                <div className="flex gap-10 w-full h-full lg:h-full justify-around items-center bg-[#F6F6F6] p-10 bg-gradient-to-b from-lighest-theme to-white overflow-hidden">
+                <div className="flex gap-10 w-full h-full lg:h-full justify-around items-center py-10 px-8 lg:px-10 overflow-hidden">
                     <LoginForm
                         back={async () => setLoginFlow('who')}
                         WhoIsLogin='Editor'
@@ -42,7 +42,7 @@ const Login = () => {
             }
 
             {loginFlow === 'signupEditor' &&
-                <div className="flex gap-10 w-full h-full lg:h-full justify-around items-center bg-[#F6F6F6] p-10 bg-gradient-to-b from-lighest-theme to-white overflow-hidden">
+                <div className="flex gap-10 w-full h-full lg:h-full justify-around items-center py-10 px-8 lg:px-10 overflow-hidden">
                     <SignUpForm
                         back={async () => setLoginFlow('who')}
                         WhoIsLogin='Editor'
@@ -51,7 +51,7 @@ const Login = () => {
             }
 
             {loginFlow === 'loginStudio' &&
-                <div className="flex gap-10 w-full h-full lg:h-full justify-around items-center bg-[#F6F6F6] p-10 bg-gradient-to-b from-lighest-theme to-white overflow-hidden">
+                <div className="flex gap-10 w-full h-full lg:h-full justify-around items-center py-10 px-8 lg:px-10 overflow-hidden">
                     <LoginForm
                         back={async () => setLoginFlow('who')}
                         WhoIsLogin='Studio'
@@ -60,7 +60,7 @@ const Login = () => {
             }
 
             {loginFlow === 'signupStudio' &&
-                <div className="flex gap-10 w-full h-full lg:h-full justify-around items-center bg-[#F6F6F6] p-10 bg-gradient-to-b from-lighest-theme to-white overflow-hidden">
+                <div className="flex gap-10 w-full h-full lg:h-full justify-around items-center py-10 px-8 lg:px-10 overflow-hidden">
                     <SignUpForm
                         back={async () => setLoginFlow('who')}
                         WhoIsLogin='Studio'
