@@ -12,22 +12,23 @@
   scroll-behavior: smooth;
 }
 
-body::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
   border-radius: 10px;
 }
 
-body::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   background: #f1f1f1;
   border-radius: 10px;
 }
 
-body::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 10px;
 }
 
-body::-webkit-scrollbar-thumb:active {
+::-webkit-scrollbar-thumb:active {
   background: #555;
 }
 
@@ -49,26 +50,4 @@ button {
 
 button:hover {
   opacity: 0.7;
-}
-
-@keyframes scroll {
-  0% {
-    transform: translateX(0);
-  }
-
-  100% {
-    transform: translateX(-100%);
-  }
-}
-
-@layer utilities {
-  .animate-scroll {
-    animation: scroll 4s linear infinite;
-    /* Adjust the duration as needed */
-  }
-
-  .animate-scroll-small {
-    animation: scroll 2s linear infinite;
-    /* Adjust the duration as needed */
-  }
 }
