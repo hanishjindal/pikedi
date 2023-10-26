@@ -17,11 +17,11 @@ const AccordianSection = () => {
     };
 
     return (
-        <div id='faq' className='px-2 md:px-16 lg:px-20 pb-5 flex flex-col gap-5'>
+        <div id='faq' className='px-2 md:px-16 lg:px-20 pb-5 flex flex-col gap-5 select-text'>
             <h1 className='text-center text-3xl lg:text-5xl font-semibold'>Have any questions?</h1>
             <div className='flex flex-col gap-2 bg-lighest-theme px-3 py-6 lg:p-10 rounded-lg'>
                 {FAQ.map((item, index) => {
-                    return <div key={index} className={'bg-white shadow-lg text-sm lg:text-base font-medium p-4 rounded-lg cursor-pointer'} onClick={() => toggleAccordion(index)}>
+                    return <div key={index} className={'bg-white shadow-lg text-sm lg:text-xl font-medium p-4 rounded-lg cursor-pointer'} onClick={() => toggleAccordion(index)}>
                         <div className="flex justify-between items-center">
                             <div>{item.ques}</div>
                             <span style={{ transform: (accordian === index) ? 'rotate(180deg)' : 'rotate(0deg)' }}>
@@ -31,7 +31,7 @@ const AccordianSection = () => {
                         <div
                             ref={contentRef}
                             style={{ maxHeight: (accordian === index) ? `${contentHeight}px` : 0, overflow: 'hidden' }}
-                            className="transition-max-height duration-500 text-xs lg:text-sm text-gray-500"
+                            className="transition-max-height duration-500 text-xs lg:text-lg text-gray-500 pr-5"
                         >
                             {item.ans}
                         </div>
