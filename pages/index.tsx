@@ -1,15 +1,17 @@
 import { useState } from "react";
-import Footer from "@/components/Footer";
-import HomeMain from "@/components/HomeMain";
-import Navbar from "@/components/Navbar";
-import ContactForm from "@/components/ContactForm";
-import AccordianSection from "@/components/AccordianSection";
+import Footer from "@/components/common/Footer";
+import HomeMain from "@/components/home/HomeMain";
+import Navbar from "@/components/common/Navbar";
+import ContactForm from "@/components/home/ContactForm";
+import AccordianSection from "@/components/common/AccordianSection";
+import HomeTopSection from "@/components/home/HomeTopSection";
 
 export default function Home() {
   const [mobileMenu, setMobileMenu] = useState<boolean>(false)
   return (
-    <div id='about' className="flex flex-col min-h-screen relative" onClick={() => setMobileMenu(false)}>
+    <div className="flex flex-col relative select-none" onClick={() => setMobileMenu(false)}>
       <Navbar mobileMenu={mobileMenu} setMobileMenu={setMobileMenu} />
+      <HomeTopSection />
       <HomeMain />
       <AccordianSection />
       <ContactForm />

@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
-import Input from './common/Input'
-import Divider from './common/Divider';
-import Button from './common/Button';
-import { CONTACT_DATA } from './config';
+import Input from '../common/Input'
+import Divider from '../common/Divider';
+import Button from '../common/Button';
+import { CONTACT_DATA } from '../config';
 import { SyncLoader } from 'react-spinners';
 
 const ContactForm = () => {
@@ -98,7 +98,7 @@ const ContactForm = () => {
                     </div>
                     <Button
                         type='primary'
-                        className='font-semibold w-32 h-12 text-lg px-6 py-2 flex gap-5'
+                        className='font-semibold w-40 h-12 text-lg px-6 py-2 flex gap-5'
                         handleClick={() => { }}
                     >
                         {isSubmitting ?

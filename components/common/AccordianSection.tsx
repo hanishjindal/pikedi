@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { FAQ } from './config'
+import { FAQ } from '../config'
 import { BiChevronDown } from 'react-icons/bi'
 
 const AccordianSection = () => {

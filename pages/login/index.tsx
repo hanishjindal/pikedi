@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Login from '@/components/login/Login'
-import Footer from '@/components/Footer'
-import Navbar from '@/components/Navbar'
+import Footer from '@/components/common/Footer'
+import Navbar from '@/components/common/Navbar'
 
 const Page = () => {
     const [mobileMenu, setMobileMenu] = useState<boolean>(false)

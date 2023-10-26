@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import SyncLoader from "react-spinners/SyncLoader";
 import Input from '../common/Input';
+import { BsArrowLeftCircleFill } from 'react-icons/bs'
 
 interface SignupFormProps {
     back: () => {}; // Use React.Dispatch to accept setState
@@ -50,11 +51,10 @@ const SignUpForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
                 setMobile(false);
             }}
         >
-            <img
+            <BsArrowLeftCircleFill
                 className="w-8 cursor-pointer absolute top-5 left-5"
-                src="/images/back.svg"
-                alt="Back-icon"
                 onClick={back}
+                size={30}
             />
 
             <h1 className="text-2xl lg:text-4xl font-semibold">

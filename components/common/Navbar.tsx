@@ -1,8 +1,9 @@
 import { useState } from 'react'
-import { MENU_DATA } from './config'
+import { MENU_DATA } from '../config'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import Button from './common/Button'
+import Button from './Button'
+import { TfiMenu } from 'react-icons/tfi'
 
 interface NavbarProps {
     mobileMenu: boolean;
@@ -16,7 +17,7 @@ const Navbar: React.FC<NavbarProps> = ({
     const router = useRouter()
     return (
         <nav
-            className='sticky top-0 select-none w-full h-16 bg-white shadow-lg z-[9999]'
+            className='sticky top-0 select-none w-full h-16 bg-white shadow-lg z-[9]'
             onClick={e => e.stopPropagation()}
         >
             <div className='w-full h-full py-2 px-10 flex items-center justify-between relative'>
@@ -42,17 +43,16 @@ const Navbar: React.FC<NavbarProps> = ({
                 <Button
                     handleClick={() => router.push('/login')}
                     type='primary'
-                    className='hidden lg:flex font-semibold text-lg px-6 py-2'
+                    className='hidden lg:flex font-semibold text-lg w-40 h-12'
                 >
                     Sign In
                 </Button>
 
                 {/* For Mobile */}
-                <img
+                <TfiMenu
                     className='lg:hidden cursor-pointer'
-                    src="/images/menu-icon.svg"
-                    alt=""
                     onClick={() => { setMobileMenu(!mobileMenu) }}
+                    size={25}
                 />
 
                 {

@@ -1,5 +1,6 @@
 import React, { ReactElement, ChangeEvent, RefObject } from 'react';
 import SyncLoader from "react-spinners/SyncLoader";
+import { BsArrowRightCircleFill } from 'react-icons/bs'
 
 interface InputProps {
     name: boolean;
@@ -62,7 +63,7 @@ const Input: React.FC<InputProps> = ({
                         ?
                         <SyncLoader size={4} />
                         :
-                        <img className="w-5 rotate-180" src="/images/back.svg" alt="" />
+                        <BsArrowRightCircleFill className="w-5" size={20} />
                     }
                 </button>
             }
