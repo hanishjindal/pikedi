@@ -3,7 +3,7 @@ import SyncLoader from "react-spinners/SyncLoader";
 
 interface InputProps {
     name: boolean;
-    setName: (value: any) => void;
+    setName: (value: boolean) => void;
     label: string;
     nameText: string | number;
     setNameText: (value: any) => void;

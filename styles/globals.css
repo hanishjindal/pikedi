@@ -8,24 +8,26 @@
   box-sizing: border-box;
   outline: none;
   scrollbar-width: thin;
+  transition: 500ms;
+  scroll-behavior: smooth;
 }
 
-.scrollBar::-webkit-scrollbar {
-  width: 5px;
+body::-webkit-scrollbar {
+  width: 6px;
   border-radius: 10px;
 }
 
-.scrollBar::-webkit-scrollbar-track {
+body::-webkit-scrollbar-track {
   background: #f1f1f1;
   border-radius: 10px;
 }
 
-.scrollBar::-webkit-scrollbar-thumb {
+body::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 10px;
 }
 
-.scrollBar::-webkit-scrollbar-thumb:active {
+body::-webkit-scrollbar-thumb:active {
   background: #555;
 }
 

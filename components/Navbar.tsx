@@ -3,17 +3,23 @@ import { MENU_DATA } from './config'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Button from './common/Button'
-const Navbar = () => {
+
+interface NavbarProps {
+    mobileMenu: boolean;
+    setMobileMenu: (value: boolean) => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({
+    mobileMenu,
+    setMobileMenu,
+}) => {
     const router = useRouter()
-    const [mobileMenu, setMobileMenu] = useState(false)
     return (
         <nav
             className='sticky top-0 select-none w-full h-16 bg-white shadow-lg z-[9999]'
-            tabIndex={0}
-            onBlur={() => { setMobileMenu(false) }}
+            onClick={e => e.stopPropagation()}
         >
             <div className='w-full h-full py-2 px-10 flex items-center justify-between relative'>
-                {/* <div className='flex gap-8 items-center relative h-full'> */}
                 <Link href='/' className='text-2xl font-bold'>
                     <img className='h-10' src="/images/logo.svg" alt="" />
                 </Link>
@@ -33,17 +39,6 @@ const Navbar = () => {
                         })
                     }
                 </div>
-                {/* </div> */}
-
-                {/* <div className='hidden lg:flex lg:items-center gap-6 bg-red'> */}
-                {/* <div className='py-3 px-5 flex items-center gap-3 bg-lightGray w-[336px] rounded-xl'>
-                        <img src="/images/searchIcon.svg" alt="searchIcon" className='w-5 h-5' />
-                        <input
-                            type='text'
-                            className='font-normal bg-transparent outline-none bottom-0 w-full'
-                            placeholder='Search for anything'
-                        />
-                    </div> */}
                 <Button
                     handleClick={() => router.push('/login')}
                     type='primary'
@@ -51,7 +46,6 @@ const Navbar = () => {
                 >
                     Sign In
                 </Button>
-                {/* </div> */}
 
                 {/* For Mobile */}
                 <img
@@ -80,14 +74,6 @@ const Navbar = () => {
                                 })
                             }
                         </div>
-                        {/* <div className='py-3 px-5 flex items-center gap-3 bg-[#F6F6F6] w-full'>
-                            <img src="/images/searchIcon.svg" alt="searchIcon" className='w-5 h-5' />
-                            <input
-                                type='text'
-                                className='font-normal bg-transparent outline-none bottom-0 w-full'
-                                placeholder='Search for anything'
-                            />
-                        </div> */}
 
                         <Button
                             handleClick={() => {
