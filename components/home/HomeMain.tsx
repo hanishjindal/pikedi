@@ -16,7 +16,7 @@ const HomeMain = () => {
                         <div key={index} className='shadow-lg w-full flex flex-col gap-2 border p-6 rounded-lg'>
                             <img className='bg-gradient-to-l from-lighest-theme to-theme rounded-lg w-[400px] md:w-full h-48 md:h-28 xl:h-48 object-contain object-center shadow-md' src={flow.link} alt="" />
 
-                            <h4 className='text-lg md:text-sm xl:text-xl font-medium'>{index + 1}. {flow.flow}</h4>
+                            <h4 className='text-lg md:text-sm xl:text-xl font-medium'>{flow.flow}</h4>
 
                             <div className='text-gray-500 text-xs xl:text-sm'>{flow.text}</div>
                         </div>
