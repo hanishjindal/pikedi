@@ -5,7 +5,7 @@ interface InputProps {
     name: boolean;
     setName: (value: boolean) => void;
     label: string;
-    nameText: string | number;
+    nameText: string | number | undefined;
     setNameText: (value: any) => void;
     nameRef: RefObject<HTMLInputElement>;
     fieldType: 'text' | 'password' | 'email' | 'number';
