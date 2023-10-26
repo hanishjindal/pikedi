@@ -3,7 +3,7 @@ import { BRAND } from '../config'
 
 const HomeMain = () => {
     return (
-        <div className='w-full h-full py-10 px-6 md:px-16 lg:px-28 flex flex-col gap-10 relative'>
+        <div className='w-full h-full py-10 px-6 md:px-16 lg:px-28 flex flex-col gap-10 relative pb-16'>
             <div className='flex flex-col gap-5'>
                 <h1 className='w-full text-center text-4xl lg:text-5xl font-semibold whitespace-nowrap'>
                     What is <span className='text-theme'>{BRAND.name}</span>?

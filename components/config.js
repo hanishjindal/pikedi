@@ -1,6 +1,6 @@
 export const BRAND = {
     name: 'Pikedi',
-    intro: 'Elevate your photos with the touch of professionals!',
+    intro: 'Elevate your photos with the touch of professionals...',
     info: '',
     flow: [
         {
