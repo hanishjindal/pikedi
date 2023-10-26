@@ -23,6 +23,43 @@ export const BRAND = {
 
 BRAND.info = `${BRAND.name} is a dedicated platform for photo editing enthusiasts and professionals alike. It serves as a bridge between individuals seeking high-quality photo enhancements and a community of skilled editors. ${BRAND.name}'s mission is to provide top-tier editing services at budget-friendly rates. Whether you're looking for retouching, enhancements, or creative effects, ${BRAND.name} ensures your photos achieve their utmost potential. ${BRAND.name}'s user-friendly interface and collaborative features make it easy for users to connect with experienced editors, ensuring a seamless and personalized editing experience. With a commitment to excellence and affordability, ${BRAND.name} is the go-to platform for anyone looking to transform their photos into stunning works of art.`;
 
+export const CAROSEL_DATA = {
+    heading: 'Services we Offer',
+    list: [
+        'Photo Retouching',
+        'Portrait Retouching',
+        'Product Retouching',
+        'Event Retouching',
+        'Photo Enhancements',
+        'Color Correction',
+        'Exposure Adjustment',
+        'Background Removal',
+        'Creative Editing',
+        'Filters and Effects',
+        'Manipulations',
+        'Custom Artwork',
+        'HDR Image Editing',
+        'Collage Creation',
+        'Texture and Pattern Additions',
+        'Skin Smoothing',
+        'Object Removal or Addition',
+        'Clipping Path Services',
+        'Batch Photo Editing',
+        'Photo Restoration',
+        '3D Rendering',
+        'Digital Makeup',
+        'Selective Color Adjustments',
+        'Panorama Stitching',
+        'Noise Reduction',
+        'Shadow and Highlight Adjustment',
+        'Sharpening and Softening',
+        'Photo Manipulation for Social Media',
+        'Black and White Conversions',
+        'Cropping and Resizing',
+        'Watermark Addition or Removal'
+    ]
+}
+
 
 export const MENU_DATA = [
     {
