@@ -14,20 +14,20 @@ const Login = () => {
             {loginFlow === 'who' &&
                 <div className="flex flex-col lg:flex-row gap-10 w-full min-h-full h-auto lg:h-full justify-around items-center py-10 px-6 sm:px-8 lg:px-10 overflow-hidden">
                     <LoginType
-                        who={LOGIN_DATA.editorText}
-                        content={LOGIN_DATA.editorContent}
-                        loginButton={async () => setLoginFlow('loginEditor')}
-                        signupButton={async () => setLoginFlow('signupEditor')}
+                        who={LOGIN_DATA.studioText}
+                        content={LOGIN_DATA.studioContent}
+                        loginButton={async () => setLoginFlow('loginStudio')}
+                        signupButton={async () => setLoginFlow('signupStudio')}
                     />
 
                     {/* Divider */}
                     <Divider type='tic' />
 
                     <LoginType
-                        who={LOGIN_DATA.studioText}
-                        content={LOGIN_DATA.studioContent}
-                        loginButton={async () => setLoginFlow('loginStudio')}
-                        signupButton={async () => setLoginFlow('signupStudio')}
+                        who={LOGIN_DATA.editorText}
+                        content={LOGIN_DATA.editorContent}
+                        loginButton={async () => setLoginFlow('loginEditor')}
+                        signupButton={async () => setLoginFlow('signupEditor')}
                     />
                 </div>
             }
