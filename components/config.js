@@ -64,3 +64,7 @@ export const LOGIN_DATA = {
 export const COPYRIGHT = {
     text: `Copyright 2023 | ${BRAND.name} | All rights reserved.`
 }
+
+export const CONTACT_DATA = {
+    text: `If you have any questions, feedback, or inquiries, please don't hesitate to get in touch with us. Our dedicated team is here to assist you and provide the information you need. Feel free to reach out through the contact form or use the provided contact details below, and we'll respond as soon as possible. We value your input and look forward to hearing from you.`
+}
