@@ -8,7 +8,7 @@ const HomeMain = () => {
                 <h1 className='w-full text-center text-4xl lg:text-5xl font-semibold whitespace-nowrap'>
                     What is <span className='text-theme'>{BRAND.name}</span>?
                 </h1>
-                <div className='lg:text-base text-sm lg:text-justify'>{BRAND.intro}</div>
+                <div className='lg:text-base text-sm lg:text-justify'>{BRAND.info}</div>
             </div>
             <div className='grid grid-cols-1 md:grid-cols-3 gap-5 lg:w-full overflow-x-auto'>
                 {BRAND.flow.map((flow, index) => {

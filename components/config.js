@@ -1,6 +1,7 @@
 export const BRAND = {
     name: 'Pikedi',
-    intro: '',
+    intro: 'Elevate your photos with the touch of professionals!',
+    info: '',
     flow: [
         {
             flow: 'Upload an image',
@@ -20,7 +21,7 @@ export const BRAND = {
     ]
 };
 
-BRAND.intro = `${BRAND.name} is a dedicated platform for photo editing enthusiasts and professionals alike. It serves as a bridge between individuals seeking high-quality photo enhancements and a community of skilled editors. ${BRAND.name}'s mission is to provide top-tier editing services at budget-friendly rates. Whether you're looking for retouching, enhancements, or creative effects, ${BRAND.name} ensures your photos achieve their utmost potential. ${BRAND.name}'s user-friendly interface and collaborative features make it easy for users to connect with experienced editors, ensuring a seamless and personalized editing experience. With a commitment to excellence and affordability, ${BRAND.name} is the go-to platform for anyone looking to transform their photos into stunning works of art.`;
+BRAND.info = `${BRAND.name} is a dedicated platform for photo editing enthusiasts and professionals alike. It serves as a bridge between individuals seeking high-quality photo enhancements and a community of skilled editors. ${BRAND.name}'s mission is to provide top-tier editing services at budget-friendly rates. Whether you're looking for retouching, enhancements, or creative effects, ${BRAND.name} ensures your photos achieve their utmost potential. ${BRAND.name}'s user-friendly interface and collaborative features make it easy for users to connect with experienced editors, ensuring a seamless and personalized editing experience. With a commitment to excellence and affordability, ${BRAND.name} is the go-to platform for anyone looking to transform their photos into stunning works of art.`;
 
 
 export const MENU_DATA = [
