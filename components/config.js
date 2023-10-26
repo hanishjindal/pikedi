@@ -29,17 +29,17 @@ export const MENU_DATA = [
         label: "home",
         link: "/"
     },
-    // {
-    //     text: "Products",
-    //     label: "products",
-    //     // link: '/products'
-    //     link: "/"
-    // },
     {
         text: "About",
         label: "about",
         // link: '/about'
         link: "/#about"
+    },
+    {
+        text: "Faq",
+        label: "products",
+        link: '/#faq'
+        // link: "/"
     },
     {
         text: "Contact Us",

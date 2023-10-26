@@ -19,7 +19,7 @@ const ContactForm = () => {
     const emailRef = useRef<HTMLInputElement | null>(null);
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
     return (
-        <div id='contact' className="p-10 lg:p-20 flex flex-col-reverse gap-8 lg:gap-0 lg:grid lg:grid-cols-12  w-full bg-gradient-to-b from-lighest-theme to-white ">
+        <div id='contact' className="p-10 lg:p-20 flex flex-col-reverse gap-8 lg:gap-0 lg:grid lg:grid-cols-12 w-full bg-gradient-to-b from-lighest-theme to-white">
             <div
                 className="col-span-8 p-8 lg:p-20 shadow-lg gap-6 lg:gap-8  rounded-lg bg-white  flex-col justify-center items-center border"
             >
