@@ -40,7 +40,7 @@ const Footer = () => {
                     ))}
                 </div>
             </div>
-            <div className="border-t border-gray-600 mt-8 p-6 flex flex-col lg:flex-row justify-between gap-4">
+            <div className="border-t border-gray-600 mt-8 py-6 flex flex-col lg:flex-row justify-between gap-4">
                 <p className='[@media(min-width:100px)]:text-xs [@media(min-width:300px)]:text-sm tracking-wide'>&copy; {new Date().getFullYear()} {BRAND.name}. All rights reserved.</p>
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:flex justify-center gap-1 lg:gap-5 text-gray-300">
                     {FOOTER_CONFIG.privacyTerm.map((itm, idx) => {
