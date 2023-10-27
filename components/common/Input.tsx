@@ -42,7 +42,7 @@ const Input: React.FC<InputProps> = ({
                 type={fieldType}
                 required={fieldRequired}
                 placeholder={placeholder}
-                className={`${!(name || nameText) ? 'h-0 duration-200' : ''} ${fieldType === 'password' && 'mr-6'}`}
+                className={`${!(name || nameText) ? 'h-0 duration-200' : ''} focus-visible:outline-none ${fieldType === 'password' && 'mr-6'}`}
                 ref={nameRef}
                 value={nameText}
                 disabled={isSubmitting}

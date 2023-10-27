@@ -1,19 +1,23 @@
-import React, { useState, useRef } from 'react'
-import { FAQ } from '../config'
-import { BiChevronDown } from 'react-icons/bi'
+import React, { useState, useEffect, RefObject } from 'react';
+import { FAQ } from '../config';
+import { BiChevronDown } from 'react-icons/bi';
 
 const AccordianSection = () => {
-    const [accordian, setAccordian] = useState<number>(-1)
-    const [contentHeight, setContentHeight] = useState<number | null>(null);
-    const contentRef = useRef<HTMLDivElement | null>(null);
+    const [accordion, setAccordion] = useState<number | null>(null);
+    const [contentHeights, setContentHeights] = useState<number[]>([]);
+    const contentRefs: RefObject<HTMLDivElement | null>[] = FAQ.map(() => React.createRef<HTMLDivElement>());
+
+    useEffect(() => {
+        const heights = contentRefs.map((ref) => ref.current?.scrollHeight || 0);
+        setContentHeights(heights);
+    }, [contentRefs]);
 
     const toggleAccordion = (index: number) => {
-        if (accordian != index) {
-            setAccordian(index)
+        if (accordion === index) {
+            setAccordion(null);
         } else {
-            setAccordian(-1)
+            setAccordion(index);
         }
-        setContentHeight(accordian == index ? 0 : contentRef.current?.scrollHeight || 0);
     };
 
     return (
@@ -21,26 +25,33 @@ const AccordianSection = () => {
             <h1 className='text-center text-3xl lg:text-5xl font-semibold'>Have any questions?</h1>
             <div className='flex flex-col gap-2 bg-lighest-theme px-3 py-6 lg:p-10 rounded-lg'>
                 {FAQ.map((item, index) => {
-                    return <div key={index} className={'bg-white shadow-lg text-base lg:text-xl font-medium p-4 rounded-lg cursor-pointer'} onClick={() => toggleAccordion(index)}>
-                        <div className="flex justify-between items-center">
-                            <div>{item.ques}</div>
-                            <span style={{ transform: (accordian === index) ? 'rotate(180deg)' : 'rotate(0deg)' }}>
-                                <BiChevronDown size={20} />
-                            </span>
+                    const contentRef = contentRefs[index];
+                    const contentHeight = contentHeights[index];
+
+                    return (
+                        <div key={index} className={'bg-white shadow-lg text-base lg:text-xl font-medium p-4 rounded-lg cursor-pointer'} onClick={() => toggleAccordion(index)}>
+                            <div className="flex justify-between items-center">
+                                <div>{item.ques}</div>
+                                <span style={{ transform: accordion === index ? 'rotate(180deg)' : 'rotate(0deg)' }}>
+                                    <BiChevronDown size={20} />
+                                </span>
+                            </div>
+                            <div
+                                ref={contentRef as RefObject<HTMLDivElement>}
+                                style={{
+                                    maxHeight: accordion === index ? `${contentHeight}px` : 0,
+                                    overflow: 'hidden',
+                                }}
+                                className="text-sm lg:text-lg text-gray-500 pr-5"
+                            >
+                                {item.ans}
+                            </div>
                         </div>
-                        <div
-                            ref={contentRef}
-                            style={{ maxHeight: (accordian === index) ? `${contentHeight}px` : 0, overflow: 'hidden' }}
-                            className="transition-max-height duration-500 text-sm lg:text-lg text-gray-500 pr-5"
-                        >
-                            {item.ans}
-                        </div>
-                    </div>
-                })
-                }
+                    );
+                })}
             </div>
         </div>
-    )
+    );
 }
 
-export default AccordianSection
+export default AccordianSection;
