@@ -20,7 +20,7 @@ const Carosel = () => {
         };
     }, [scrollWidth]);
     return (
-        <div className='w-full h-full py-5 md:py-10 px-6 md:px-16 lg:px-28 flex flex-col items-center gap-5 lg:gap-8 relative'>
+        <div className='w-full h-full py-5 md:py-10 px-6 md:px-16 lg:px-28 flex flex-col items-center gap-5 lg:gap-8 relative !pb-16'>
             <h1 className='w-full text-center text-4xl lg:text-5xl font-semibold whitespace-nowrap'>
                 {CAROSEL_DATA.heading.split(' ')[0]} <span className='text-theme'>{CAROSEL_DATA.heading.split(' ')[1]}</span>
             </h1>
@@ -31,7 +31,7 @@ const Carosel = () => {
                     </div>
                 ))}
             </div>
-            <span id='about' className='absolute bottom-10'></span>
+            <span id='faq' className='absolute bottom-20'></span>
         </div>
     );
 };

@@ -141,3 +141,76 @@ export const FAQ = [
         ans: `${BRAND.name} offers a money - back guarantee.If you're not satisfied with the final edit after the review process, you can request a refund.`
     }
 ]
+
+export const FOOTER_CONFIG = {
+    footerIntro: `Empowering Studios with Professional Photo Editing.`,
+    list: [
+        {
+            title: 'Join Us',
+            links: [
+                { text: 'Apply to be an Editor', url: '#' },
+                { text: 'Pricing', url: '#' },
+            ],
+        },
+        {
+            title: 'Pricing',
+            links: [
+                { text: 'Pricing Tiers', url: '#' },
+                { text: 'Basic Edits', url: '#' },
+                { text: 'Advanced Edits', url: '#' },
+                { text: 'Custom Projects', url: '#' },
+                { text: 'Payment Options', url: '#' },
+                { text: 'Money-back Guarantee', url: '#' },
+            ],
+        },
+        {
+            title: 'FAQs',
+            links: [
+                { text: 'General Questions', url: '#' },
+                { text: 'Using Pikedi', url: '#' },
+                { text: 'Working with Editors', url: '#' },
+                { text: 'Payment and Security', url: '#' },
+            ],
+        },
+        {
+            title: 'Blog',
+            links: [
+                { text: 'Photo Editing Tips', url: '#' },
+                { text: 'Photography Inspiration', url: '#' },
+                { text: 'Editor Spotlights', url: '#' },
+                { text: 'Industry News', url: '#' },
+            ],
+        },
+        {
+            title: 'Contact Us',
+            links: [
+                { text: 'Support Center', url: '#' },
+                { text: 'Contact Form', url: '#' },
+                { text: 'Business Inquiries', url: '#' },
+            ],
+        },
+    ],
+    privacyTerm: [
+        {
+            title: 'Terms of Service',
+            // link: '/terms-of-service'
+            link: '/'
+        },
+        {
+            title: 'Privacy Policy',
+            // link: '/privacy-policy'
+            link: '/'
+        },
+        {
+            title: 'Refund Policy',
+            // link: '/refund-policy'
+            link: '/'
+        },
+        {
+            title: 'User Guidelines',
+            // link: '/user-guidelines'
+            link: '/'
+        }
+    ]
+
+};

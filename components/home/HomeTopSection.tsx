@@ -16,6 +16,7 @@ const HomeTopSection = () => {
                 </Link>
             </div>
             <img draggable={false} className='hidden lg:block lg:w-3/5' src="/images/home.gif" alt="" />
+            <span id='about' className='absolute bottom-10'></span>
         </div>
     )
 }

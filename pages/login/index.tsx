@@ -6,7 +6,7 @@ import Navbar from '@/components/common/Navbar'
 const Page = () => {
     const [mobileMenu, setMobileMenu] = useState<boolean>(false)
     return (
-        <div className='min-h-screen flex flex-col justify-between scrollBar overflow-y-auto lg:overflow-y-auto select-none bg-gradient-to-b from-lighest-theme to-white relative' onClick={() => { setMobileMenu(false) }}>
+        <div className='min-h-screen flex flex-col justify-between overflow-y-auto select-none bg-gradient-to-b from-lighest-theme to-white relative' onClick={() => { setMobileMenu(false) }}>
             <Navbar mobileMenu={mobileMenu} setMobileMenu={setMobileMenu} />
             <Login />
             <Footer />

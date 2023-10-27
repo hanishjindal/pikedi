@@ -13,8 +13,8 @@ export default function Home() {
     <div className="flex flex-col relative select-none" onClick={() => setMobileMenu(false)}>
       <Navbar mobileMenu={mobileMenu} setMobileMenu={setMobileMenu} />
       <HomeTopSection />
-      <Carosel />
       <HomeMain />
+      <Carosel />
       <AccordianSection />
       <ContactForm />
       <Footer />

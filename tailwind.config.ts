@@ -20,6 +20,7 @@ const config: Config = {
       },
       borderColor: {
         "theme": "#00d3b7",
+        "lighest-theme": "#b9e9dd"
       },
       outlineColor: {
         "theme": "#00d3b7",
@@ -27,6 +28,7 @@ const config: Config = {
       textColor: {
         "theme": "#00d3b7",
         "lightGray": "#F6F6F6",
+        "lighest-theme": "#b9e9dd"
       },
       gradientColorStops: {
         "lighest-theme": "#b9e9dd",
