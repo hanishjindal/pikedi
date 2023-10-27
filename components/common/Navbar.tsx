@@ -31,7 +31,7 @@ const Navbar: React.FC<NavbarProps> = ({
                                 <Link
                                     key={index}
                                     href={item.link}
-                                    className={`cursor-pointer h-7 ${router.asPath === item.link && "text-theme border-b-2"} hover:text-theme hover:border-b-2 border-theme`}
+                                    className={`cursor-pointer h-7 ${router.asPath === item.link ? "text-theme border-b-2" : ""} hover:text-theme hover:border-b-2 border-theme`}
                                     onClick={() => { setMobileMenu(false) }}
                                 >
                                     {item.text}

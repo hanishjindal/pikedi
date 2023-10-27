@@ -10,7 +10,7 @@ const AccordianSection = () => {
     useEffect(() => {
         const heights = contentRefs.map((ref) => ref.current?.scrollHeight || 0);
         setContentHeights(heights);
-    }, [contentRefs]);
+    }, []);
 
     const toggleAccordion = (index: number) => {
         if (accordion === index) {
@@ -21,7 +21,7 @@ const AccordianSection = () => {
     };
 
     return (
-        <div id='faq' className='px-2 md:px-16 lg:px-20 pb-5 flex flex-col gap-5 select-text'>
+        <div id='faq' className='px-2 md:px-16 lg:px-20 pb-5 flex flex-col gap-5 select-text relative'>
             <h1 className='text-center text-3xl lg:text-5xl font-semibold'>Have any questions?</h1>
             <div className='flex flex-col gap-2 bg-lighest-theme px-3 py-6 lg:p-10 rounded-lg'>
                 {FAQ.map((item, index) => {
@@ -50,6 +50,7 @@ const AccordianSection = () => {
                     );
                 })}
             </div>
+            <span id='contact' className='absolute bottom-20'></span>
         </div>
     );
 }
