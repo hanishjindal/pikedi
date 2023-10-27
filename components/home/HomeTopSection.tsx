@@ -10,7 +10,7 @@ const HomeTopSection = () => {
                 <h1 className='text-3xl font-medium text-center lg:text-5xl tracking-wide'>{BRAND.intro}</h1>
                 <img draggable={false} className='lg:hidden' src="/images/home.gif" alt="" />
                 <Link href={'/login'}>
-                    <Button type='primary' className='w-48 h-16 font-medium text-lg' handleClick={() => { }}>
+                    <Button type='primary' className='w-48 h-16 font-medium text-2xl' handleClick={() => { }}>
                         Get Started
                     </Button>
                 </Link>
