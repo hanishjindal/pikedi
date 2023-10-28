@@ -23,7 +23,7 @@ const Footer = () => {
                         <BsLinkedin />
                     </div>
                 </div>
-                <div className="container col-span-10 mx-auto grid  [@media(min-width:100px)]:grid-col-1 [@media(min-width:300px)]:grid-cols-2  lg:!grid-cols-5 gap-8">
+                <div className="container col-span-10 mx-auto grid  [@media(min-width:100px)]:grid-col-1 [@media(min-width:300px)]:grid-cols-2 md:!grid-cols-3 lg:!grid-cols-5 gap-8">
                     {FOOTER_CONFIG.list.map((section, index) => (
                         <div key={index}>
                             <h3 className="text-2xl font-bold mb-4">{section.title}</h3>
