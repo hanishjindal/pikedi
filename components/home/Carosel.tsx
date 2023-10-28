@@ -24,7 +24,7 @@ const Carosel = () => {
             <h1 className='w-full text-center text-4xl lg:text-5xl font-semibold whitespace-nowrap'>
                 {CAROSEL_DATA.heading.split(' ')[0]} <span className='text-theme'>{CAROSEL_DATA.heading.split(' ')[1]}</span>
             </h1>
-            <div className='flex w-full gap-4 lg:gap-8 overflow-x-auto pb-2 scrollHide' ref={scrollRef}>
+            <div className='flex w-full gap-4 lg:gap-8 overflow-x-auto py-2 scrollHide border-t-2 border-b-2' ref={scrollRef}>
                 {CAROSEL_DATA.list.map((item, index) => (
                     <div key={index} className='text-xs lg:text-lg rounded-lg font-medium p-2 whitespace-nowrap scrollbar-hide bg-gray-700 text-gray-100'>
                         {item}
