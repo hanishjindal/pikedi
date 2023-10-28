@@ -26,7 +26,7 @@ const Carosel = () => {
             </h1>
             <div className='flex w-full gap-4 lg:gap-8 overflow-x-auto pb-2 scrollHide' ref={scrollRef}>
                 {CAROSEL_DATA.list.map((item, index) => (
-                    <div key={index} className='text-xs lg:text-lg border-2 border-theme rounded-2xl font-medium text-theme p-2 whitespace-nowrap scrollbar-hide'>
+                    <div key={index} className='text-xs lg:text-lg rounded-lg font-medium p-2 whitespace-nowrap scrollbar-hide bg-gray-400 text-gray-100'>
                         {item}
                     </div>
                 ))}
