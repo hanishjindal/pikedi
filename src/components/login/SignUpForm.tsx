@@ -1,7 +1,7 @@
 import Divider from '@/components/common/Divider';
 import React, { useRef, useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import SyncLoader from "react-spinners/SyncLoader";
 import Input from '../common/Input';
 import { BsArrowLeftCircleFill } from 'react-icons/bs'

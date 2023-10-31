@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { MENU_DATA } from '../config'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Button from './Button'
 import { TfiMenu } from 'react-icons/tfi'
@@ -31,7 +31,7 @@ const Navbar: React.FC<NavbarProps> = ({
                                 <Link
                                     key={index}
                                     href={item.link}
-                                    className={`cursor-pointer h-7 ${router.asPath === item.link ? "text-theme border-b-2" : ""} hover:text-theme hover:border-b-2 border-theme`}
+                                    className={`cursor-pointer h-7 hover:text-theme hover:border-b-2 border-theme`}
                                     onClick={() => { setMobileMenu(false) }}
                                 >
                                     {item.text}
@@ -65,7 +65,7 @@ const Navbar: React.FC<NavbarProps> = ({
                                         <Link
                                             key={index}
                                             href={item.link}
-                                            className={`cursor-pointer ${router.asPath === item.link && "text-theme"} hover:text-theme`}
+                                            className={`cursor-pointer hover:text-theme`}
                                             onClick={() => { setMobileMenu(false) }}
                                         >
                                             {item.text}

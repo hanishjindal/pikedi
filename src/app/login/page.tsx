@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from 'react'
 import Login from '@/components/login/Login'
 import Footer from '@/components/common/Footer'
