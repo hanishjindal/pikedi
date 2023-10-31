@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import Divider from '../common/Divider';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import SyncLoader from "react-spinners/SyncLoader";
 import Input from '../common/Input';
 import { BsArrowLeftCircleFill } from 'react-icons/bs'
+import axios from "axios"
 
 interface LoginFormProps {
     back: () => {}; // Use React.Dispatch to accept setState
@@ -21,13 +21,22 @@ const LoginForm: React.FC<LoginFormProps> = ({ back, WhoIsLogin }) => {
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
     const passwordRef = useRef<HTMLInputElement | null>(null);
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        toast.success('Success')
-        setIsSubmitting(true)
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        setTimeout(() => {
+        try {
+            setIsSubmitting(true)
+            const user = {
+                email: emailText,
+                password: passwordText
+            }
+            const res = await axios.post("/api/users/login", user)
+            toast.success('Success')
             router.push('/')
-        }, 1000);
+        } catch (error: any) {
+            toast.error(error?.response?.data?.error ?? 'Somthing went wrong')
+        } finally {
+            setIsSubmitting(false)
+        }
     }
 
     useEffect(() => {

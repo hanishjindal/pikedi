@@ -2,10 +2,9 @@ import Divider from '@/components/common/Divider';
 import React, { useRef, useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import SyncLoader from "react-spinners/SyncLoader";
 import Input from '../common/Input';
 import { BsArrowLeftCircleFill } from 'react-icons/bs'
-
+import axios from 'axios';
 interface SignupFormProps {
     back: () => {}; // Use React.Dispatch to accept setState
     WhoIsLogin: 'Editor' | 'Studio';
@@ -27,13 +26,24 @@ const SignUpForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
     const passwordRef = useRef<HTMLInputElement | null>(null);
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        toast.success('Success')
-        setIsSubmitting(true)
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        setTimeout(() => {
-            router.push('/')
-        }, 1000);
+        try {
+            setIsSubmitting(true)
+            const user = {
+                fullName: nameText,
+                email: emailText,
+                mobile: mobileNumber,
+                password: passwordText
+            }
+            const res = await axios.post("/api/users/signup", user)
+            toast.success('Success')
+            router.push('/login')
+        } catch (error: any) {
+            toast.error(error?.response?.data?.error ?? 'Somthing went wrong')
+        } finally {
+            setIsSubmitting(false)
+        }
     }
 
     useEffect(() => {
