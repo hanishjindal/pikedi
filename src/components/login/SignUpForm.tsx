@@ -1,9 +1,6 @@
-import Divider from '@/components/common/Divider';
 import React, { useRef, useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import Input from '../common/Input';
-import { BsArrowLeftCircleFill } from 'react-icons/bs'
 import axios from 'axios';
 import FormBox from './common/FormBox';
 interface SignupFormProps {
