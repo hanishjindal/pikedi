@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import LoginType from './LoginType'
+import LoginType from './common/LoginType'
 import Divider from '../common/Divider'
 import { LOGIN_DATA } from "../config"
 import LoginForm from './LoginForm'

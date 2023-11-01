@@ -27,9 +27,9 @@ const ContactForm = () => {
                             name={name}
                             setName={setName}
                             label='Name'
-                            nameText={nameText}
+                            inputValue={nameText}
                             nameRef={nameRef}
-                            setNameText={setNameText}
+                            setInputValue={setNameText}
                             fieldRequired={true}
                             fieldType='text'
                             placeholder='Full Name'
@@ -50,9 +50,9 @@ const ContactForm = () => {
                             name={email}
                             setName={setEmail}
                             label='Email'
-                            nameText={emailText}
+                            inputValue={emailText}
                             nameRef={emailRef}
-                            setNameText={setEmailText}
+                            setInputValue={setEmailText}
                             fieldRequired={true}
                             fieldType='email'
                             placeholder='email'
@@ -73,9 +73,9 @@ const ContactForm = () => {
                             name={mobile}
                             setName={setMobile}
                             label='Mobile Number'
-                            nameText={mobileNumber}
+                            inputValue={mobileNumber}
                             nameRef={mobileRef}
-                            setNameText={setMobileNumber}
+                            setInputValue={setMobileNumber}
                             fieldRequired={true}
                             fieldType='number'
                             placeholder='+91 00000 00000'
