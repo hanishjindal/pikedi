@@ -13,21 +13,25 @@ interface LoginFormProps {
 
 const LoginForm: React.FC<LoginFormProps> = ({ back, WhoIsLogin }) => {
     const router = useRouter()
-    const [email, setEmail] = useState<boolean>(false);
-    const [emailText, setEmailText] = useState<string>('');
-    const [password, setPassword] = useState<boolean>(false);
-    const [passwordText, setPasswordText] = useState<string>('');
+    const [formData, setFormData] = useState({
+        email: '',
+        password: ''
+    })
+    const [formLabel, setFormLabel] = useState({
+        email: false,
+        password: false
+    })
     const emailRef = useRef<HTMLInputElement | null>(null);
-    const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
     const passwordRef = useRef<HTMLInputElement | null>(null);
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         try {
             setIsSubmitting(true)
             const user = {
-                email: emailText,
-                password: passwordText
+                email: formData.email,
+                password: formData.password
             }
             const res = await axios.post("/api/users/login", user)
             toast.success('Success')
@@ -48,8 +52,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ back, WhoIsLogin }) => {
         <div
             className="py-20 px-7 shadow-lg flex justify-center items-center gap-6 lg:gap-8 w-full lg:w-[45%] h-[60%] lg:h-full rounded-lg bg-white relative flex-col"
             onClick={() => {
-                setEmail(false);
-                setPassword(false);
+                setFormLabel({
+                    email: false,
+                    password: false
+                })
             }}
         >
             <BsArrowLeftCircleFill
@@ -64,20 +70,21 @@ const LoginForm: React.FC<LoginFormProps> = ({ back, WhoIsLogin }) => {
 
             <form className="border rounded-xl w-full lg:w-1/2" onSubmit={(e) => handleSubmit(e)}>
                 <Input
-                    name={email}
-                    setName={setEmail}
+                    name={formLabel.email}
+                    setName={(name) => setFormLabel({ ...formLabel, email: name })}
                     label='Email'
-                    nameText={emailText}
+                    nameText={formData.email}
                     nameRef={emailRef}
-                    setNameText={setEmailText}
+                    setNameText={(nameText) => setFormData({ ...formData, email: nameText })}
                     fieldRequired={true}
                     fieldType='email'
                     placeholder='enter email'
                     fieldClick={(e) => {
                         e.stopPropagation();
-                        setEmail(true);
-                        setPassword(false);
-                        emailRef.current?.focus()
+                        setFormLabel({
+                            email: true,
+                            password: false
+                        })
                         setTimeout(() => {
                             emailRef.current?.focus()
                         }, 0);
@@ -87,20 +94,21 @@ const LoginForm: React.FC<LoginFormProps> = ({ back, WhoIsLogin }) => {
                 <Divider type="toe" />
 
                 <Input
-                    name={password}
-                    setName={setPassword}
+                    name={formLabel.password}
+                    setName={(name) => setFormLabel({ ...formLabel, password: name })}
                     label='Password'
-                    nameText={passwordText}
+                    nameText={formData.password}
                     nameRef={passwordRef}
-                    setNameText={setPasswordText}
+                    setNameText={(nameText) => setFormData({ ...formData, password: nameText })}
                     fieldRequired={true}
                     fieldType='password'
                     placeholder='enter password'
                     fieldClick={(e) => {
                         e.stopPropagation();
-                        setEmail(false);
-                        setPassword(true);
-                        passwordRef.current?.focus()
+                        setFormLabel({
+                            email: false,
+                            password: true
+                        })
                         setTimeout(() => {
                             passwordRef.current?.focus()
                         }, 0);
