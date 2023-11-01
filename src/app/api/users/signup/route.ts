@@ -8,7 +8,7 @@ connect()
 export async function POST(request: NextRequest) {
     try {
         const reqBody = await request.json()
-        const { fullName, email, mobile, password } = reqBody;
+        const { fullName, email, mobile, password, role } = reqBody;
 
         // if user exist
         const user = await User.findOne({ email })
@@ -25,7 +25,8 @@ export async function POST(request: NextRequest) {
             fullName,
             email,
             mobile,
-            password: hashedPassword
+            password: hashedPassword,
+            role
         })
 
         const savedUser = await newUser.save()

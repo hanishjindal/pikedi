@@ -65,7 +65,8 @@ const SignUpForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
             setIsSubmitting(true)
             const user = {
                 email: formData.email.value,
-                password: formData.password.value
+                password: formData.password.value,
+                role: WhoIsLogin.toLocaleLowerCase()
             }
             const res = await axios.post("/api/users/login", user)
             dispatch(signIn(res.data.data))

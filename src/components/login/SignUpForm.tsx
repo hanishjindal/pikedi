@@ -78,12 +78,12 @@ const SignUpForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
         e.preventDefault()
         try {
             setIsSubmitting(true)
-            console.log('hi')
             await axios.post("/api/users/signup", {
                 fullName: formData.fullName.value,
                 mobile: formData.mobile.value,
                 email: formData.email.value,
                 password: formData.password.value,
+                role: WhoIsLogin.toLocaleLowerCase()
             })
             toast.success('Success')
             router.push(`/login?page=signin&type=${WhoIsLogin.toLocaleLowerCase()}`)
