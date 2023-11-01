@@ -2,10 +2,9 @@ import Divider from '@/components/common/Divider';
 import React, { useRef, useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import SyncLoader from "react-spinners/SyncLoader";
 import Input from '../common/Input';
 import { BsArrowLeftCircleFill } from 'react-icons/bs'
-
+import axios from 'axios';
 interface SignupFormProps {
     back: () => {}; // Use React.Dispatch to accept setState
     WhoIsLogin: 'Editor' | 'Studio';
@@ -13,27 +12,36 @@ interface SignupFormProps {
 
 const SignUpForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
     const router = useRouter()
-    const [name, setName] = useState<boolean>(false)
-    const [nameText, setNameText] = useState<string>('')
+    const [formData, setFormData] = useState({
+        fullName: '',
+        mobile: '',
+        email: '',
+        password: ''
+    })
+    const [formLabel, setFormLabel] = useState({
+        fullName: false,
+        mobile: false,
+        email: false,
+        password: false
+    })
     const nameRef = useRef<HTMLInputElement | null>(null);
-    const [email, setEmail] = useState<boolean>(false);
-    const [emailText, setEmailText] = useState<string>('');
-    const emailRef = useRef<HTMLInputElement | null>(null);
-    const [mobile, setMobile] = useState<boolean>(false)
-    const [mobileNumber, setMobileNumber] = useState<number>(NaN)
     const mobileRef = useRef<HTMLInputElement | null>(null);
-    const [password, setPassword] = useState<boolean>(false);
-    const [passwordText, setPasswordText] = useState<string>('');
+    const emailRef = useRef<HTMLInputElement | null>(null);
     const passwordRef = useRef<HTMLInputElement | null>(null);
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        toast.success('Success')
-        setIsSubmitting(true)
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        setTimeout(() => {
-            router.push('/')
-        }, 1000);
+        try {
+            setIsSubmitting(true)
+            const res = await axios.post("/api/users/signup", formData)
+            toast.success('Success')
+            router.push('/login')
+        } catch (error: any) {
+            toast.error(error?.response?.data?.error ?? 'Somthing went wrong')
+        } finally {
+            setIsSubmitting(false)
+        }
     }
 
     useEffect(() => {
@@ -45,10 +53,12 @@ const SignUpForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
         <div
             className="py-20 px-7 shadow-lg flex justify-center items-center gap-6 lg:gap-8 w-full lg:w-[50%] h-[60%] lg:h-full rounded-lg bg-white relative flex-col"
             onClick={() => {
-                setName(false);
-                setEmail(false);
-                setPassword(false);
-                setMobile(false);
+                setFormLabel({
+                    fullName: false,
+                    mobile: false,
+                    email: false,
+                    password: false
+                })
             }}
         >
             <BsArrowLeftCircleFill
@@ -63,21 +73,23 @@ const SignUpForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
 
             <form className="border rounded-xl w-full lg:w-1/2" onSubmit={handleSubmit}>
                 <Input
-                    name={name}
-                    setName={setName}
+                    name={formLabel.fullName}
+                    setName={(name) => setFormLabel({ ...formLabel, fullName: name })}
                     label='Name'
-                    nameText={nameText}
+                    nameText={formData.fullName}
                     nameRef={nameRef}
-                    setNameText={setNameText}
+                    setNameText={(nameText) => setFormData({ ...formData, fullName: nameText })}
                     fieldRequired={true}
                     fieldType='text'
                     placeholder='Full Name'
                     fieldClick={(e) => {
                         e.stopPropagation();
-                        setName(true)
-                        setEmail(false);
-                        setMobile(false)
-                        setPassword(false);
+                        setFormLabel({
+                            fullName: true,
+                            mobile: false,
+                            email: false,
+                            password: false
+                        })
                         setTimeout(() => {
                             nameRef.current?.focus()
                         }, 0);
@@ -85,43 +97,25 @@ const SignUpForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
                 />
 
                 <Divider type="toe" />
-                <Input
-                    name={email}
-                    setName={setEmail}
-                    label='Email'
-                    nameText={emailText}
-                    nameRef={emailRef}
-                    setNameText={setEmailText}
-                    fieldRequired={true}
-                    fieldType='email'
-                    placeholder='john@xyz.in'
-                    fieldClick={(e) => {
-                        e.stopPropagation();
-                        setEmail(true);
-                        setPassword(false);
-                        setTimeout(() => {
-                            emailRef.current?.focus()
-                        }, 0);
-                    }}
-                />
-
-                <Divider type="toe" />
 
                 <Input
-                    name={mobile}
-                    setName={setMobile}
+                    name={formLabel.mobile}
+                    setName={(name) => setFormLabel({ ...formLabel, mobile: name })}
                     label='Mobile Number'
-                    nameText={mobileNumber}
+                    nameText={formData.mobile}
                     nameRef={mobileRef}
-                    setNameText={setMobileNumber}
+                    setNameText={(nameText) => setFormData({ ...formData, mobile: nameText })}
                     fieldRequired={true}
                     fieldType='number'
                     placeholder='+91 00000 00000'
                     fieldClick={(e) => {
                         e.stopPropagation();
-                        setMobile(true)
-                        setEmail(false);
-                        setPassword(false);
+                        setFormLabel({
+                            fullName: false,
+                            mobile: true,
+                            email: false,
+                            password: false
+                        })
                         setTimeout(() => {
                             mobileRef.current?.focus()
                         }, 0);
@@ -131,19 +125,49 @@ const SignUpForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
                 <Divider type="toe" />
 
                 <Input
-                    name={password}
-                    setName={setPassword}
+                    name={formLabel.email}
+                    setName={(name) => setFormLabel({ ...formLabel, email: name })}
+                    label='Email'
+                    nameText={formData.email}
+                    nameRef={emailRef}
+                    setNameText={(nameText) => setFormData({ ...formData, email: nameText })}
+                    fieldRequired={true}
+                    fieldType='email'
+                    placeholder='john@xyz.in'
+                    fieldClick={(e) => {
+                        e.stopPropagation();
+                        setFormLabel({
+                            fullName: false,
+                            mobile: false,
+                            email: true,
+                            password: false
+                        })
+                        setTimeout(() => {
+                            emailRef.current?.focus()
+                        }, 0);
+                    }}
+                />
+
+                <Divider type="toe" />
+
+                <Input
+                    name={formLabel.password}
+                    setName={(name) => setFormLabel({ ...formLabel, password: name })}
                     label='Password'
-                    nameText={passwordText}
+                    nameText={formData.password}
                     nameRef={passwordRef}
-                    setNameText={setPasswordText}
+                    setNameText={(nameText) => setFormData({ ...formData, password: nameText })}
                     fieldRequired={true}
                     fieldType='password'
                     placeholder='enter password'
                     fieldClick={(e) => {
                         e.stopPropagation();
-                        setEmail(false);
-                        setPassword(true);
+                        setFormLabel({
+                            fullName: false,
+                            mobile: false,
+                            email: false,
+                            password: true
+                        })
                         setTimeout(() => {
                             passwordRef.current?.focus()
                         }, 0);

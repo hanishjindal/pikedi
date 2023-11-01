@@ -47,8 +47,8 @@ const Input: React.FC<InputProps> = ({
                 value={nameText}
                 disabled={isSubmitting}
                 onChange={(e: ChangeEvent<HTMLInputElement>) => setNameText(e.target.value)}
-                min={min}
-                max={max}
+                minLength={min}
+                maxLength={max}
                 onFocus={() => setName(true)}
                 onBlur={() => setName(false)}
             />
