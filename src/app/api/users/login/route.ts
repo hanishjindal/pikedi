@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
         const { email, password } = reqBody;
 
         //check if user exists
-        const user = await User.findOne({ email })
+        const user = await User.findOne({ email }).select("-updatedAt -createdAt")
         if (!user) {
             return NextResponse.json({ error: "User does not exist" }, { status: 400 })
         }
@@ -28,15 +28,19 @@ export async function POST(request: NextRequest) {
         //create token data
         const tokenData = {
             id: user._id,
-            username: user.username,
+            fullName: user.fullName,
             email: user.email
         }
         //create token
         const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET!, { expiresIn: "1d" })
 
+        const userDataWithPassword = user.toObject();
+        delete userDataWithPassword.password;
+
         const response = NextResponse.json({
             message: "Login successful",
             success: true,
+            data: userDataWithPassword
         })
         response.cookies.set("token", token, {
             httpOnly: true,

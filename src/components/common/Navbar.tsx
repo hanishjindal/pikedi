@@ -4,6 +4,12 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Button from './Button'
 import { TfiMenu } from 'react-icons/tfi'
+import { useSelector } from 'react-redux';
+import { selectIsAuthenticated } from '@/redux/slice/authSlice'
+import axios from 'axios'
+import toast from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
+import { signOut } from '@/redux/slice/authSlice';
 
 interface NavbarProps {
     mobileMenu: boolean;
@@ -15,6 +21,19 @@ const Navbar: React.FC<NavbarProps> = ({
     setMobileMenu,
 }) => {
     const router = useRouter()
+    const dispatch = useDispatch()
+    const isAuthenticated = useSelector(selectIsAuthenticated);
+    const logout = async () => {
+        try {
+            await axios.get('/api/users/logout')
+            dispatch(signOut())
+            toast.success('Logout successful')
+            router.push('/login')
+        } catch (error: any) {
+            toast.error(error.message)
+        }
+    }
+
     return (
         <nav
             className='sticky top-0 select-none w-full h-16 bg-white shadow-lg z-[9]'
@@ -40,12 +59,19 @@ const Navbar: React.FC<NavbarProps> = ({
                         })
                     }
                 </div>
+
                 <Button
-                    handleClick={() => router.push('/login')}
+                    handleClick={() => {
+                        if (isAuthenticated) {
+                            logout()
+                        } else {
+                            router.push('/login')
+                        }
+                    }}
                     type='primary'
                     className='hidden lg:flex font-semibold text-lg w-40 h-12'
                 >
-                    Sign In
+                    Sign {isAuthenticated ? 'Out' : 'In'}
                 </Button>
 
                 {/* For Mobile */}
@@ -77,13 +103,17 @@ const Navbar: React.FC<NavbarProps> = ({
 
                         <Button
                             handleClick={() => {
-                                router.push('/login')
+                                if (isAuthenticated) {
+                                    logout()
+                                } else {
+                                    router.push('/login')
+                                }
                                 setMobileMenu(false)
                             }}
                             type='primary'
                             className='font-semibold text-lg mb-4 py-2 w-full'
                         >
-                            Sign In
+                            Sign {isAuthenticated ? 'Out' : 'In'}
                         </Button>
                     </div>
                 }

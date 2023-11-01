@@ -3,6 +3,8 @@ import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import FormBox from './common/FormBox';
+import { useDispatch } from 'react-redux';
+import { signIn } from '@/redux/slice/authSlice';
 interface SignupFormProps {
     back: () => {}; // Use React.Dispatch to accept setState
     WhoIsLogin: 'Editor' | 'Studio';
@@ -12,6 +14,7 @@ type fieldType = 'fullName' | 'mobile' | 'email' | 'password'
 
 const SignUpForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
     const router = useRouter()
+    const dispatch = useDispatch();
     const [formData, setFormData] = useState({
         email: {
             label: false,
@@ -65,6 +68,7 @@ const SignUpForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
                 password: formData.password.value
             }
             const res = await axios.post("/api/users/login", user)
+            dispatch(signIn(res.data.data))
             toast.success('Success')
             router.push('/')
         } catch (error: any) {
