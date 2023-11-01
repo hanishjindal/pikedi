@@ -73,9 +73,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ back, WhoIsLogin }) => {
                     name={formLabel.email}
                     setName={(name) => setFormLabel({ ...formLabel, email: name })}
                     label='Email'
-                    nameText={formData.email}
+                    inputValue={formData.email}
                     nameRef={emailRef}
-                    setNameText={(nameText) => setFormData({ ...formData, email: nameText })}
+                    setInputValue={(nameText) => setFormData({ ...formData, email: nameText })}
                     fieldRequired={true}
                     fieldType='email'
                     placeholder='enter email'
@@ -97,9 +97,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ back, WhoIsLogin }) => {
                     name={formLabel.password}
                     setName={(name) => setFormLabel({ ...formLabel, password: name })}
                     label='Password'
-                    nameText={formData.password}
+                    inputValue={formData.password}
                     nameRef={passwordRef}
-                    setNameText={(nameText) => setFormData({ ...formData, password: nameText })}
+                    setInputValue={(nameText) => setFormData({ ...formData, password: nameText })}
                     fieldRequired={true}
                     fieldType='password'
                     placeholder='enter password'

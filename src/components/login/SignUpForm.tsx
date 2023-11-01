@@ -76,9 +76,9 @@ const SignUpForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
                     name={formLabel.fullName}
                     setName={(name) => setFormLabel({ ...formLabel, fullName: name })}
                     label='Name'
-                    nameText={formData.fullName}
+                    inputValue={formData.fullName}
                     nameRef={nameRef}
-                    setNameText={(nameText) => setFormData({ ...formData, fullName: nameText })}
+                    setInputValue={(nameText) => setFormData({ ...formData, fullName: nameText })}
                     fieldRequired={true}
                     fieldType='text'
                     placeholder='Full Name'
@@ -102,9 +102,9 @@ const SignUpForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
                     name={formLabel.mobile}
                     setName={(name) => setFormLabel({ ...formLabel, mobile: name })}
                     label='Mobile Number'
-                    nameText={formData.mobile}
+                    inputValue={formData.mobile}
                     nameRef={mobileRef}
-                    setNameText={(nameText) => setFormData({ ...formData, mobile: nameText })}
+                    setInputValue={(nameText) => setFormData({ ...formData, mobile: nameText })}
                     fieldRequired={true}
                     fieldType='number'
                     placeholder='+91 00000 00000'
@@ -128,9 +128,9 @@ const SignUpForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
                     name={formLabel.email}
                     setName={(name) => setFormLabel({ ...formLabel, email: name })}
                     label='Email'
-                    nameText={formData.email}
+                    inputValue={formData.email}
                     nameRef={emailRef}
-                    setNameText={(nameText) => setFormData({ ...formData, email: nameText })}
+                    setInputValue={(nameText) => setFormData({ ...formData, email: nameText })}
                     fieldRequired={true}
                     fieldType='email'
                     placeholder='john@xyz.in'
@@ -154,9 +154,9 @@ const SignUpForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
                     name={formLabel.password}
                     setName={(name) => setFormLabel({ ...formLabel, password: name })}
                     label='Password'
-                    nameText={formData.password}
+                    inputValue={formData.password}
                     nameRef={passwordRef}
-                    setNameText={(nameText) => setFormData({ ...formData, password: nameText })}
+                    setInputValue={(nameText) => setFormData({ ...formData, password: nameText })}
                     fieldRequired={true}
                     fieldType='password'
                     placeholder='enter password'

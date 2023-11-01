@@ -1,6 +1,6 @@
 import React from 'react';
-import { LOGIN_DATA } from "../config"
-import Button from '../common/Button';
+import { LOGIN_DATA } from "../../config"
+import Button from '../../common/Button';
 
 interface LoginTypeProps {
     who: string;
