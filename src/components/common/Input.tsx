@@ -8,7 +8,7 @@ interface InputProps {
     label: string;
     inputValue: string | number | undefined;
     setInputValue: (value: any) => void;
-    nameRef: RefObject<HTMLInputElement>;
+    nameRef?: RefObject<HTMLInputElement>;
     fieldType: 'text' | 'password' | 'email' | 'number';
     fieldRequired: boolean;
     placeholder?: string;
@@ -35,11 +35,12 @@ const Input: React.FC<InputProps> = ({
 }: InputProps): ReactElement => {
     return (
         <div className="m-3 flex flex-col h-8 cursor-text justify-center duration-200 relative" onClick={fieldClick}>
-            <label htmlFor="" className={`duration-200 ${(name || inputValue) ? 'text-sm' : 'text-lg'} text-gray-500 cursor-text`}>
+            <label htmlFor={label} className={`duration-200 w-full ${(name || inputValue) ? 'text-sm' : 'text-lg'} text-gray-500 cursor-text`}>
                 {label}
             </label>
             <input
                 type={fieldType}
+                id={label}
                 required={fieldRequired}
                 placeholder={placeholder}
                 className={`${!(name || inputValue) ? 'h-0 duration-200' : ''} focus-visible:outline-none ${fieldType === 'password' && 'mr-6'}`}
@@ -50,7 +51,6 @@ const Input: React.FC<InputProps> = ({
                 minLength={min}
                 maxLength={max}
                 onFocus={() => setName(true)}
-                onBlur={() => setName(false)}
             />
             {fieldType === 'password' &&
                 <button
