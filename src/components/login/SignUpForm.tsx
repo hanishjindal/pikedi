@@ -81,7 +81,13 @@ const SignUpForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
         e.preventDefault()
         try {
             setIsSubmitting(true)
-            const res = await axios.post("/api/users/signup", formData)
+            console.log('hi')
+            await axios.post("/api/users/signup", {
+                fullName: formData.fullName.value,
+                mobile: formData.mobile.value,
+                email: formData.email.value,
+                password: formData.password.value,
+            })
             toast.success('Success')
             router.push('/login')
         } catch (error: any) {
