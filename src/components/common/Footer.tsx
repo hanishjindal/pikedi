@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { BRAND, FOOTER_CONFIG } from '../config';
 import { BsFacebook, BsInstagram, BsLinkedin, BsTwitter, BsYoutube } from 'react-icons/bs';
+import Image from 'next/image';
 
 const Footer = () => {
     return (
@@ -10,7 +11,12 @@ const Footer = () => {
                 <div className='col-span-2 flex flex-col gap-5'>
                     <div className='flex flex-col gap-4'>
                         <div className='flex items-center gap-2'>
-                            <img className='h-10' src="/images/logo.svg" alt="" />
+                            <Image
+                                src="/images/logo.svg"
+                                alt=""
+                                width={30}
+                                height={40}
+                            />
                             <h3 className="text-2xl font-bold">{BRAND.name}</h3>
                         </div>
                         <p className='text-gray-300 text-xs'>{FOOTER_CONFIG.footerIntro}</p>
