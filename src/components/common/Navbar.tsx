@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { MENU_DATA } from '../config'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -30,7 +30,9 @@ const Navbar: React.FC<NavbarProps> = ({
             try {
                 setIsLoading(true)
                 const res = await axios.get('/api/users/active');
-                dispatch(signIn(res.data.data))
+                if (res.data.active) {
+                    dispatch(signIn(res.data.data))
+                }
             } catch (error) {
                 console.error('Error fetching data:', error);
             } finally {
@@ -80,8 +82,8 @@ const Navbar: React.FC<NavbarProps> = ({
                                 )
                             } else {
                                 return (
-                                    <>
-                                    </>
+                                    <Fragment key={index}>
+                                    </Fragment>
                                 )
                             }
                         })
@@ -129,8 +131,8 @@ const Navbar: React.FC<NavbarProps> = ({
                                         )
                                     } else {
                                         return (
-                                            <>
-                                            </>
+                                            <Fragment key={index}>
+                                            </Fragment>
                                         )
                                     }
                                 })

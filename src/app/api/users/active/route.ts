@@ -9,10 +9,17 @@ connect();
 export async function GET(request: NextRequest) {
 
     try {
+        if (!request.cookies.get("token")?.value) {
+            return NextResponse.json({
+                data: {},
+                active: false
+            })
+        }
         const userId = await getDataFromToken(request);
         const user = await User.findOne({ _id: userId }).select("-password -updatedAt -createdAt");
         return NextResponse.json({
-            data: user
+            data: user,
+            active: true
         })
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 400 });
