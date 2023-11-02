@@ -3,8 +3,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 // Define the shape of your user data
 interface User {
   id: string;
-  username: string;
+  fullName: string;
   email: string;
+  mobile: number;
   // Add other user properties as needed
 }
 
