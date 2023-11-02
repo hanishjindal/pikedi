@@ -176,7 +176,7 @@ const Profile: React.FC<profileProps> = ({
                             {userData?.profilePic ?
                                 <div className='border-2 rounded-xl flex justify-center items-center shadow w-[180px] h-[180px] p-4'>
                                     <Image
-                                        src={'/images/logo.png'}
+                                        src={userData?.profilePic}
                                         alt=''
                                         width={50}
                                         height={50}
