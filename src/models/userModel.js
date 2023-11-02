@@ -1,6 +1,12 @@
 import mongoose from "mongoose";
+import { v4 as uuid } from 'uuid';
 
 const userSchema = new mongoose.Schema({
+    userId: {
+        type: String,
+        unique: true,
+        default: uuid().split('-')[0]
+    },
     fullName: {
         type: String,
         required: [true, "Please provide a Fullname"],
@@ -32,7 +38,7 @@ const userSchema = new mongoose.Schema({
         enum: ['editor', 'studio'],
         required: [true, "Please specify the role"],
     },
-    active: {
+    isActive: {
         type: Boolean,
         default: true,
     },
