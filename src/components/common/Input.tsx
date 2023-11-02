@@ -14,6 +14,7 @@ interface InputProps {
     placeholder?: string;
     fieldClick: (e: any) => void;
     isSubmitting?: boolean;
+    hidePassPointer?: boolean;
     max?: number;
     min?: number;
 }
@@ -30,6 +31,7 @@ const Input: React.FC<InputProps> = ({
     placeholder,
     fieldClick,
     isSubmitting,
+    hidePassPointer,
     max,
     min
 }: InputProps): ReactElement => {
@@ -52,7 +54,7 @@ const Input: React.FC<InputProps> = ({
                 maxLength={max}
                 onFocus={() => setName(true)}
             />
-            {fieldType === 'password' &&
+            {(!hidePassPointer && fieldType === 'password') &&
                 <button
                     type='submit'
                     className='absolute right-0 cursor-pointer !opacity-100 h-full disabled:cursor-default'

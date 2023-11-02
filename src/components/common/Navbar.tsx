@@ -15,11 +15,13 @@ import { signIn, signOut } from '@/redux/slice/authSlice';
 interface NavbarProps {
     mobileMenu: boolean;
     setMobileMenu: (value: boolean) => void;
+    setUserData?: (value: any) => void;
 }
 
 const Navbar: React.FC<NavbarProps> = ({
     mobileMenu,
     setMobileMenu,
+    setUserData
 }) => {
     const router = useRouter()
     const dispatch = useDispatch()
@@ -31,6 +33,9 @@ const Navbar: React.FC<NavbarProps> = ({
             try {
                 setIsLoading(true)
                 const res = await axios.get('/api/users/active');
+                if (setUserData) {
+                    setUserData(res.data.data)
+                }
                 if (res.data.active) {
                     dispatch(signIn(res.data.data))
                 }
