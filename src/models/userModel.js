@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
     },
     profilePic: {
         type: String,
-        default: null
+        default: ''
     },
     isVerified: {
         type: Boolean,
