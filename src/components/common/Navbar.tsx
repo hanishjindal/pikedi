@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { MENU_DATA } from '../config'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -9,7 +9,7 @@ import { selectIsAuthenticated } from '@/redux/slice/authSlice'
 import axios from 'axios'
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
-import { signOut } from '@/redux/slice/authSlice';
+import { signIn, signOut } from '@/redux/slice/authSlice';
 
 interface NavbarProps {
     mobileMenu: boolean;
@@ -23,14 +23,35 @@ const Navbar: React.FC<NavbarProps> = ({
     const router = useRouter()
     const dispatch = useDispatch()
     const isAuthenticated = useSelector(selectIsAuthenticated);
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                setIsLoading(true)
+                const res = await axios.get('/api/users/active');
+                dispatch(signIn(res.data.data))
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            } finally {
+                setIsLoading(false)
+            }
+        };
+
+        fetchData();
+    }, []);
+
     const logout = async () => {
         try {
+            setIsLoading(true)
             await axios.get('/api/users/logout')
             dispatch(signOut())
             toast.success('Logout successful')
             router.push('/login')
         } catch (error: any) {
             toast.error(error.message)
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -46,16 +67,23 @@ const Navbar: React.FC<NavbarProps> = ({
                 <div className='hidden lg:inline-flex gap-8 text-lg font-medium h-full items-center'>
                     {
                         MENU_DATA.map((item, index) => {
-                            return (
-                                <Link
-                                    key={index}
-                                    href={item.link}
-                                    className={`cursor-pointer h-7 hover:text-theme hover:border-b-2 border-theme`}
-                                    onClick={() => { setMobileMenu(false) }}
-                                >
-                                    {item.text}
-                                </Link>
-                            )
+                            if (!item.protected || isAuthenticated) {
+                                return (
+                                    <Link
+                                        key={index}
+                                        href={item.link}
+                                        className={`cursor-pointer h-7 hover:text-theme hover:border-b-2 border-theme`}
+                                        onClick={() => { setMobileMenu(false) }}
+                                    >
+                                        {item.text}
+                                    </Link>
+                                )
+                            } else {
+                                return (
+                                    <>
+                                    </>
+                                )
+                            }
                         })
                     }
                 </div>
@@ -68,6 +96,7 @@ const Navbar: React.FC<NavbarProps> = ({
                             router.push('/login')
                         }
                     }}
+                    isSubmitting={isLoading}
                     type='primary'
                     className='hidden lg:flex font-semibold text-lg w-40 h-12'
                 >
@@ -87,16 +116,23 @@ const Navbar: React.FC<NavbarProps> = ({
                         <div className='flex flex-col gap-4 text-lg font-medium'>
                             {
                                 MENU_DATA.map((item, index) => {
-                                    return (
-                                        <Link
-                                            key={index}
-                                            href={item.link}
-                                            className={`cursor-pointer hover:text-theme`}
-                                            onClick={() => { setMobileMenu(false) }}
-                                        >
-                                            {item.text}
-                                        </Link>
-                                    )
+                                    if (!item.protected || isAuthenticated) {
+                                        return (
+                                            <Link
+                                                key={index}
+                                                href={item.link}
+                                                className={`cursor-pointer hover:text-theme`}
+                                                onClick={() => { setMobileMenu(false) }}
+                                            >
+                                                {item.text}
+                                            </Link>
+                                        )
+                                    } else {
+                                        return (
+                                            <>
+                                            </>
+                                        )
+                                    }
                                 })
                             }
                         </div>
@@ -110,6 +146,7 @@ const Navbar: React.FC<NavbarProps> = ({
                                 }
                                 setMobileMenu(false)
                             }}
+                            isSubmitting={isLoading}
                             type='primary'
                             className='font-semibold text-lg mb-4 py-2 w-full'
                         >

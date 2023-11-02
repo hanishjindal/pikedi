@@ -65,23 +65,33 @@ export const MENU_DATA = [
     {
         text: "Home",
         label: "home",
+        protected: false,
         link: "/"
+    },
+    {
+        text: 'Profile',
+        label: 'profile',
+        protected: true,
+        link: '/profile'
     },
     {
         text: "About",
         label: "about",
+        protected: false,
         // link: '/about'
         link: "/#about"
     },
     {
         text: "Faq",
         label: "products",
+        protected: false,
         link: '/#faq'
         // link: "/"
     },
     {
         text: "Contact Us",
         label: "Contact Us",
+        protected: false,
         // link: "/pricing"
         link: "/#contact"
     }

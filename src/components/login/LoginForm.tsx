@@ -12,7 +12,7 @@ interface SignupFormProps {
 
 type fieldType = 'fullName' | 'mobile' | 'email' | 'password'
 
-const SignUpForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
+const LoginForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
     const router = useRouter()
     const dispatch = useDispatch();
     const [formData, setFormData] = useState({
@@ -102,4 +102,4 @@ const SignUpForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
     )
 }
 
-export default SignUpForm
+export default LoginForm;

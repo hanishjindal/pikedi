@@ -24,13 +24,17 @@ const userSchema = new mongoose.Schema({
         default: false,
     },
     isAdmin: {
-        type: 'Boolean',
+        type: Boolean,
         default: false,
     },
     role: {
         type: String,
         enum: ['editor', 'studio'],
         required: [true, "Please specify the role"],
+    },
+    active: {
+        type: Boolean,
+        default: true,
     },
     forgotPasswordToken: String,
     forgotPasswordTokenExpiry: Date,
