@@ -1,5 +1,6 @@
 import React from 'react'
 import { BRAND } from '../config'
+import Image from 'next/image';
 
 const HomeMain = () => {
     return (
@@ -14,7 +15,14 @@ const HomeMain = () => {
                 {BRAND.flow.map((flow, index) => {
                     return (
                         <div key={index} className='shadow-lg w-full flex flex-col gap-2 border p-6 rounded-lg'>
-                            <img className='bg-gradient-to-l from-lighest-theme to-theme rounded-lg w-[400px] md:w-full h-48 md:h-28 xl:h-48 object-contain object-center shadow-md' src={flow.link} alt="" />
+                            <Image
+                                src={flow.link}
+                                alt=""
+                                width={400}
+                                height={48}
+                                priority
+                                className='bg-gradient-to-l from-lighest-theme to-theme rounded-lg w-[400px] md:w-full h-48 md:h-28 xl:h-48 object-contain object-center shadow-md'
+                            />
 
                             <h4 className='text-lg md:text-sm xl:text-xl font-medium'>{flow.flow}</h4>
 

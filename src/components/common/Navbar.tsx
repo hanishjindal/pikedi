@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { Fragment, useEffect, useState } from 'react'
 import { MENU_DATA } from '../config'
 import { useRouter } from 'next/navigation'
@@ -64,7 +65,13 @@ const Navbar: React.FC<NavbarProps> = ({
         >
             <div className='w-full h-full py-2 px-10 flex items-center justify-between relative'>
                 <Link href='/' className='text-2xl font-bold'>
-                    <img className='h-10' src="/images/logo.svg" alt="" />
+                    <Image
+                        src="/images/logo.svg"
+                        alt=""
+                        width={30}
+                        height={40}
+                        priority
+                    />
                 </Link>
                 <div className='hidden lg:inline-flex gap-8 text-lg font-medium h-full items-center'>
                     {
