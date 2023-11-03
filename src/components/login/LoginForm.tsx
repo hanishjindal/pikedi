@@ -71,7 +71,7 @@ const LoginForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
             const res = await axios.post("/api/users/login", user)
             dispatch(signIn(res.data.data))
             toast.success('Success')
-            router.push('/profile')
+            router.push('/')
         } catch (error: any) {
             toast.error(error?.response?.data?.error ?? 'Somthing went wrong')
         } finally {
@@ -91,7 +91,7 @@ const LoginForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
         <FormBox
             back={back}
             WhoIsLogin={WhoIsLogin}
-            heading='Signin'
+            heading='Sign In'
             handleResetFocus={() => handleResetFocus()}
             handleInput={handleInput}
             handleFieldClick={handleFieldClick}

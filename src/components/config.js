@@ -69,12 +69,6 @@ export const MENU_DATA = [
         link: "/"
     },
     {
-        text: 'Profile',
-        label: 'profile',
-        protected: true,
-        link: '/profile'
-    },
-    {
         text: "About",
         label: "about",
         protected: false,

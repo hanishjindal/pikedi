@@ -11,6 +11,8 @@ import axios from 'axios'
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { signIn, signOut } from '@/redux/slice/authSlice';
+import Divider from './Divider'
+import { BiSolidUserCircle } from 'react-icons/bi'
 
 interface NavbarProps {
     mobileMenu: boolean;
@@ -26,7 +28,9 @@ const Navbar: React.FC<NavbarProps> = ({
     const router = useRouter()
     const dispatch = useDispatch()
     const isAuthenticated = useSelector(selectIsAuthenticated);
-    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [profilePic, setProfilePic] = useState('')
+    const [userIcon, setUserIcon] = useState<boolean>(false)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -36,6 +40,7 @@ const Navbar: React.FC<NavbarProps> = ({
                 if (setUserData) {
                     setUserData(res.data.data)
                 }
+                setProfilePic(res.data.data.profilePic)
                 if (res.data.active) {
                     dispatch(signIn(res.data.data))
                 }
@@ -67,8 +72,10 @@ const Navbar: React.FC<NavbarProps> = ({
         <nav
             className='sticky top-0 select-none w-full h-16 bg-white shadow-lg z-[9]'
             onClick={e => e.stopPropagation()}
+            onMouseLeave={() => setUserIcon(false)}
+            onTouchEnd={() => setUserIcon(false)}
         >
-            <div className='w-full h-full py-2 px-10 flex items-center justify-between relative'>
+            <div className='w-full h-full py-2 px-8 lg:px-10 flex items-center justify-between relative'>
                 <Link href='/' className='text-2xl font-bold'>
                     <Image
                         src="/images/logo.svg"
@@ -104,28 +111,86 @@ const Navbar: React.FC<NavbarProps> = ({
                     }
                 </div>
 
-                <Button
-                    type='button'
-                    handleClick={() => {
-                        if (isAuthenticated) {
-                            logout()
-                        } else {
-                            router.push('/login')
+                {isAuthenticated ?
+                    <div className='hidden h-12 w-auto relative lg:flex flex-col items-center justify-center'>
+                        {profilePic ?
+                            <Image
+                                src={profilePic}
+                                alt=''
+                                width={100}
+                                height={100}
+                                className='h-12 w-auto rounded-full border-2 cursor-pointer'
+                                onClick={() => setUserIcon(e => !e)}
+                            />
+                            :
+                            <BiSolidUserCircle
+                                size={48}
+                                className="border rounded-full text-gray-600 cursor-pointer"
+                                onClick={() => setUserIcon(e => !e)}
+                            />
                         }
-                    }}
-                    isSubmitting={isLoading}
-                    buttonType='primary'
-                    className='hidden lg:flex font-semibold text-lg w-40 h-12'
-                >
-                    Sign {isAuthenticated ? 'Out' : 'In'}
-                </Button>
+                        {userIcon &&
+                            <div
+                                className='absolute top-full right-0 rounded-lg bg-white shadow-lg z-[9999] w-40 flex flex-col gap-1 py-2 border'
+                                onMouseLeave={() => setUserIcon(false)}
+                                onClick={() => setUserIcon(false)}
+
+                            >
+                                <div
+                                    className='cursor-pointer font-medium mx-4'
+                                    onClick={() => router.push('/profile')}
+                                >
+                                    Profile
+                                </div>
+                                <Divider type='tac' />
+                                <div
+                                    className='cursor-pointer font-medium mx-4'
+                                    onClick={logout}
+                                >
+                                    Sign Out
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    :
+                    <Button
+                        type='button'
+                        handleClick={() => {
+                            router.push('/login')
+                        }}
+                        isSubmitting={isLoading}
+                        buttonType='primary'
+                        className='hidden lg:flex font-semibold text-lg w-40 h-12'
+                    >
+                        Sign In
+                    </Button>
+                }
 
                 {/* For Mobile */}
-                <TfiMenu
-                    className='lg:hidden cursor-pointer'
-                    onClick={() => { setMobileMenu(!mobileMenu) }}
-                    size={25}
-                />
+                {isAuthenticated ?
+                    (profilePic ?
+                        <Image
+                            src={profilePic}
+                            alt=''
+                            width={100}
+                            height={100}
+                            className='h-12 w-auto rounded-full border-2 cursor-pointer lg:hidden'
+                            onClick={() => { setMobileMenu(!mobileMenu) }}
+                        />
+                        :
+                        <BiSolidUserCircle
+                            size={48}
+                            className="border rounded-full text-gray-600 cursor-pointer lg:hidden"
+                            onClick={() => { setMobileMenu(!mobileMenu) }}
+                        />
+                    )
+                    :
+                    <TfiMenu
+                        className='lg:hidden cursor-pointer'
+                        onClick={() => { setMobileMenu(!mobileMenu) }}
+                        size={25}
+                    />
+                }
 
                 {
                     mobileMenu &&
@@ -151,6 +216,16 @@ const Navbar: React.FC<NavbarProps> = ({
                                         )
                                     }
                                 })
+                            }
+                            {isAuthenticated &&
+                                <Link
+                                    key={'profle'}
+                                    href={'/profile'}
+                                    className={`cursor-pointer hover:text-theme`}
+                                    onClick={() => { setMobileMenu(false) }}
+                                >
+                                    Profile
+                                </Link>
                             }
                         </div>
 
