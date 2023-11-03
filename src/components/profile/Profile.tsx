@@ -9,6 +9,7 @@ import toast from 'react-hot-toast'
 import axios from 'axios'
 import { useDispatch } from 'react-redux';
 import { signIn } from '@/redux/slice/authSlice';
+import { CldUploadButton } from 'next-cloudinary'
 
 type fieldType = 'fullName' | 'mobile' | 'email' | 'password'
 type passFieldType = 'old' | 'new' | 'confirm'
@@ -169,6 +170,27 @@ const Profile: React.FC<profileProps> = ({
         }
     }
 
+    const handleUpload = async (result: any) => {
+        try {
+            setIsSubmitting(true)
+            const payload = {
+                email: formData.email.value,
+                profilePic: result?.info?.url,
+                role: userData?.role
+            }
+            const res = await axios.post("/api/users/update", payload)
+            if (setUserData) {
+                setUserData(res.data.data)
+            }
+            dispatch(signIn(res.data.data))
+            toast.success('Uploaded successfully')
+        } catch (error: any) {
+            toast.error(error?.response?.data?.error ?? 'Somthing went wrong')
+        } finally {
+            setIsSubmitting(false)
+        }
+    }
+
     const handleResetFocus = () => {
         setFormData({
             ...formData,
@@ -193,7 +215,7 @@ const Profile: React.FC<profileProps> = ({
                     <div className='col-span-12 lg:col-span-3 w-full h-auto lg:h-[80vh]'>
                         <div className='flex flex-col gap-5 py-8 lg:py-10 justify-center items-center'>
                             {userData?.profilePic ?
-                                <div className='border-2 rounded-xl flex justify-center items-center shadow w-[180px] h-[180px] p-4'>
+                                <div className='border rounded-xl flex justify-center items-center w-[180px] h-[180px] p-4'>
                                     <Image
                                         src={userData?.profilePic}
                                         alt=''
@@ -205,20 +227,25 @@ const Profile: React.FC<profileProps> = ({
                                 :
                                 <BiSolidUserRectangle
                                     size={180}
-                                    className="border-2 rounded-xl shadow text-gray-600"
+                                    className="border rounded-xl text-gray-600"
                                 />
                             }
-                            <div
-                                className='w-40 h-12 relative gap-3 flex justify-center items-center rounded-lg text-black bg-white border-2 disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer overflow-hidden'
-                            >
-                                <span className='cursor-pointer'>Upload</span>
-                                <BsUpload size={15} />
-                                <input
+                            <CldUploadButton
+                                options={{ maxFiles: 1 }}
+                                onUpload={handleUpload}
+                                uploadPreset="pikedi">
+                                <div
+                                    className='w-40 h-12 relative gap-3 flex justify-center items-center rounded-lg text-black bg-white border-2 disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer overflow-hidden'
+                                >
+                                    <span className='cursor-pointer'>Upload</span>
+                                    <BsUpload size={15} />
+                                    {/* <input
                                     className='absolute top-[50%] left-1/2 w-[500%] h-[200%] opacity-0 bg-transparent text-transparent cursor-pointer'
                                     type="file"
                                     accept='image/*'
-                                />
-                            </div>
+                                /> */}
+                                </div>
+                            </CldUploadButton>
                         </div>
                     </div>
 

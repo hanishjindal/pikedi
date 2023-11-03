@@ -9,7 +9,7 @@ connect();
 export async function POST(request: NextRequest) {
     try {
         const reqBody = await request.json();
-        const { email, password, fullName, mobile, role } = reqBody;
+        const { email, password, fullName, mobile, role, profilePic } = reqBody;
 
         // Check if the user exists
         const user = await User.findOne({ email, role }).select("-updatedAt -createdAt");
@@ -43,6 +43,7 @@ export async function POST(request: NextRequest) {
         // Update other user details (fullName, mobile, etc.)
         if (fullName) user.fullName = fullName;
         if (mobile) user.mobile = mobile;
+        if (profilePic) user.profilePic = profilePic;
 
         // Save the updated user
         await user.save();
