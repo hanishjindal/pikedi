@@ -14,8 +14,11 @@ const Footer = () => {
                             <Image
                                 src="/images/logo.svg"
                                 alt=""
-                                width={30}
-                                height={40}
+                                width="0"
+                                height="0"
+                                sizes="30px"
+                                style={{ width: '30px', height: 'auto' }}
+                                priority
                             />
                             <h3 className="text-2xl font-bold">{BRAND.name}</h3>
                         </div>

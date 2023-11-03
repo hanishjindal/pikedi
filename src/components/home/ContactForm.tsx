@@ -97,7 +97,8 @@ const ContactForm = () => {
                         </textarea>
                     </div>
                     <Button
-                        type='primary'
+                        type='submit'
+                        buttonType='primary'
                         className='font-semibold w-40 h-12 text-lg px-6 py-2 flex gap-5'
                         handleClick={() => { }}
                     >

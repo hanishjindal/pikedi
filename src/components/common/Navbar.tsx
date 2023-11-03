@@ -73,8 +73,10 @@ const Navbar: React.FC<NavbarProps> = ({
                     <Image
                         src="/images/logo.svg"
                         alt=""
-                        width={30}
-                        height={40}
+                        width="0"
+                        height="0"
+                        sizes="30px"
+                        style={{ width: '30px', height: 'auto' }}
                         priority
                     />
                 </Link>
@@ -103,6 +105,7 @@ const Navbar: React.FC<NavbarProps> = ({
                 </div>
 
                 <Button
+                    type='button'
                     handleClick={() => {
                         if (isAuthenticated) {
                             logout()
@@ -111,7 +114,7 @@ const Navbar: React.FC<NavbarProps> = ({
                         }
                     }}
                     isSubmitting={isLoading}
-                    type='primary'
+                    buttonType='primary'
                     className='hidden lg:flex font-semibold text-lg w-40 h-12'
                 >
                     Sign {isAuthenticated ? 'Out' : 'In'}
@@ -152,6 +155,7 @@ const Navbar: React.FC<NavbarProps> = ({
                         </div>
 
                         <Button
+                            type='button'
                             handleClick={() => {
                                 if (isAuthenticated) {
                                     logout()
@@ -161,8 +165,8 @@ const Navbar: React.FC<NavbarProps> = ({
                                 setMobileMenu(false)
                             }}
                             isSubmitting={isLoading}
-                            type='primary'
-                            className='font-semibold text-lg mb-4 py-2 w-full'
+                            buttonType='primary'
+                            className='font-semibold text-lg mb-4 py-2 w-full h-12'
                         >
                             Sign {isAuthenticated ? 'Out' : 'In'}
                         </Button>

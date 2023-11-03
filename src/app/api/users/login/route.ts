@@ -17,6 +17,9 @@ export async function POST(request: NextRequest) {
         if (!user) {
             return NextResponse.json({ error: "User does not exist" }, { status: 400 })
         }
+        if (!user.isActive) {
+            return NextResponse.json({ error: "User is inactive" }, { status: 400 })
+        }
 
 
         //check if password is correct

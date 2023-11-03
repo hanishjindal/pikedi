@@ -23,7 +23,8 @@ const LoginType: React.FC<LoginTypeProps> = ({ who, content, loginButton, signup
                 {content}
             </span>
             <Button
-                type='primary'
+                type='button'
+                buttonType='primary'
                 className='font-semibold bg-theme text-xl rounded-lg cursor-pointer w-40 h-12 text-white whitespace-nowrap'
                 handleClick={loginButton}
             >

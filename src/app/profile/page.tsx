@@ -16,6 +16,7 @@ const Page = () => {
             />
             <Profile
                 userData={userData}
+                setUserData={setUserData}
             />
             <Footer />
         </div>

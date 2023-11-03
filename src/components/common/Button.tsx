@@ -3,19 +3,28 @@ import { SyncLoader } from 'react-spinners';
 
 interface ButtonProps {
     children: React.ReactNode;
-    type: 'primary' | 'secondary';
+    buttonType: 'primary' | 'secondary';
     className: string;
     handleClick: () => void;
     isSubmitting?: boolean;
+    type: 'button' | 'submit' | 'reset';
 }
-const Button: React.FC<ButtonProps> = ({ children, type, className, handleClick, isSubmitting }) => {
+const Button: React.FC<ButtonProps> = ({
+    children,
+    type,
+    buttonType,
+    className,
+    handleClick,
+    isSubmitting
+}) => {
     return (
         <button
-            className={`${className} flex justify-center items-center rounded-lg ${type === 'primary' ? 'text-white bg-theme' : 'text-black bg-white border-2'} disabled:cursor-not-allowed disabled:opacity-60`}
+            className={`${className} flex justify-center items-center rounded-lg ${buttonType === 'primary' ? 'text-white bg-theme' : 'text-black bg-white border-2'} disabled:cursor-not-allowed disabled:opacity-60`}
             onClick={handleClick}
             disabled={isSubmitting}
+            type={type}
         >
-            {isSubmitting ?
+            {(type !== 'reset' && isSubmitting) ?
                 <SyncLoader size={4} color='#fff' />
                 :
                 children
