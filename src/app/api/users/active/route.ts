@@ -32,7 +32,16 @@ export async function GET(request: NextRequest) {
             active: true
         })
     } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 400 });
+        const response = NextResponse.json({
+            data: error.message,
+            active: false
+        }, { status: (error.name == 'TokenExpiredError') ? 401 : 400 })
+
+        if (error.name == 'TokenExpiredError') {
+            response.cookies.set('token', "", { expires: new Date(0) });
+        }
+
+        return response;
     }
 
 }

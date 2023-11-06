@@ -6,7 +6,7 @@ import Link from 'next/link'
 import Button from './Button'
 import { TfiMenu } from 'react-icons/tfi'
 import { useSelector } from 'react-redux';
-import { selectIsAuthenticated } from '@/redux/slice/authSlice'
+import { selectIsAuthenticated, selectUser } from '@/redux/slice/authSlice'
 import axios from 'axios'
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
@@ -29,8 +29,8 @@ const Navbar: React.FC<NavbarProps> = ({
     const dispatch = useDispatch()
     const isAuthenticated = useSelector(selectIsAuthenticated);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [profilePic, setProfilePic] = useState('')
-    const [userIcon, setUserIcon] = useState<boolean>(false)
+    const profilePic = useSelector(selectUser)?.profilePic;
+    const [userIcon, setUserIcon] = useState<boolean>(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -40,7 +40,6 @@ const Navbar: React.FC<NavbarProps> = ({
                 if (setUserData) {
                     setUserData(res.data.data)
                 }
-                setProfilePic(res.data.data.profilePic)
                 if (res.data.active) {
                     dispatch(signIn(res.data.data))
                 }
@@ -119,7 +118,8 @@ const Navbar: React.FC<NavbarProps> = ({
                                 alt=''
                                 width={100}
                                 height={100}
-                                className='h-12 w-auto rounded-full border-2 cursor-pointer'
+                                priority
+                                className='h-12 w-12 rounded-full border-2 cursor-pointer'
                                 onClick={() => setUserIcon(e => !e)}
                             />
                             :
@@ -174,7 +174,8 @@ const Navbar: React.FC<NavbarProps> = ({
                             alt=''
                             width={100}
                             height={100}
-                            className='h-12 w-auto rounded-full border-2 cursor-pointer lg:hidden'
+                            priority
+                            className='h-12 w-12 object-cover rounded-full border-2 cursor-pointer lg:hidden'
                             onClick={() => { setMobileMenu(!mobileMenu) }}
                         />
                         :

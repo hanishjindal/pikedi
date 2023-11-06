@@ -221,7 +221,8 @@ const Profile: React.FC<profileProps> = ({
                                         alt=''
                                         width={200}
                                         height={200}
-                                        className='h-full w-auto rounded-lg'
+                                        priority
+                                        className='h-full w-auto rounded-lg object-cover'
                                     />
                                 </div>
                                 :
@@ -231,7 +232,7 @@ const Profile: React.FC<profileProps> = ({
                                 />
                             }
                             <CldUploadButton
-                                options={{ maxFiles: 1, folder: 'pikediProfilePic', sources: ['local', 'google_drive', 'camera'], showPoweredBy: false }}
+                                options={{ maxFiles: 1, folder: 'pikediProfilePic', sources: ['local', 'google_drive', 'camera'], showPoweredBy: false, cropping: true, croppingAspectRatio: 1, showSkipCropButton: false }}
                                 onUpload={handleUpload}
                                 uploadPreset="pikedi"
                             >
