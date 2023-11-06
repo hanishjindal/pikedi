@@ -8,7 +8,7 @@
   box-sizing: border-box;
   outline: none;
   scrollbar-width: thin;
-  transition: 500ms;
+  transition: 100ms;
   scroll-behavior: smooth;
 }
 
@@ -59,4 +59,8 @@ button:hover {
 .scrollHide {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.link:hover .hidden-tooltip {
+  display: block;
 }

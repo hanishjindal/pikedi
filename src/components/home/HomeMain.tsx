@@ -32,6 +32,7 @@ const HomeMain = () => {
                 })
                 }
             </div>
+            <span id='faq' className='absolute bottom-20'></span>
         </div>
     )
 }

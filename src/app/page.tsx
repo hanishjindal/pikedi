@@ -15,7 +15,7 @@ export default function Home() {
       <Navbar mobileMenu={mobileMenu} setMobileMenu={setMobileMenu} />
       <HomeTopSection />
       <HomeMain />
-      <Carosel />
+      {/* <Carosel /> */}
       <AccordianSection />
       <ContactForm />
       <Footer />

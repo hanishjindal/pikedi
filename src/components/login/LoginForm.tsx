@@ -71,7 +71,11 @@ const LoginForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
             const res = await axios.post("/api/users/login", user)
             dispatch(signIn(res.data.data))
             toast.success('Success')
-            router.push('/')
+            if (WhoIsLogin === 'Studio') {
+                router.push('/studio')
+            } else {
+                router.push('/editor')
+            }
         } catch (error: any) {
             toast.error(error?.response?.data?.error ?? 'Somthing went wrong')
         } finally {

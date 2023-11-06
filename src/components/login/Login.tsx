@@ -31,14 +31,14 @@ const Login = () => {
                     />
 
                     {/* Divider */}
-                    <Divider type='tic' />
+                    {/* <Divider type='tic' />
 
                     <LoginType
                         who={LOGIN_DATA.editorText}
                         content={LOGIN_DATA.editorContent}
                         loginButton={async () => handleLoginRoute('signin', 'editor')}
                         signupButton={async () => handleLoginRoute('signup', 'editor')}
-                    />
+                    /> */}
                 </div>
             }
 

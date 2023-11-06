@@ -218,3 +218,26 @@ export const FOOTER_CONFIG = {
     ]
 
 };
+
+import { FcHome, FcOldTimeCamera, FcOpenedFolder } from 'react-icons/fc';
+import { FaUserFriends } from 'react-icons/fa'
+
+export const SIDE_NAV_CONFIG = {
+    menuItems: [
+        {
+            label: 'Studio',
+            icon: FcOldTimeCamera, // Import the Studio icon
+            route: '/studio',
+        },
+        {
+            label: 'Project',
+            icon: FcOpenedFolder, // Import the Projects icon
+            route: '/studio',
+        },
+        // {
+        //     label: 'Users',
+        //     icon: FaUserFriends, // Import the Users icon
+        //     route: '/studio',
+        // },
+    ],
+};

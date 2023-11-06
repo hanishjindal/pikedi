@@ -136,13 +136,24 @@ const Navbar: React.FC<NavbarProps> = ({
                                 onClick={() => setUserIcon(false)}
 
                             >
-                                <div
+                                <Link
+                                    href={'/studio'}
                                     className='cursor-pointer font-medium mx-4'
-                                    onClick={() => router.push('/profile')}
+                                >
+                                    Studio
+                                </Link>
+
+                                <Divider type='tac' />
+
+                                <Link
+                                    href={'/profile'}
+                                    className='cursor-pointer font-medium mx-4'
                                 >
                                     Profile
-                                </div>
+                                </Link>
+
                                 <Divider type='tac' />
+
                                 <div
                                     className='cursor-pointer font-medium mx-4'
                                     onClick={logout}
