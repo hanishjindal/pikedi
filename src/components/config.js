@@ -227,12 +227,12 @@ export const SIDE_NAV_CONFIG = {
         {
             label: 'Studio',
             icon: FcOldTimeCamera, // Import the Studio icon
-            route: '/studio',
+            route: '/studio/#',
         },
         {
             label: 'Project',
             icon: FcOpenedFolder, // Import the Projects icon
-            route: '/studio',
+            route: '/studio/#',
         },
         // {
         //     label: 'Users',

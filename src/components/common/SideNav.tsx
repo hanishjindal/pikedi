@@ -1,7 +1,8 @@
 import React from 'react';
 import Divider from './Divider';
-import Link from 'next/link';
 import { SIDE_NAV_CONFIG } from '../config';
+import { useRouter } from 'next/navigation';
+
 
 type sideNavType = 'Studio' | 'Project' | 'Users'
 
@@ -19,14 +20,18 @@ const labelToTypeMap: { [label: string]: sideNavType } = {
 };
 
 const SideNav: React.FC<SideNavProps> = ({ sideNavMenu, setSideNavMenu, sideBarOpen, setSideBarOpen }) => {
+    const router = useRouter()
     return (
         <div className='p-4 pt-4 h-full flex flex-col gap-2 w-full'>
             {SIDE_NAV_CONFIG.menuItems.map((menuItem, index) => (
                 <React.Fragment key={index}>
-                    <Link
-                        href={menuItem.route}
-                        className={`link p-2 text-base text-gray-500 flex gap-2 items-center ${sideBarOpen === 'close' && 'justify-center'} ${sideNavMenu === menuItem.label && "bg-theme text-white rounded-lg"} relative`}
-                        onClick={() => setSideNavMenu(labelToTypeMap[menuItem.label])}
+                    <div
+                        className={`link p-2 text-base text-gray-500 flex gap-2 items-center ${sideBarOpen === 'close' && 'justify-center'} ${sideNavMenu === menuItem.label && "bg-theme text-white rounded-lg"} relative cursor-pointer`}
+                        onClick={() => {
+                            setSideNavMenu(labelToTypeMap[menuItem.label])
+                            router.push(menuItem.route)
+
+                        }}
                         onDoubleClick={() => setSideBarOpen(sideBarOpen === 'open' ? 'close' : 'open')}
                     >
                         {
@@ -40,7 +45,7 @@ const SideNav: React.FC<SideNavProps> = ({ sideNavMenu, setSideNavMenu, sideBarO
                                 {menuItem.label}
                             </div>
                         }
-                    </Link>
+                    </div>
                     {(index === 1) &&
                         <Divider type='tac' />
                     }
