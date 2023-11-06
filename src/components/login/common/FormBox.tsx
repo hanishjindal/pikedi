@@ -2,8 +2,7 @@ import Divider from '@/components/common/Divider';
 import Input from '@/components/common/Input';
 import React from 'react';
 import { BsArrowLeftCircleFill } from 'react-icons/bs';
-
-type fieldType = 'fullName' | 'mobile' | 'email' | 'password'
+import { fieldType } from '../../utils'
 
 interface FormBoxProps {
     back: () => void;

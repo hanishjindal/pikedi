@@ -3,12 +3,12 @@ import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import FormBox from './common/FormBox';
+import { fieldType } from '../utils'
+
 interface SignupFormProps {
     back: () => {}; // Use React.Dispatch to accept setState
     WhoIsLogin: 'Editor' | 'Studio';
 }
-
-type fieldType = 'fullName' | 'mobile' | 'email' | 'password'
 
 const SignUpForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
     const router = useRouter()

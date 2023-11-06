@@ -10,9 +10,7 @@ import axios from 'axios'
 import { useDispatch } from 'react-redux';
 import { signIn } from '@/redux/slice/authSlice';
 import { CldUploadButton } from 'next-cloudinary'
-
-type fieldType = 'fullName' | 'mobile' | 'email' | 'password'
-type passFieldType = 'old' | 'new' | 'confirm'
+import { fieldType, passFieldType } from '../utils'
 
 interface profileProps {
     userData: any;

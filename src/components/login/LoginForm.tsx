@@ -5,12 +5,11 @@ import axios from 'axios';
 import FormBox from './common/FormBox';
 import { useDispatch } from 'react-redux';
 import { signIn } from '@/redux/slice/authSlice';
+import { fieldType } from '../utils'
 interface SignupFormProps {
     back: () => {}; // Use React.Dispatch to accept setState
     WhoIsLogin: 'Editor' | 'Studio';
 }
-
-type fieldType = 'fullName' | 'mobile' | 'email' | 'password'
 
 const LoginForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
     const router = useRouter()
