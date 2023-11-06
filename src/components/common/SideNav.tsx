@@ -29,7 +29,7 @@ const SideNav: React.FC<SideNavProps> = ({ sideNavMenu, setSideNavMenu, sideBarO
                         className={`link p-2 text-base text-gray-500 flex gap-2 items-center ${sideBarOpen === 'close' && 'justify-center'} ${sideNavMenu === menuItem.label && "bg-theme text-white rounded-lg"} relative cursor-pointer`}
                         onClick={() => {
                             setSideNavMenu(labelToTypeMap[menuItem.label])
-                            router.push(menuItem.route)
+                            // router.push(menuItem.route)
 
                         }}
                         onDoubleClick={() => setSideBarOpen(sideBarOpen === 'open' ? 'close' : 'open')}
