@@ -34,10 +34,11 @@ export async function GET(request: NextRequest) {
     } catch (error: any) {
         const response = NextResponse.json({
             data: error.message,
-            active: false
-        }, { status: (error.name == 'TokenExpiredError') ? 401 : 400 })
+            active: false,
+            error: true
+        }, { status: (error.message === 'jwt expired') ? 401 : 400 })
 
-        if (error.name == 'TokenExpiredError') {
+        if (error.message === 'jwt expired') {
             response.cookies.set('token', "", { expires: new Date(0) });
         }
 

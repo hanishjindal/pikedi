@@ -43,8 +43,11 @@ const Navbar: React.FC<NavbarProps> = ({
                 if (res.data.active) {
                     dispatch(signIn(res.data.data))
                 }
-            } catch (error) {
-                console.error('Error fetching data:', error);
+            } catch (error: any) {
+                if (error?.response?.data?.error) {
+                    await logout();
+                }
+                toast.error(error?.response?.data.data ?? error.message);
             } finally {
                 setIsLoading(false)
             }
