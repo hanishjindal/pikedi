@@ -1,27 +1,37 @@
 import React from 'react';
 import Divider from './Divider';
-import { SIDE_NAV_CONFIG, sideNavType, openCloseTyee } from '../utils';
+import { SIDE_NAV_CONFIG } from '../utils';
 import { useRouter } from 'next/navigation';
 
 interface SideNavProps {
-    sideBarOpen: openCloseTyee;
-    setSideBarOpen: (val: openCloseTyee) => void;
+    sideBarOpen: string | null;
     pathname: string;
 }
 
-const SideNav: React.FC<SideNavProps> = ({ sideBarOpen, setSideBarOpen, pathname }) => {
+const SideNav: React.FC<SideNavProps> = ({ sideBarOpen, pathname }) => {
     const router = useRouter()
+
+    const handleSideNav = () => {
+        if (!sideBarOpen || sideBarOpen === 'close') {
+            router.push(`${pathname}/?nav=open`)
+        } else {
+            router.push(`${pathname}/?nav=close`)
+        }
+    }
+
     return (
         <div className='p-4 pt-4 h-full flex flex-col gap-2 w-full'>
             {SIDE_NAV_CONFIG.map((menuItem, index) => (
                 <React.Fragment key={index}>
                     <div
                         className={`link p-2 text-base text-gray-500 flex gap-2 items-center ${sideBarOpen === 'close' && 'justify-center'} ${pathname === menuItem.route && "bg-theme text-white rounded-lg"} relative cursor-pointer`}
-                        onClick={() => {
-                            router.push(menuItem.route)
-
+                        onClick={(event) => {
+                            if (event.detail === 2) {
+                                handleSideNav();
+                            } else {
+                                router.push(`${menuItem.route}/?nav=${sideBarOpen}`)
+                            }
                         }}
-                        onDoubleClick={() => setSideBarOpen(sideBarOpen === 'open' ? 'close' : 'open')}
                     >
                         {
                             React.createElement(menuItem.icon, { size: 16, color: '#000' })

@@ -1,12 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import SideNav from '../common/SideNav';
 import Divider from '../common/Divider';
-import { openCloseTyee } from '../utils'
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 const Studio = () => {
-    const [sideBarOpen, setSideBarOpen] = useState<openCloseTyee>('open')
+    const searchParam = useSearchParams()
     const pathname = usePathname()
+    const router = useRouter()
+    const sideBarOpen = searchParam.get('nav')
+
+    useEffect(() => {
+        if (!sideBarOpen) {
+            router.push(`${pathname}/?nav=open`)
+        }
+    }, [])
+
     return (
         <div className="w-full h-full">
             <div className="w-full h-full flex relative">
@@ -14,7 +22,6 @@ const Studio = () => {
                     <div className={`h-full relative flex flex-col ${sideBarOpen === 'close' && 'items-center'} ${sideBarOpen === 'open' ? 'w-[15%]' : 'w-[5%]'}`}>
                         <SideNav
                             sideBarOpen={sideBarOpen}
-                            setSideBarOpen={setSideBarOpen}
                             pathname={pathname}
                         />
                     </div>
