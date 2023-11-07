@@ -11,14 +11,6 @@ interface SideNavProps {
 const SideNav: React.FC<SideNavProps> = ({ sideBarOpen, pathname }) => {
     const router = useRouter()
 
-    const handleSideNav = (path: string) => {
-        if (!sideBarOpen || sideBarOpen === 'close') {
-            router.push(`${path}/?nav=open`)
-        } else {
-            router.push(`${path}/?nav=close`)
-        }
-    }
-
     return (
         <div className='p-4 pt-4 h-full flex flex-col gap-2 w-full'>
             {SIDE_NAV_CONFIG.map((menuItem, index) => (
@@ -27,7 +19,8 @@ const SideNav: React.FC<SideNavProps> = ({ sideBarOpen, pathname }) => {
                         className={`link p-2 text-base text-gray-500 flex gap-2 items-center ${sideBarOpen === 'close' && 'justify-center'} ${pathname === menuItem.route && "bg-theme text-white rounded-lg"} relative cursor-pointer`}
                         onClick={(event) => {
                             if (event.detail === 2) {
-                                handleSideNav(menuItem.route);
+                                const nav = (!sideBarOpen || sideBarOpen === 'close') ? 'open' : 'close'
+                                router.push(`${menuItem.route}/?nav=${nav}`)
                             } else {
                                 router.push(`${menuItem.route}/?nav=${sideBarOpen}`)
                             }
