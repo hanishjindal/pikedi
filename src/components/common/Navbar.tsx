@@ -234,7 +234,17 @@ const Navbar: React.FC<NavbarProps> = ({
                             }
                             {isAuthenticated &&
                                 <Link
-                                    key={'profle'}
+                                    key={'studio'}
+                                    href={'/profile'}
+                                    className={`cursor-pointer hover:text-theme`}
+                                    onClick={() => { setMobileMenu(false) }}
+                                >
+                                    Studio
+                                </Link>
+                            }
+                            {isAuthenticated &&
+                                <Link
+                                    key={'profile'}
                                     href={'/profile'}
                                     className={`cursor-pointer hover:text-theme`}
                                     onClick={() => { setMobileMenu(false) }}

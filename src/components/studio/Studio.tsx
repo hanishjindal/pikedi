@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import SideNav from '../common/SideNav';
-import Divider from '../common/Divider';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 const Studio = () => {
@@ -8,10 +7,11 @@ const Studio = () => {
     const pathname = usePathname()
     const router = useRouter()
     const sideBarOpen = searchParam.get('nav')
+    const isMobileOrTablet = window.innerWidth <= 768;
 
     useEffect(() => {
         if (!sideBarOpen) {
-            router.push(`${pathname}/?nav=open`)
+            router.push(`${pathname}/?nav=${isMobileOrTablet ? "close" : "open"}`)
         }
     }, [])
 
@@ -19,14 +19,12 @@ const Studio = () => {
         <div className="w-full h-full">
             <div className="w-full h-full flex relative">
                 <div className="bg-white rounded-lg w-full flex">
-                    <div className={`h-full relative flex flex-col ${sideBarOpen === 'close' && 'items-center'} ${sideBarOpen === 'open' ? 'w-[15%]' : 'w-[5%]'}`}>
+                    <div className={`h-full relative flex flex-col min-w-[60px] border-r-2 ${sideBarOpen === 'close' && 'items-center'} ${sideBarOpen === 'open' ? 'w-[15%]' : 'w-[60px] md:w-[80px]'}`}>
                         <SideNav
                             sideBarOpen={sideBarOpen}
                             pathname={pathname}
                         />
                     </div>
-
-                    <Divider type='tic' />
 
                     <div className={`col-span-8 overflow-auto ${sideBarOpen === 'open' ? 'w-[85%]' : 'w-[95%]'}]`}>
                         <div className='p-8'>
