@@ -13,6 +13,7 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({
                 data: {},
                 active: false,
+                state:1
             })
         }
         const userId = await getDataFromToken(request);
@@ -21,7 +22,8 @@ export async function POST(request: NextRequest) {
         if (!user || !user.isActive) {
             const response = NextResponse.json({
                 data: {},
-                active: false
+                active: false,
+                state:2
             })
             response.cookies.set('token', "", { expires: new Date(0) });
             return response;
@@ -29,7 +31,8 @@ export async function POST(request: NextRequest) {
 
         return NextResponse.json({
             data: user,
-            active: true
+            active: true,
+            state:3
         })
     } catch (error: any) {
         const response = NextResponse.json({
