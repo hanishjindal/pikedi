@@ -36,7 +36,7 @@ const Navbar: React.FC<NavbarProps> = ({
         const fetchData = async () => {
             try {
                 setIsLoading(true)
-                const res = await axios.get('/api/users/active');
+                const res = await axios.post('/api/users/active', {});
                 if (setUserData) {
                     setUserData(res.data.data)
                 }
@@ -59,7 +59,7 @@ const Navbar: React.FC<NavbarProps> = ({
     const logout = async () => {
         try {
             setIsLoading(true)
-            await axios.get('/api/users/logout')
+            await axios.post('/api/users/logout', {})
             dispatch(signOut())
             toast.success('Logout successful')
             router.push('/login')
