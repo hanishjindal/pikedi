@@ -11,7 +11,7 @@ const Studio = () => {
     let isMobileOrTablet: boolean = false;
 
     useEffect(() => {
-        isMobileOrTablet = window.innerWidth <= 768;
+        isMobileOrTablet = document.documentElement.clientWidth <= 768;
         if (!sideBarOpen) {
             router.push(`${pathname}/?nav=${isMobileOrTablet ? "close" : "open"}`)
         } else if (sideBarOpen === 'open' && isMobileOrTablet) {
