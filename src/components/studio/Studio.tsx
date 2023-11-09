@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect } from 'react';
 import SideNav from '../common/SideNav';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -7,11 +8,14 @@ const Studio = () => {
     const pathname = usePathname()
     const router = useRouter()
     const sideBarOpen = searchParam.get('nav')
-    const isMobileOrTablet = window.innerWidth <= 768;
+    let isMobileOrTablet: boolean = false;
 
     useEffect(() => {
+        isMobileOrTablet = window.innerWidth <= 768;
         if (!sideBarOpen) {
             router.push(`${pathname}/?nav=${isMobileOrTablet ? "close" : "open"}`)
+        } else if (sideBarOpen === 'open' && isMobileOrTablet) {
+            router.push(`${pathname}/?nav=close`)
         }
     }, [])
 
@@ -23,6 +27,7 @@ const Studio = () => {
                         <SideNav
                             sideBarOpen={sideBarOpen}
                             pathname={pathname}
+                            isMobileOrTablet={isMobileOrTablet}
                         />
                     </div>
 

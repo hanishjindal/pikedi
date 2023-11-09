@@ -1,4 +1,8 @@
 import { FcHome, FcOldTimeCamera, FcOpenedFolder } from 'react-icons/fc';
+import { signOut } from '@/redux/slice/authSlice';
+import axios from 'axios'
+import toast from 'react-hot-toast';
+import { Dispatch } from 'redux';
 import { FaUserFriends } from 'react-icons/fa'
 import { IconType } from 'react-icons';
 
@@ -35,3 +39,17 @@ export const SIDE_NAV_CONFIG: MenuItem[] = [
     //   route: '/studio',
     // },
 ];
+
+export const logout = async (setIsLoading: (value: boolean) => void, dispatch: Dispatch, router: any) => {
+    try {
+        setIsLoading(true)
+        await axios.post('/api/users/logout', {})
+        dispatch(signOut())
+        toast.success('Logout successful')
+        router.push('/login')
+    } catch (error: any) {
+        toast.error(error.message)
+    } finally {
+        setIsLoading(false)
+    }
+}

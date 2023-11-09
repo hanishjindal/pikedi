@@ -10,9 +10,10 @@ import { selectIsAuthenticated, selectUser } from '@/redux/slice/authSlice'
 import axios from 'axios'
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
-import { signIn, signOut } from '@/redux/slice/authSlice';
+import { signIn } from '@/redux/slice/authSlice';
 import Divider from './Divider'
 import { BiSolidUserCircle } from 'react-icons/bi'
+import { logout } from '../utils'
 
 interface NavbarProps {
     mobileMenu: boolean;
@@ -45,7 +46,7 @@ const Navbar: React.FC<NavbarProps> = ({
                 }
             } catch (error: any) {
                 if (error?.response?.data?.error) {
-                    await logout();
+                    await logout(setIsLoading, dispatch, router);
                 }
                 toast.error(error?.response?.data.data ?? error.message);
             } finally {
@@ -55,20 +56,6 @@ const Navbar: React.FC<NavbarProps> = ({
 
         fetchData();
     }, []);
-
-    const logout = async () => {
-        try {
-            setIsLoading(true)
-            await axios.post('/api/users/logout', {})
-            dispatch(signOut())
-            toast.success('Logout successful')
-            router.push('/login')
-        } catch (error: any) {
-            toast.error(error.message)
-        } finally {
-            setIsLoading(false)
-        }
-    }
 
     return (
         <nav
@@ -140,7 +127,7 @@ const Navbar: React.FC<NavbarProps> = ({
 
                             >
                                 <Link
-                                    href={'/studio'}
+                                    href={'/studio?nav=open'}
                                     className='cursor-pointer font-medium mx-4'
                                 >
                                     Studio
@@ -159,7 +146,7 @@ const Navbar: React.FC<NavbarProps> = ({
 
                                 <div
                                     className='cursor-pointer font-medium mx-4'
-                                    onClick={logout}
+                                    onClick={() => logout(setIsLoading, dispatch, router)}
                                 >
                                     Sign Out
                                 </div>
@@ -235,7 +222,7 @@ const Navbar: React.FC<NavbarProps> = ({
                             {isAuthenticated &&
                                 <Link
                                     key={'studio'}
-                                    href={'/profile'}
+                                    href={'/studio?nav=close'}
                                     className={`cursor-pointer hover:text-theme`}
                                     onClick={() => { setMobileMenu(false) }}
                                 >
@@ -258,7 +245,7 @@ const Navbar: React.FC<NavbarProps> = ({
                             type='button'
                             handleClick={() => {
                                 if (isAuthenticated) {
-                                    logout()
+                                    logout(setIsLoading, dispatch, router)
                                 } else {
                                     router.push('/login')
                                 }

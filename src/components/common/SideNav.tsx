@@ -6,11 +6,11 @@ import { useRouter } from 'next/navigation';
 interface SideNavProps {
     sideBarOpen: string | null;
     pathname: string;
+    isMobileOrTablet: boolean;
 }
 
-const SideNav: React.FC<SideNavProps> = ({ sideBarOpen, pathname }) => {
+const SideNav: React.FC<SideNavProps> = ({ sideBarOpen, pathname, isMobileOrTablet }) => {
     const router = useRouter()
-    const isMobileOrTablet = window.innerWidth <= 768;
 
     return (
         <div className='p-2 md:p-4 pt-4 h-full flex flex-col gap-2 w-full'>
