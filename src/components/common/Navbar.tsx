@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useState } from 'react'
 import { MENU_DATA } from '../config'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -7,10 +7,7 @@ import Button from './Button'
 import { TfiMenu } from 'react-icons/tfi'
 import { useSelector } from 'react-redux';
 import { selectIsAuthenticated, selectUser } from '@/redux/slice/authSlice'
-import axios from 'axios'
-import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
-import { signIn } from '@/redux/slice/authSlice';
 import Divider from './Divider'
 import { BiSolidUserCircle } from 'react-icons/bi'
 import { logout } from '../utils'
@@ -18,13 +15,11 @@ import { logout } from '../utils'
 interface NavbarProps {
     mobileMenu: boolean;
     setMobileMenu: (value: boolean) => void;
-    setUserData?: (value: any) => void;
 }
 
 const Navbar: React.FC<NavbarProps> = ({
     mobileMenu,
-    setMobileMenu,
-    setUserData
+    setMobileMenu
 }) => {
     const router = useRouter()
     const dispatch = useDispatch()
@@ -32,31 +27,6 @@ const Navbar: React.FC<NavbarProps> = ({
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const profilePic = useSelector(selectUser)?.profilePic;
     const [userIcon, setUserIcon] = useState<boolean>(false);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setIsLoading(true)
-                const res = await axios.post('/api/users/active', {});
-                if (setUserData) {
-                    setUserData(res.data.data)
-                }
-                if (res.data.active) {
-                    dispatch(signIn(res.data.data))
-                }
-            } catch (error: any) {
-                if (error?.response?.data?.error) {
-                    await logout(setIsLoading, dispatch, router);
-                }
-                toast.error(error?.response?.data.data ?? error.message);
-            } finally {
-                setIsLoading(false)
-            }
-        };
-
-        fetchData();
-    }, []);
-
     return (
         <nav
             className='sticky top-0 select-none w-full h-16 bg-white shadow-lg z-[9]'
@@ -136,7 +106,7 @@ const Navbar: React.FC<NavbarProps> = ({
                                 <Divider type='tac' />
 
                                 <Link
-                                    href={'/profile'}
+                                    href={'/studio/profile'}
                                     className='cursor-pointer font-medium mx-4'
                                 >
                                     Profile
@@ -232,7 +202,7 @@ const Navbar: React.FC<NavbarProps> = ({
                             {isAuthenticated &&
                                 <Link
                                     key={'profile'}
-                                    href={'/profile'}
+                                    href={'/studio/profile'}
                                     className={`cursor-pointer hover:text-theme`}
                                     onClick={() => { setMobileMenu(false) }}
                                 >
