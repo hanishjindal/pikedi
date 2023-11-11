@@ -9,7 +9,7 @@ const Page = () => {
     return (
         <div className='h-screen flex flex-col overflow-y-auto select-none' onClick={() => { setMobileMenu(false) }}>
             <Navbar mobileMenu={mobileMenu} setMobileMenu={setMobileMenu} />
-            <Studio />
+            <Studio page='Studio' />
             {/* <Footer /> */}
         </div>
     )
