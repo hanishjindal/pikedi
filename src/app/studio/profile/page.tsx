@@ -10,7 +10,7 @@ const Page = () => {
         <div className='flex flex-col select-none relative' onClick={() => { setMobileMenu(false) }}>
             <Navbar mobileMenu={mobileMenu} setMobileMenu={setMobileMenu} />
             <Studio page='Profile' />
-            {/* <Footer /> */}
+            <Footer />
         </div>
     )
 }

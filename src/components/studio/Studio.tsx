@@ -39,8 +39,7 @@ const Studio: React.FC<studioProps> = ({ page }) => {
     }
 
     return (
-        // <div className="w-full h-auto">
-        <div className="w-full h-auto flex relative">
+        <div className="w-full min-h-[90vh] h-auto flex relative">
             <div className="bg-white rounded-lg w-full flex">
                 <div className={`h-full relative flex flex-col min-w-[60px] ${sideBarOpen === 'close' && 'items-center'} ${sideBarOpen === 'open' ? 'w-[15%]' : 'w-[60px] md:w-[80px]'}`}>
                     <SideNav
@@ -50,14 +49,13 @@ const Studio: React.FC<studioProps> = ({ page }) => {
                     />
                 </div>
 
-                <div className={`col-span-8 w-full h-auto overflow-y-scroll ${sideBarOpen === 'open' ? 'w-[85%]' : 'w-[95%]'}] py-8`}>
+                <div className={`w-full h-auto overflow-y-scroll ${sideBarOpen === 'open' ? 'w-[85%]' : 'w-[95%]'}] py-8`}>
                     {
                         renderStudio()
                     }
                 </div>
             </div>
         </div>
-        // </div>
     );
 };
 
