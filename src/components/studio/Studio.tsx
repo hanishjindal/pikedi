@@ -4,6 +4,8 @@ import SideNav from '../common/SideNav';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { sideNavType } from '@/components/utils'
 import Profile from '../profile/Profile';
+import NewUpload from './NewUpload';
+import Project from './Project';
 
 interface studioProps {
     page: sideNavType;
@@ -18,19 +20,20 @@ const Studio: React.FC<studioProps> = ({ page }) => {
 
     useEffect(() => {
         isMobileOrTablet = document.documentElement.clientWidth <= 768;
-        console.log(searchParam.get('nav'))
         if (!sideBarOpen) {
             router.push(`${pathname}/?nav=${isMobileOrTablet ? "close" : "open"}`)
         } else if (sideBarOpen === 'open' && isMobileOrTablet) {
             router.push(`${pathname}/?nav=close`)
-        } else {
-
         }
     }, [sideBarOpen])
 
     const renderStudio = () => {
         if (page === 'Profile') {
             return <Profile />
+        } else if (page === 'Studio') {
+            return <NewUpload />
+        } else if (page === 'Project') {
+            return <Project />
         } else {
             return <div className='mx-8'>
                 {pathname}
