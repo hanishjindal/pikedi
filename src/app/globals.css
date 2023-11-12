@@ -82,5 +82,5 @@ button:hover {
 
 .link:hover .hidden-tooltip {
   display: block;
-  z-index: 99;
+  z-index: 999;
 }

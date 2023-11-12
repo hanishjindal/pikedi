@@ -1,8 +1,47 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 
 const Project = () => {
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [images, setImages] = useState<[]>([])
+    useEffect(() => {
+        const handleLoadImages = async () => {
+            try {
+                setIsLoading(true)
+                const res = await axios.post("/api/studio/get-images", {})
+                if (!res.data.success) {
+                    toast.error(res.data.message ?? 'Somthing went wrong')
+                }
+                setImages(res.data.data)
+            } catch (error: any) {
+                toast.error(error?.response?.data?.error ?? 'Somthing went wrong')
+            } finally {
+                setIsLoading(false)
+            }
+        }
+        handleLoadImages();
+    }, [])
     return (
-        <div>Project</div>
+        <div className='w-full h-full px-4 md:px-8 flex flex-col gap-8'>
+            {isLoading ?
+                <div>Loading...</div>
+                :
+                <div className='grid grid-cols-12 gap-5'>
+                    {images.length ?
+                        images.map((item: { url: string }, idx: React.Key) => {
+                            return (
+                                <div key={idx} className='col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3 border-2 rounded-lg flex justify-center items-center overflow-hidden h-40 md:h-48'>
+                                    <img src={item?.url} className='max-h-full h-auto' />
+                                </div>
+                            )
+                        })
+                        :
+                        <div className='col-span-12'>Upload some images...</div>
+                    }
+                </div>
+            }
+        </div>
     )
 }
 

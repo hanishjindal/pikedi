@@ -218,3 +218,37 @@ export const FOOTER_CONFIG = {
     ]
 
 };
+
+export const EDIT_REASONS = [
+    { label: "Background Removal", value: 1 },
+    { label: "Color Correction", value: 2 },
+    { label: "Photo Retouching", value: 3 },
+    { label: "Adding/Removing Objects", value: 4 },
+    { label: "Image Manipulation", value: 5 },
+    { label: "Graphic Design", value: 6 },
+    { label: "Clipping Path", value: 7 },
+    { label: "Shadow Effects", value: 8 },
+    { label: "HDR Enhancement", value: 9 },
+    { label: "Product Enhancement", value: 10 },
+    { label: "Beauty/Fashion Retouch", value: 11 },
+    { label: "Montage Creation", value: 12 },
+    { label: "Digital Art Creation", value: 13 },
+    { label: "Vectorization", value: 14 },
+    { label: "Meme Creation", value: 15 },
+    { label: "Collage Making", value: 16 },
+    { label: "Logo Design", value: 17 },
+    { label: "Banner Design", value: 18 },
+    { label: "Social Media Graphics", value: 19 },
+    { label: "Packaging Design", value: 20 },
+    { label: "Poster/Flyer Design", value: 21 },
+    { label: "Web Template Design", value: 22 },
+    { label: "GIF Creation", value: 23 },
+    { label: "Typography Design", value: 24 },
+    { label: "Pattern/Texture Design", value: 25 },
+    { label: "Photo Manipulation", value: 26 },
+    { label: "Wedding Photo Editing", value: 27 },
+    { label: "Real Estate Photo Editing", value: 28 },
+    { label: "E-commerce Image Editing", value: 29 },
+    { label: "Artistic Filters/Effects", value: 30 },
+    // Add or modify reasons to better suit your services
+];

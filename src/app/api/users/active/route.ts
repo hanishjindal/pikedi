@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
                 state:1
             })
         }
-        const userId = await getDataFromToken(request);
+        const userId = (await getDataFromToken(request)).id;
         const user = await User.findOne({ _id: userId }).select("-password -updatedAt -createdAt");
 
         if (!user || !user.isActive) {
