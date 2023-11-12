@@ -16,7 +16,7 @@ const SideNav: React.FC<SideNavProps> = ({ sideBarOpen, pathname, isMobileOrTabl
     const [IsLoading, setIsLoading] = useState<boolean>(false)
 
     return (
-        <div className={`p-2 md:p-4 pt-4 h-full bg-white ${sideBarOpen === 'open' ? 'w-[13%]' : 'w-[60px] md:w-[80px]'} flex flex-col gap-2 fixed border-r-2 `}>
+        <div className={`p-2 md:p-4 pt-4 h-full bg-white flex flex-col gap-2 sticky border-r-2 `}>
             {SIDE_NAV_CONFIG.map((menuItem, index) => (
                 <React.Fragment key={index}>
                     <div

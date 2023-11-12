@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 const Footer = () => {
     return (
-        <footer className="bg-black text-white lg:pt-20 pt-10 lg:py-10 px-6 md:px-16 lg:px-28">
+        <footer className="bg-black text-white lg:pt-20 pt-10 lg:py-10 px-6 md:px-16 lg:px-28 z-[999]">
             <div className='flex flex-col-reverse gap-10 xl:grid grid-cols-12'>
                 <div className='col-span-2 flex flex-col gap-5'>
                     <div className='flex flex-col gap-4'>
@@ -39,7 +39,7 @@ const Footer = () => {
                             <ul className='flex flex-col gap-2 whitespace-nowrap'>
                                 {section.links.map((link, linkIndex) => (
                                     <li key={linkIndex}>
-                                        <Link href={link.url} className='hover:text-theme text-gray-300'>
+                                        <Link href={link.url} className='hover:text-theme text-gray-300 text-sm md:text-base'>
                                             {link.text}
                                         </Link>
                                     </li>
