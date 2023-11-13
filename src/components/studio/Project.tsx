@@ -26,7 +26,8 @@ const Project = () => {
         handleLoadImages();
     }, [])
     return (
-        <div className='w-full h-full flex flex-col gap-8'>
+        <div className='w-full h-full px-4 md:px-8 flex flex-col gap-8'>
+            <div>nav</div>
             {isLoading ?
                 <div>Loading...</div>
                 :
@@ -34,7 +35,7 @@ const Project = () => {
                     {images.length ?
                         images.map((item: { url: string, name: string }, idx: number) => {
                             return (
-                                <div key={idx} className='col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3 border-2 border-gray-700 rounded-lg flex flex-col overflow-hidden'>
+                                <div key={idx} className='col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3 border-2 border-gray-700 rounded-lg flex flex-col overflow-hidden bg-slate-200'>
                                     <div className='flex justify-center items-center overflow-hidden h-40 md:h-48'>
                                         <Image
                                             width={500}
