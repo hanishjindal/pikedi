@@ -62,18 +62,18 @@ const NewUpload = () => {
             <h1 className='text-xl md:text-4xl font-semibold'>Upload New Images</h1>
 
             {uploadedImage ?
-                <div className='flex flex-col lg:flex-row gap-8'>
-                    <div className='w-full lg:w-1/2 h-[250px] lg:h-[400px] border-2 flex justify-center items-center rounded-lg overflow-hidden'>
+                <div className='flex flex-col lg:grid grid-cols-12 gap-8'>
+                    <div className='w-full lg:col-span-6 h-[250px] lg:h-[400px] border-2 flex justify-center items-center rounded-lg overflow-hidden'>
                         <Image
                             src={uploadedImage}
                             alt=""
-                            width={1600}
+                            width={1000}
                             height={1000}
                             priority
-                            className='object-cover object-center shadow-md max-w-full w-auto max-h-full h-auto'
+                            className='object-contain object-center shadow-md max-w-full w-full max-h-full h-auto'
                         />
                     </div>
-                    <div className='w-full lg:w-1/2 flex flex-col gap-5'>
+                    <div className='w-full lg:col-span-6 flex flex-col gap-5  lg:h-[400px]'>
                         <div>
                             <span className='text-sm'>Reasons:-</span>
                             <Select
@@ -86,7 +86,7 @@ const NewUpload = () => {
                             <span className='text-sm'>Image Name:-</span>
                             <input
                                 type="text"
-                                className='w-full text-black border-2 p-[6px] rounded-sm text-base px-2'
+                                className='w-full text-black border-[1.5px] p-[6px] rounded-md text-base px-2'
                                 placeholder='Enter image name'
                                 value={imageName}
                                 onChange={(e) => { setImageName(e.target.value) }}
@@ -95,8 +95,11 @@ const NewUpload = () => {
                         <div>
                             <span className='text-sm'>Enter editing summary:-</span>
                             <textarea
-                                rows={4}
-                                className='w-full text-black border-2 p-[6px] rounded-sm text-base px-2'
+                                rows={8}
+                                placeholder='Enter detailed editing requirements'
+                                className='w-full text-black border-[1.5px] p-[6px] pb-2 rounded-md text-base px-2'
+                                value={summary}
+                                onChange={(e) => setSummary(e.target.value)}
                             />
                         </div>
                     </div>
