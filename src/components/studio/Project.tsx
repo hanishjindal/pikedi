@@ -26,7 +26,7 @@ const Project = () => {
         handleLoadImages();
     }, [])
     return (
-        <div className='w-full h-full px-4 md:px-8 flex flex-col gap-8'>
+        <div className='w-full h-full flex flex-col gap-8'>
             <div>nav</div>
             {isLoading ?
                 <div>Loading...</div>
