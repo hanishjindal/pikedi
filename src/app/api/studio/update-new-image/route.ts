@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
     try {
         const reqBody = await request.json()
         const { userId, email } = (await getDataFromToken(request));
-        const { url, reasons } = reqBody;
+        const { url, reasons, name, summary } = reqBody;
 
         // if user exist
         const user = await User.findOne({ email, userId })
@@ -26,7 +26,9 @@ export async function POST(request: NextRequest) {
             email,
             url,
             reasons,
-            imageId: randomUUID()
+            imageId: randomUUID(),
+            name,
+            summary
         })
 
         const savedImage = await newImage.save()
