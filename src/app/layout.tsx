@@ -5,6 +5,8 @@ import ToasterContext from './context/ToasterContext'
 import { Providers } from '@/redux/provider'
 import { BRAND } from '@/components/config'
 import AuthContext from './context/AuthContext'
+import Navbar from '@/components/common/Navbar'
+import Footer from '@/components/common/Footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,7 +26,9 @@ export default function RootLayout({
         <Providers>
           <ToasterContext />
           <AuthContext>
+            <Navbar />
             {children}
+            <Footer />
           </AuthContext>
         </Providers>
       </body>

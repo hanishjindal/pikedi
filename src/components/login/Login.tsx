@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from 'react'
 import LoginType from './common/LoginType'
 import Divider from '../common/Divider'
@@ -20,7 +21,7 @@ const Login = () => {
         )
     }
     return (
-        <div className='w-full h-auto lg:h-[80vh]'>
+        <div className='w-full h-[90vh]'>
             {!((page === 'signin' || page === 'signup') && (type === 'editor' || type === 'studio')) &&
                 <div className="flex flex-col lg:flex-row gap-10 w-full min-h-full h-auto lg:h-full justify-around items-center py-10 px-6 sm:px-8 lg:px-10 overflow-hidden">
                     <LoginType

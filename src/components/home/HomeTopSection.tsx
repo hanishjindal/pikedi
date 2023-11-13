@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import Button from '../common/Button'
 import Link from 'next/link'

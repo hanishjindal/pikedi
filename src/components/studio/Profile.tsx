@@ -1,3 +1,4 @@
+'use client'
 import React, { useEffect, useState } from 'react'
 import Divider from '../common/Divider'
 import { BiSolidUserRectangle } from 'react-icons/bi'
@@ -255,7 +256,7 @@ const Profile = () => {
 
                 <form
                     onSubmit={handleSubmit}
-                    className='lg:col-span-7 lg:px-0 px-5 col-span-12 w-full h-auto py-10 flex flex-col justify-between gap-5'
+                    className='lg:col-span-7 px-0 col-span-12 w-full h-auto py-10 flex flex-col justify-between gap-5'
                 >
                     <div className='flex flex-col gap-5'>
                         <h1 className='font-bold text-3xl'>

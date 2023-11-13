@@ -1,16 +1,9 @@
-"use client"
-import React, { useState } from 'react'
 import Login from '@/components/login/Login'
-import Footer from '@/components/common/Footer'
-import Navbar from '@/components/common/Navbar'
 
 const Page = () => {
-    const [mobileMenu, setMobileMenu] = useState<boolean>(false)
     return (
-        <div className='min-h-screen flex flex-col justify-between overflow-y-auto select-none bg-gradient-to-b from-lighest-theme to-white relative' onClick={() => { setMobileMenu(false) }}>
-            <Navbar mobileMenu={mobileMenu} setMobileMenu={setMobileMenu} />
+        <div className='min-h-[90vh] flex flex-col justify-between overflow-y-auto select-none bg-gradient-to-b from-lighest-theme to-white relative'>
             <Login />
-            <Footer />
         </div>
     )
 }

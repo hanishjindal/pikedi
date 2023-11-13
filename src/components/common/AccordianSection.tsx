@@ -1,3 +1,4 @@
+'use client'
 import React, { useState, useEffect, RefObject } from 'react';
 import { FAQ } from '../config';
 import { BiChevronDown } from 'react-icons/bi';

@@ -1,3 +1,4 @@
+'use client'
 import React, { useRef, useState } from 'react';
 import Input from '../common/Input'
 import Divider from '../common/Divider';

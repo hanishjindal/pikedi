@@ -1,23 +1,18 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import SideNav from '../common/SideNav';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { sideNavType } from '@/components/utils'
-import Profile from './Profile';
-import NewUpload from './NewUpload';
-import Project from './Project';
+'use client'
+import SideNav from '@/components/common/SideNav'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import React, { useEffect } from 'react'
 
-interface studioProps {
-    page: sideNavType;
-}
-
-const Studio: React.FC<studioProps> = ({ page }) => {
+export default function StudioLayout({
+    children,
+}: {
+    children: React.ReactNode
+}) {
     const searchParam = useSearchParams()
     const pathname = usePathname()
     const router = useRouter()
     const sideBarOpen = searchParam.get('nav')
     let isMobileOrTablet: boolean = false;
-
     useEffect(() => {
         isMobileOrTablet = document.documentElement.clientWidth <= 768;
         if (!sideBarOpen) {
@@ -26,21 +21,6 @@ const Studio: React.FC<studioProps> = ({ page }) => {
             router.push(`${pathname}/?nav=close`)
         }
     }, [sideBarOpen])
-
-    const renderStudio = () => {
-        if (page === 'Profile') {
-            return <Profile />
-        } else if (page === 'Studio') {
-            return <NewUpload />
-        } else if (page === 'Project') {
-            return <Project />
-        } else {
-            return <div className='mx-8'>
-                {pathname}
-            </div>
-        }
-    }
-
     return (
         <div className="w-full min-h-[90vh] h-auto flex relative">
             <div className="bg-white rounded-lg w-full flex">
@@ -52,14 +32,12 @@ const Studio: React.FC<studioProps> = ({ page }) => {
                     />
                 </div>
 
-                <div className={`w-full h-auto overflow-y-scroll ${sideBarOpen === 'open' ? 'w-[85%]' : 'w-[95%]'}] py-8`}>
+                <div className={`w-full h-full ${sideBarOpen === 'open' ? 'w-[85%]' : 'w-[95%]'}] py-8 px-4 md:px-8`}>
                     {
-                        renderStudio()
+                        children
                     }
                 </div>
             </div>
         </div>
-    );
-};
-
-export default Studio;
+    )
+}

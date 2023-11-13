@@ -1,3 +1,4 @@
+'use client'
 import axios from 'axios'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
@@ -25,7 +26,7 @@ const Project = () => {
         handleLoadImages();
     }, [])
     return (
-        <div className='w-full h-full px-4 md:px-8 flex flex-col gap-8'>
+        <div className='w-full h-full flex flex-col gap-8'>
             {isLoading ?
                 <div>Loading...</div>
                 :

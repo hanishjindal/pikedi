@@ -1,3 +1,4 @@
+'use client'
 import Image from 'next/image'
 import { Fragment, useState } from 'react'
 import { MENU_DATA } from '../config'
@@ -12,29 +13,29 @@ import Divider from './Divider'
 import { BiSolidUserCircle } from 'react-icons/bi'
 import { logout } from '../utils'
 
-interface NavbarProps {
-    mobileMenu: boolean;
-    setMobileMenu: (value: boolean) => void;
-}
 
-const Navbar: React.FC<NavbarProps> = ({
-    mobileMenu,
-    setMobileMenu
-}) => {
+const Navbar = () => {
     const router = useRouter()
     const dispatch = useDispatch()
     const isAuthenticated = useSelector(selectIsAuthenticated);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const profilePic = useSelector(selectUser)?.profilePic;
     const [userIcon, setUserIcon] = useState<boolean>(false);
+    const [mobileMenu, setMobileMenu] = useState<boolean>(false)
     return (
         <nav
             className='sticky top-0 select-none w-full h-16 bg-white shadow-lg z-[9]'
             onClick={e => e.stopPropagation()}
-            onMouseLeave={() => setUserIcon(false)}
+            onMouseLeave={() => {
+                setUserIcon(false)
+                setMobileMenu(false)
+            }}
             onTouchEnd={() => setUserIcon(false)}
         >
-            <div className='w-full h-full py-2 px-8 lg:px-10 flex items-center justify-between relative'>
+            <div
+                className='w-full h-full py-2 px-8 lg:px-10 flex items-center justify-between relative'
+                onClick={e => e.stopPropagation()}
+            >
                 <Link href='/' className='text-2xl font-bold'>
                     <Image
                         src="/images/logo.svg"

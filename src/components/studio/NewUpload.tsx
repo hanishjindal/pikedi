@@ -1,3 +1,4 @@
+'use client'
 import axios from 'axios'
 import { CldUploadButton } from 'next-cloudinary'
 import React, { useState } from 'react'
@@ -57,7 +58,7 @@ const NewUpload = () => {
     };
 
     return (
-        <div className='w-full h-full px-4 md:px-8 flex flex-col gap-8'>
+        <div className='w-full h-full flex flex-col gap-8'>
 
             <h1 className='text-xl md:text-4xl font-semibold'>Upload New Images</h1>
 
