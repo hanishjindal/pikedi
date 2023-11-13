@@ -132,12 +132,12 @@ const NewUpload = () => {
             }
 
 
-            <div className={`${!uploadedImage && 'hidden'} flex w-auto gap-5`}>
+            <div className={`${!uploadedImage && 'hidden'} flex w-full gap-5`}>
                 <Button
                     type='submit'
                     buttonType='primary'
                     isSubmitting={isSubmitting}
-                    className='font-semibold w-40 h-12 text-lg px-6 py-2 flex gap-5'
+                    className='font-semibold w-1/2 lg:w-40 h-12 text-lg px-6 py-2 flex gap-5'
                     handleClick={handleUpload}
                 >
                     Submit
@@ -147,7 +147,7 @@ const NewUpload = () => {
                     type='reset'
                     buttonType='secondary'
                     isSubmitting={isSubmitting}
-                    className='font-semibold w-40 h-12 text-lg px-6 py-2 flex gap-5'
+                    className='font-semibold w-1/2 lg:w-40 h-12 text-lg px-6 py-2 flex gap-5'
                     handleClick={handleReset}
                 >
                     Reset
