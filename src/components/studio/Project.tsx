@@ -4,9 +4,10 @@ import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { BiDotsVerticalRounded } from 'react-icons/bi'
+import { SyncLoader } from 'react-spinners'
 
 const Project = () => {
-    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [isLoading, setIsLoading] = useState<boolean>(true)
     const [images, setImages] = useState<[]>([])
     useEffect(() => {
         const handleLoadImages = async () => {
@@ -29,7 +30,7 @@ const Project = () => {
         <div className='w-full h-full flex flex-col gap-8'>
             <div>nav</div>
             {isLoading ?
-                <div>Loading...</div>
+                <div className="flex gap-4 items-center">Loading <SyncLoader size={4} /></div>
                 :
                 <div className='grid grid-cols-12 gap-5'>
                     {images.length ?
