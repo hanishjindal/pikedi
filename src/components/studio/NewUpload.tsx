@@ -12,6 +12,8 @@ const NewUpload = () => {
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
     const [uploadedImage, setUploadedImage] = useState<string>('')
     const [selectReason, setSelectReason] = useState<MultiValue<typeof EDIT_REASONS[0]>>([])
+    const [imageName, setImageName] = useState<string>('')
+    const [summary, setSummary] = useState<string>('')
 
     const handleUpload = async () => {
         if (selectReason.length === 0) {
@@ -22,20 +24,28 @@ const NewUpload = () => {
             setIsSubmitting(true)
             const payload = {
                 url: uploadedImage,
-                reasons: selectReason.map((item) => { return item.label })
+                reasons: selectReason.map((item) => { return item.label }),
+                name: imageName,
+                summary
             }
             const res = await axios.post("/api/studio/update-new-image", payload)
             if (!res.data.success) {
                 throw new Error(res.data.message)
             }
-            setSelectReason([])
-            setUploadedImage('')
+            handleReset()
             toast.success('Uploaded successfully')
         } catch (error: any) {
             toast.error(error?.response?.data?.error ?? 'Somthing went wrong')
         } finally {
             setIsSubmitting(false)
         }
+    }
+
+    const handleReset = () => {
+        setSelectReason([])
+        setUploadedImage('')
+        setImageName('')
+        setSummary('')
     }
 
     const handleUrl = (result: any) => {
@@ -57,19 +67,38 @@ const NewUpload = () => {
                         <Image
                             src={uploadedImage}
                             alt=""
-                            width={1000}
-                            height={800}
+                            width={1600}
+                            height={1000}
                             priority
-                            className='object-contain object-center shadow-md max-w-full w-auto max-h-full h-auto'
+                            className='object-cover object-center shadow-md max-w-full w-auto max-h-full h-auto'
                         />
                     </div>
-                    <div className='w-full lg:w-1/2'>
-                        <span className='text-sm'>Reasons:-</span>
-                        <Select
-                            isMulti
-                            onChange={handleChange}
-                            options={EDIT_REASONS}
-                        />
+                    <div className='w-full lg:w-1/2 flex flex-col gap-5'>
+                        <div>
+                            <span className='text-sm'>Reasons:-</span>
+                            <Select
+                                isMulti
+                                onChange={handleChange}
+                                options={EDIT_REASONS}
+                            />
+                        </div>
+                        <div>
+                            <span className='text-sm'>Image Name:-</span>
+                            <input
+                                type="text"
+                                className='w-full text-black border-2 p-[6px] rounded-sm text-base px-2'
+                                placeholder='Enter image name'
+                                value={imageName}
+                                onChange={(e) => { setImageName(e.target.value) }}
+                            />
+                        </div>
+                        <div>
+                            <span className='text-sm'>Enter editing summary:-</span>
+                            <textarea
+                                rows={4}
+                                className='w-full text-black border-2 p-[6px] rounded-sm text-base px-2'
+                            />
+                        </div>
                     </div>
                 </div>
                 :
@@ -115,10 +144,7 @@ const NewUpload = () => {
                     buttonType='secondary'
                     isSubmitting={isSubmitting}
                     className='font-semibold w-40 h-12 text-lg px-6 py-2 flex gap-5'
-                    handleClick={() => {
-                        setUploadedImage('');
-                        setSelectReason([]);
-                    }}
+                    handleClick={handleReset}
                 >
                     Reset
                 </Button>

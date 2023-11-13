@@ -10,6 +10,14 @@ const imageSchema = new mongoose.Schema({
         unique: true,
         required: [true, "Please provide a imageId"],
     },
+    name: {
+        type: String,
+        required: [true, 'Please provide a image name']
+    },
+    summary: {
+        type: String,
+        required: [true, 'Please provide summary']
+    },
     email: {
         type: String,
         required: [true, "Please provide an email"],
