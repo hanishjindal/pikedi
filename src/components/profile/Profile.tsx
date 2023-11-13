@@ -217,7 +217,7 @@ const Profile = () => {
                                     width={200}
                                     height={200}
                                     priority
-                                    className='h-full w-auto rounded-lg object-cover'
+                                    className='h-full max-w-full w-auto rounded-lg object-cover'
                                 />
                             </div>
                             :

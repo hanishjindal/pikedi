@@ -63,7 +63,7 @@ const NewUpload = () => {
 
             {uploadedImage ?
                 <div className='flex flex-col lg:grid grid-cols-12 gap-8'>
-                    <div className='w-full lg:col-span-6 h-[250px] lg:h-[400px] border-2 flex justify-center items-center rounded-lg overflow-hidden'>
+                    <div className='w-full lg:col-span-6 h-[250px] lg:h-[400px] border-2 flex justify-center items-center rounded-lg overflow-hidden bg-slate-200'>
                         <Image
                             src={uploadedImage}
                             alt=""
