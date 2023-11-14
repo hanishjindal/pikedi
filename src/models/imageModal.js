@@ -12,11 +12,12 @@ const imageSchema = new mongoose.Schema({
     },
     name: {
         type: String,
-        required: [true, 'Please provide a image name']
+        required: [true, 'Please provide a image name'],
+        default: 'Untitled'
     },
     summary: {
         type: String,
-        required: [true, 'Please provide summary']
+        required: [false, 'Please provide summary']
     },
     email: {
         type: String,

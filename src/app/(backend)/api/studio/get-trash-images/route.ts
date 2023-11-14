@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
         const reqBody = await request.json()
         const { userId, email } = (await getDataFromToken(request));
 
-        let images = await ImageModel.find({ email, userId, isActive: true }).select('-_id -__v');
+        let images = await ImageModel.find({ email, userId, isActive: false }).select('-_id -__v');
 
         const resp: {
             message: string;

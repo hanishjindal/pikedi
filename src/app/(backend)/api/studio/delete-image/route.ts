@@ -7,38 +7,34 @@ connect()
 
 export async function POST(request: NextRequest) {
     try {
+
         const reqBody = await request.json()
         const { userId, email } = (await getDataFromToken(request));
+        const { imageId } = reqBody;
 
-        let images = await ImageModel.find({ email, userId, isActive: true }).select('-_id -__v');
-
-        const resp: {
-            message: string;
-            success: boolean;
-            data: any[];
-        } = {
-            message: "Something went wrong",
+        let images = await ImageModel.findOne({ email, userId, imageId });
+        const resp = {
+            message: "",
             success: false,
-            data: []
-        };
-
-        if (!images || !Array.isArray(images)) {
-            return NextResponse.json(resp)
-        }
-        if (!images.length) {
-            resp.message = 'Image not available';
-            return NextResponse.json(resp)
+            data: {
+                imageId
+            }
         }
 
-        resp.message = 'Data Loaded';
-        resp.success = true;
-        resp.data = images;
+        if (!images) {
+            resp.message = 'Image not found'
+            return NextResponse.json(resp)
+        }
+        if (!images.isActive) {
+            resp.message = 'Image already in trash'
+            return NextResponse.json(resp)
+        }
 
-        const response = NextResponse.json({
-            message: "Data Loaded",
-            success: true,
-            data: images
-        });
+        images.isActive = false
+        await images.save()
+        resp.message = 'Image moved to trash'
+        resp.success = true
+        const response = NextResponse.json(resp)
         return response;
 
     } catch (error: any) {
