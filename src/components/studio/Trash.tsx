@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { BiDotsVerticalRounded } from 'react-icons/bi'
 import { SyncLoader } from 'react-spinners'
-import Divider from '../common/Divider'
 
 const Trash = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
@@ -88,7 +87,7 @@ const Trash = () => {
                                                 onClick={() => setThreeDotMenu(-1)}
                                             >
                                                 <span
-                                                    className='cursor-pointer px-2'
+                                                    className='cursor-pointer mx-1 px-1 rounded-md hover:bg-lighest-theme'
                                                     onClick={() => handleRestoreImage(idx)}
                                                 >Restore</span>
                                             </div>
@@ -102,7 +101,6 @@ const Trash = () => {
                     }
                 </div>
             }
-
         </div>
     )
 }
