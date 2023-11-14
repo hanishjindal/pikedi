@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { BiDotsVerticalRounded } from 'react-icons/bi'
 import { SyncLoader } from 'react-spinners'
+import SearchBar from '../common/SearchBar'
 
 const Trash = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
@@ -48,7 +49,7 @@ const Trash = () => {
 
     return (
         <div className='w-full h-full flex flex-col gap-8'>
-            <div>nav</div>
+            <div><SearchBar /></div>
             {isLoading ?
                 <div className="flex gap-4 items-center">Loading <SyncLoader size={4} /></div>
                 :

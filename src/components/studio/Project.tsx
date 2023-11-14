@@ -8,6 +8,7 @@ import { SyncLoader } from 'react-spinners'
 import Divider from '../common/Divider'
 import Modal from '../common/Modal'
 import Button from '../common/Button'
+import SearchBar from '../common/SearchBar'
 
 const Project = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
@@ -52,7 +53,7 @@ const Project = () => {
 
     return (
         <div className='w-full h-full flex flex-col gap-8'>
-            <div>nav</div>
+            <div><SearchBar /></div>
             {isLoading ?
                 <div className="flex gap-4 items-center">Loading <SyncLoader size={4} /></div>
                 :
