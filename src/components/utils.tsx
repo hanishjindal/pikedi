@@ -1,4 +1,4 @@
-import { FcHome, FcOldTimeCamera, FcOpenedFolder, FcPortraitMode } from 'react-icons/fc';
+import { FcHome, FcOldTimeCamera, FcOpenedFolder, FcPortraitMode, FcFullTrash } from 'react-icons/fc';
 import { FaUserFriends } from 'react-icons/fa'
 import { BiLogOut } from 'react-icons/bi';
 import { signOut, signIn } from '@/redux/slice/authSlice';
@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 import { Dispatch } from 'redux';
 import { IconType } from 'react-icons';
 
-export type sideNavType = 'Main' | 'Studio' | 'Project' | 'Users' | 'Profile' | 'Sign Out';
+export type sideNavType = 'Main' | 'Studio' | 'Project' | 'Users' | 'Profile' | 'Trash' | 'Sign Out';
 export type openCloseTyee = 'open' | 'close';
 export type fieldType = 'fullName' | 'mobile' | 'email' | 'password'
 export type passFieldType = 'old' | 'new' | 'confirm'
@@ -48,6 +48,11 @@ export const SIDE_NAV_CONFIG: MenuItem[] = [
         label: 'Project',
         icon: FcOpenedFolder,
         route: '/studio/project',
+    },
+    {
+        label: 'Trash',
+        icon: FcFullTrash,
+        route: '/studio/trash',
     },
     {
         label: 'Profile',
