@@ -6,10 +6,13 @@ import toast from 'react-hot-toast'
 import { BiDotsVerticalRounded } from 'react-icons/bi'
 import { SyncLoader } from 'react-spinners'
 import Divider from '../common/Divider'
+import Modal from '../common/Modal'
+import Button from '../common/Button'
 
 const Project = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [images, setImages] = useState<any[]>([])
+    const [deleteModal, setDeleteModal] = useState<number>(-1)
     const [threeDotMenu, setThreeDotMenu] = useState<number>(-1)
 
     useEffect(() => {
@@ -87,11 +90,11 @@ const Project = () => {
                                                 className='py-2 shadow-lg absolute top-[80%] right-4 rounded-md bg-white flex flex-col gap-1 text-black font-medium w-32 z-[99]'
                                                 onClick={() => setThreeDotMenu(-1)}
                                             >
-                                                <span className='cursor-pointer px-2'>Rename</span>
+                                                <span className='cursor-pointer mx-1 px-1 rounded-md hover:bg-lighest-theme'>Rename</span>
                                                 <Divider type='tac' />
                                                 <span
-                                                    className='cursor-pointer px-2'
-                                                    onClick={() => handleDeleteImage(idx)}
+                                                    className='cursor-pointer mx-1 px-1 rounded-md hover:bg-lighest-theme'
+                                                    onClick={() => setDeleteModal(idx)}
                                                 >Delete</span>
                                             </div>
                                         }
@@ -104,7 +107,36 @@ const Project = () => {
                     }
                 </div>
             }
-
+            {deleteModal > -1 &&
+                <Modal>
+                    <div className='w-full flex flex-col items-center gap-6'>
+                        <span className='text-xl px-6 font-medium'>Do you want to delete</span>
+                        <div className='w-full flex gap-2'>
+                            <Button
+                                type='button'
+                                handleClick={() => {
+                                    handleDeleteImage(deleteModal)
+                                    setDeleteModal(-1)
+                                }}
+                                isSubmitting={false}
+                                buttonType='primary'
+                                className='lg:flex font-semibold text-lg w-full h-10'
+                            >
+                                Delete
+                            </Button>
+                            <Button
+                                type='button'
+                                handleClick={() => { setDeleteModal(-1) }}
+                                isSubmitting={false}
+                                buttonType='secondary'
+                                className='lg:flex font-semibold text-lg w-full h-10'
+                            >
+                                Cancel
+                            </Button>
+                        </div>
+                    </div>
+                </Modal>
+            }
         </div>
     )
 }
