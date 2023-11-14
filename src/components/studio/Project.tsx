@@ -68,9 +68,9 @@ const Project = () => {
             toast.dismiss()
             toast.success('Image moved to trash')
         } catch (error: any) {
+            toast.dismiss()
             toast.error(error?.response?.data?.error ?? 'Somthing went wrong')
         } finally {
-            toast.dismiss()
             setIsSubmitting(false)
         }
     }
