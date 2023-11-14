@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { BiDotsVerticalRounded } from 'react-icons/bi'
 import { SyncLoader } from 'react-spinners'
+import SearchBar from '../common/SearchBar'
 
 const Trash = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
@@ -34,13 +35,16 @@ const Trash = () => {
         const imageId = images[idx].imageId
         try {
             setIsSubmitting(true)
+            toast.loading('Restoring Image...')
             const res = await axios.post("/api/studio/restore-image", { imageId })
             if (!res.data.success) {
                 toast.error(res.data.message ?? 'Somthing went wrong')
             }
             setImages(prevImages => prevImages.filter((image, index) => index !== idx));
-            toast.success('Image moved to trash')
+            toast.dismiss()
+            toast.success('Image restored')
         } catch (error: any) {
+            toast.dismiss()
             toast.error(error?.response?.data?.error ?? 'Somthing went wrong')
         } finally {
             setIsSubmitting(false)
@@ -49,7 +53,12 @@ const Trash = () => {
 
     return (
         <div className='w-full h-full flex flex-col gap-8'>
-            <div>nav</div>
+            <div>
+                <SearchBar
+                    list={images}
+                    setList={setImages}
+                />
+            </div>
             {isLoading ?
                 <div className="flex gap-4 items-center">Loading <SyncLoader size={4} /></div>
                 :
