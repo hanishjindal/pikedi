@@ -18,32 +18,54 @@ const Project = () => {
     const [threeDotMenu, setThreeDotMenu] = useState<number>(-1)
 
     useEffect(() => {
-        const handleLoadImages = async () => {
-            try {
-                setIsLoading(true)
-                const res = await axios.post("/api/studio/get-images", {})
-                if (!res.data.success) {
-                    toast.error(res.data.message ?? 'Somthing went wrong')
-                }
-                setImages(res.data.data)
-            } catch (error: any) {
-                toast.error(error?.response?.data?.error ?? 'Somthing went wrong')
-            } finally {
-                setIsLoading(false)
-            }
-        }
         handleLoadImages();
     }, [])
+
+    useEffect(() => {
+        window.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [deleteModal]);
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === 'Enter' && deleteModal > -1) {
+            event.preventDefault();
+            handleDeleteImage(deleteModal);
+            setDeleteModal(-1);
+        } else if (event.key === 'Escape' && deleteModal > -1) {
+            event.preventDefault();
+            setDeleteModal(-1);
+        }
+    };
+
+    const handleLoadImages = async () => {
+        try {
+            setIsLoading(true)
+            const res = await axios.post("/api/studio/get-images", {})
+            if (!res.data.success) {
+                toast.error(res.data.message ?? 'Somthing went wrong')
+            }
+            setImages(res.data.data)
+        } catch (error: any) {
+            toast.error(error?.response?.data?.error ?? 'Somthing went wrong')
+        } finally {
+            setIsLoading(false)
+        }
+    }
 
     const handleDeleteImage = async (idx: number) => {
         const imageId = images[idx].imageId
         try {
             setIsSubmitting(true)
+            toast.loading('Deleting Image...')
             const res = await axios.post("/api/studio/delete-image", { imageId })
             if (!res.data.success) {
                 toast.error(res.data.message ?? 'Somthing went wrong')
             }
             setImages(prevImages => prevImages.filter((image, index) => index !== idx));
+            toast.dismiss()
             toast.success('Image moved to trash')
         } catch (error: any) {
             toast.error(error?.response?.data?.error ?? 'Somthing went wrong')
@@ -54,7 +76,12 @@ const Project = () => {
 
     return (
         <div className='w-full h-full flex flex-col gap-8'>
-            <div><SearchBar /></div>
+            <div>
+                <SearchBar
+                    list={images}
+                    setList={setImages}
+                />
+            </div>
             {isLoading ?
                 <div className="flex gap-4 items-center">Loading <SyncLoader size={4} /></div>
                 :
@@ -111,15 +138,15 @@ const Project = () => {
                             )
                         })
                         :
-                        <div className='col-span-12'>Upload some images...</div>
+                        <div className='col-span-12'>No images found...</div>
                     }
                 </div>
             }
             {deleteModal > -1 &&
-                <Modal>
+                <Modal reset={() => setDeleteModal(-1)}>
                     <div className='w-full flex flex-col items-center gap-6'>
                         <span className='text-xl px-6 font-medium'>Do you want to delete</span>
-                        <div className='w-full flex gap-2'>
+                        <form className='w-full flex gap-2'>
                             <Button
                                 type='button'
                                 handleClick={() => {
@@ -141,7 +168,7 @@ const Project = () => {
                             >
                                 Cancel
                             </Button>
-                        </div>
+                        </form>
                     </div>
                 </Modal>
             }

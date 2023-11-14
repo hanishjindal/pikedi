@@ -1,71 +1,160 @@
-import React, { useState } from 'react'
-import { FaSearch, FaSortAmountDown } from "react-icons/fa";
+import React, { useState, useEffect } from 'react';
+import { FaSearch, FaSortAmountDown } from 'react-icons/fa';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import { DateRangePicker } from 'react-date-range';
-import { PiCalendarThin } from "react-icons/pi";
-import { HiChevronDown } from "react-icons/hi";
-import { RxReset } from "react-icons/rx";
+import { PiCalendarThin } from 'react-icons/pi';
+import { HiChevronDown } from 'react-icons/hi';
+import { RxReset } from 'react-icons/rx';
 
-type sortType = 'acc' | 'dec'
+type sortType = 'acc' | 'dec';
 
-const SearchBar = () => {
+interface SearchBarProps {
+    list: any[];
+    setList: (value: any[]) => void;
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({ list, setList }) => {
+    const [originalList, setOriginalList] = useState<any[]>([]);
     const [selectionRange, setSelectionRange] = useState<any>({
         startDate: new Date(),
         endDate: new Date(),
         key: 'selection',
     });
+    const [showDate, setShowDate] = useState<boolean>(false);
+    const [searchInput, setSearchInput] = useState<string>('');
+    const [clickOutDate, setClickOutDate] = useState<boolean>(false);
+    const [sort, setSort] = useState<sortType>('acc');
 
-    const [showDate, setShowDate] = useState<boolean>(false)
-    const [sort, setSort] = useState<sortType>('acc')
+    useEffect(() => {
+        if (!originalList.length)
+            setOriginalList(list);
+    }, [list]);
+
+    const handleReset = () => {
+        setList(originalList);
+        setSelectionRange({
+            startDate: new Date(),
+            endDate: new Date(),
+            key: 'selection',
+        });
+        setShowDate(false)
+        setSearchInput('');
+        setSort('acc');
+        setClickOutDate(false);
+    };
+
+    const handleDate = (value: boolean) => {
+        if (value === false && clickOutDate) {
+            handleDateSearch();
+        }
+        setShowDate(value);
+    };
 
     const handleSelect = (ranges: any) => {
+        setClickOutDate(true);
         setSelectionRange(ranges.selection);
-        setShowDate(false)
+    };
+
+    const handleDateSearch = () => {
+        const formattedStartDate = new Date(selectionRange.startDate);
+        const formattedEndDate = new Date(selectionRange.endDate);
+
+        formattedStartDate.setHours(0, 0, 0, 0);
+        formattedEndDate.setHours(23, 59, 59, 999);
+
+        const filteredList = originalList.filter(
+            (item) =>
+                new Date(item.createdAt) >= formattedStartDate &&
+                new Date(item.createdAt) <= formattedEndDate
+        );
+
+        setList(filteredList);
+        setClickOutDate(false);
+    };
+
+    const handleSearch = () => {
+        if (!searchInput.trim()) {
+            return;
+        }
+
+        const filteredList = originalList.filter(
+            (item) =>
+                item.name.toLowerCase().includes(searchInput.toLowerCase()) ||
+                item.imageId.toString() === searchInput
+        );
+
+        setList(filteredList);
+    };
+
+    const handleSort = () => {
+        const sortedList = [...originalList];
+
+        sortedList.sort((a, b) => {
+            const dateA: Date = new Date(a.createdAt);
+            const dateB: Date = new Date(b.createdAt);
+
+            if (sort === 'dec') {
+                return dateA.getTime() - dateB.getTime();
+            } else {
+                return dateB.getTime() - dateA.getTime();
+            }
+        });
+
+        setList(sortedList);
+        setSort(sort === 'acc' ? 'dec' : 'acc');
     };
 
     return (
-        <div className='bg-gray-600 p-4 lg:p-2 lg:px-4 rounded-xl flex flex-col lg:flex-row gap-2 justify-between'>
-            <div className='flex bg-white w-full lg:w-1/3 h-full py-1 rounded-sm items-center pr-3'>
+        <div className='bg-lighest-theme border border-theme p-3 md:p-2 md:px-4 rounded-xl flex flex-col md:flex-row gap-2 justify-between w-full'>
+            <div className='flex bg-white w-full lg:w-1/3 h-full py-1 rounded-md items-center pr-3 border-2 border-theme'>
                 <select
-                    name="seatchType"
+                    name="searchType"
                     id="searchType"
-                    className='h-full border-r-2 p-1 text-sm whitespace-nowrap rounded-l-md'
+                    className='h-full border-r-2 p-1 text-sm whitespace-nowrap rounded-l-md bg-white'
                 >
                     <option value="value">Name</option>
                     <option value="id">Id</option>
                 </select>
-                <input className='px-1 rounded-md w-full' placeholder='search' />
-                <FaSearch size={20} />
+                <input
+                    className='px-2 rounded-md w-full text-sm'
+                    placeholder='search'
+                    value={searchInput}
+                    onChange={(e) => setSearchInput(e.target.value)}
+                />
+                <FaSearch size={20} onClick={handleSearch} className='cursor-pointer' />
             </div>
-            <div className='flex gap-4 items-center'
-                onMouseLeave={() => setShowDate(false)}
+            <div className='flex gap-1 lg:gap-4 items-center justify-end'
+                onMouseLeave={() => showDate && handleDate(false)}
             >
                 <div className='relative'>
                     <div
-                        className='bg-white px-3 py-1 rounded-md flex items-center gap-2 cursor-pointer'
-                        onClick={() => setShowDate(e => !e)}
+                        className='bg-white border-2 border-theme text-sm lg:text-base px-3 py-1 rounded-md flex items-center gap-1 lg:gap-2 cursor-pointer'
+                        onClick={() => handleDate(!showDate)}
                     >
-                        <PiCalendarThin /> Date <HiChevronDown className={showDate ? '' : 'rotate-180'} />
+                        <PiCalendarThin className={`text-theme`} /> Date <HiChevronDown className={showDate ? '' : 'rotate-180'} />
                     </div>
                     {showDate &&
                         <DateRangePicker
                             ranges={[selectionRange]}
                             onChange={handleSelect}
-                            className='absolute -right-1/2 lg:-right-0 top-full z-[2] border border-black'
+                            className='absolute left-0 md:left-auto md:-right-0 top-full z-[2] border border-black w-[270%] md:w-auto overflow-x-auto text-xs md:text-base'
                         />
                     }
                 </div>
 
                 <div
-                    className='bg-white p-3 py-1 rounded-md cursor-pointer flex items-center gap-2'
-                    onClick={() => setSort(sort === 'acc' ? 'dec' : 'acc')}
+                    className='bg-white border-2 border-theme text-sm lg:text-base p-3 py-1 rounded-md cursor-pointer flex items-center gap-1 lg:gap-2'
+                    onClick={handleSort}
                 >
-                    <FaSortAmountDown className={sort === 'acc' ? 'rotate-180' : ''} /> Sort
+                    <FaSortAmountDown className={`text-theme ${sort === 'acc' ? 'rotate-180' : ''}`} /> Sort
                 </div>
 
-                <div className='bg-white p-3 py-1 rounded-md cursor-pointer flex items-center gap-2'>
-                    <RxReset /> Reset
+                <div
+                    className='bg-white border-2 border-theme text-sm lg:text-base p-3 py-1 rounded-md cursor-pointer flex items-center gap-1 lg:gap-2'
+                    onClick={handleReset}
+                >
+                    <RxReset className={`text-theme`} /> Reset
                 </div>
             </div>
 
