@@ -12,6 +12,7 @@ import SearchBar from '../common/SearchBar'
 
 const Project = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
     const [images, setImages] = useState<any[]>([])
     const [deleteModal, setDeleteModal] = useState<number>(-1)
     const [threeDotMenu, setThreeDotMenu] = useState<number>(-1)
@@ -37,7 +38,7 @@ const Project = () => {
     const handleDeleteImage = async (idx: number) => {
         const imageId = images[idx].imageId
         try {
-            setIsLoading(true)
+            setIsSubmitting(true)
             const res = await axios.post("/api/studio/delete-image", { imageId })
             if (!res.data.success) {
                 toast.error(res.data.message ?? 'Somthing went wrong')
@@ -47,7 +48,7 @@ const Project = () => {
         } catch (error: any) {
             toast.error(error?.response?.data?.error ?? 'Somthing went wrong')
         } finally {
-            setIsLoading(false)
+            setIsSubmitting(false)
         }
     }
 
@@ -89,13 +90,19 @@ const Project = () => {
                                         {threeDotMenu === idx &&
                                             <div
                                                 className='py-2 shadow-lg absolute top-[80%] right-4 rounded-md bg-white flex flex-col gap-1 text-black font-medium w-32 z-[99]'
-                                                onClick={() => setThreeDotMenu(-1)}
+                                                onClick={() => {
+                                                    if (!isSubmitting)
+                                                        setThreeDotMenu(-1)
+                                                }}
                                             >
                                                 <span className='cursor-pointer mx-1 px-1 rounded-md hover:bg-lighest-theme'>Rename</span>
-                                                <Divider type='tac' />
+                                                <Divider type='toe' />
                                                 <span
                                                     className='cursor-pointer mx-1 px-1 rounded-md hover:bg-lighest-theme'
-                                                    onClick={() => setDeleteModal(idx)}
+                                                    onClick={() => {
+                                                        if (!isSubmitting)
+                                                            setDeleteModal(idx)
+                                                    }}
                                                 >Delete</span>
                                             </div>
                                         }
@@ -119,7 +126,7 @@ const Project = () => {
                                     handleDeleteImage(deleteModal)
                                     setDeleteModal(-1)
                                 }}
-                                isSubmitting={false}
+                                isSubmitting={isSubmitting}
                                 buttonType='primary'
                                 className='lg:flex font-semibold text-lg w-full h-10'
                             >
@@ -128,7 +135,7 @@ const Project = () => {
                             <Button
                                 type='button'
                                 handleClick={() => { setDeleteModal(-1) }}
-                                isSubmitting={false}
+                                isSubmitting={isSubmitting}
                                 buttonType='secondary'
                                 className='lg:flex font-semibold text-lg w-full h-10'
                             >

@@ -228,7 +228,7 @@ const Profile = () => {
                             />
                         }
                         <CldUploadButton
-                            options={{ maxFiles: 1, folder: 'pikediProfilePic', sources: ['local', 'google_drive', 'camera'], showPoweredBy: false, cropping: true, croppingAspectRatio: 1, showSkipCropButton: false }}
+                            options={{ maxFiles: 1, folder: 'pikediProfilePic', sources: ['local', 'google_drive', 'camera'], showPoweredBy: false, cropping: true, croppingAspectRatio: 1, showSkipCropButton: false, resourceType: 'image' }}
                             onUpload={handleUpload}
                             uploadPreset="pikedi"
                         >

@@ -5,95 +5,147 @@ import Divider from '../common/Divider';
 import Button from '../common/Button';
 import { CONTACT_DATA } from '../config';
 import { SyncLoader } from 'react-spinners';
+import { fieldType } from '../utils';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const ContactForm = () => {
-    const [name, setName] = useState<boolean>(false)
-    const [nameText, setNameText] = useState<string>('')
-    const nameRef = useRef<HTMLInputElement | null>(null);
-    const [mobile, setMobile] = useState<boolean>(false)
-    const [mobileNumber, setMobileNumber] = useState<number>()
-    const mobileRef = useRef<HTMLInputElement | null>(null);
-    const [email, setEmail] = useState<boolean>(false)
-    const [emailText, setEmailText] = useState<string>('')
-    const emailRef = useRef<HTMLInputElement | null>(null);
+    const [formData, setFormData] = useState<any>({
+        fullName: {
+            label: false,
+            value: '',
+            ref: useRef<HTMLInputElement | null>(null),
+            labelText: 'Name',
+            type: 'text',
+            placeholder: 'Full Name',
+            required: true,
+            name: 'fullName'
+        },
+        mobile: {
+            label: false,
+            value: '',
+            labelText: 'Mobile Number',
+            type: 'number',
+            placeholder: '+91 00000 00000',
+            required: true,
+            name: 'mobile'
+        },
+        email: {
+            label: false,
+            value: '',
+            labelText: 'Email',
+            type: 'email',
+            placeholder: 'john@xyz.in',
+            required: true,
+            name: 'email'
+        },
+    })
+    const [contactMessage, setContactMessage] = useState<string>('')
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
+
+    const handleInput = (type: fieldType, val: string) => {
+        setFormData({
+            ...formData,
+            [type]: { ...formData[type], value: val }
+        })
+    }
+
+    const handleFieldClick = (type: fieldType) => {
+        setFormData({
+            ...formData,
+            fullName: { ...formData.fullName, label: (type === 'fullName') },
+            mobile: { ...formData.mobile, label: (type === 'mobile') },
+            email: { ...formData.email, label: (type === 'email') },
+        })
+    }
+
+    const handleFieldInputData = () => {
+        setFormData({
+            ...formData,
+            fullName: { ...formData.fullName, value: '', label: false },
+            mobile: { ...formData.mobile, value: '', label: false },
+            email: { ...formData.email, value: '', label: false },
+        })
+        setContactMessage('')
+    }
+
+    const handleSubmit = async () => {
+        try {
+            setIsSubmitting(true)
+            await axios.post("/api/contact", {
+                fullName: formData.fullName.value,
+                mobile: formData.mobile.value,
+                email: formData.email.value,
+                message: contactMessage
+            })
+            handleFieldInputData()
+            toast.success('Success submitted, We will contact you soon...')
+        } catch (error: any) {
+            toast.error(error?.response?.data?.error ?? 'Somthing went wrong')
+        } finally {
+            setIsSubmitting(false)
+        }
+    }
+
+    const handleResetFocus = () => {
+        setFormData({
+            ...formData,
+            fullName: { ...formData.fullName, label: false },
+            mobile: { ...formData.mobile, label: false },
+            email: { ...formData.email, label: false },
+        })
+    }
     return (
-        <div className="p-5 lg:p-20 flex flex-col-reverse gap-8 lg:gap-0 lg:grid lg:grid-cols-12  w-full">
+        <div
+            className="p-5 lg:p-20 flex flex-col-reverse gap-8 lg:gap-0 lg:grid lg:grid-cols-12 w-full"
+            onMouseLeave={handleResetFocus}
+        >
             <div
                 className="col-span-8 p-8 lg:p-20 shadow-lg gap-6 lg:gap-8 rounded-lg flex-col justify-center items-center border-2 bg-white border-theme"
             >
                 <form className="flex flex-col gap-5">
                     <div className='border-2 rounded-lg bg-white'>
-                        <Input
-                            name={name}
-                            setName={setName}
-                            label='Name'
-                            inputValue={nameText}
-                            nameRef={nameRef}
-                            setInputValue={setNameText}
-                            fieldRequired={true}
-                            fieldType='text'
-                            placeholder='Full Name'
-                            fieldClick={(e) => {
-                                e.stopPropagation();
-                                setName(true)
-                                setEmail(false)
-                                setMobile(false)
-                                setTimeout(() => {
-                                    nameRef.current?.focus()
-                                }, 0);
-                            }}
-                        />
+                        {
+                            Object.keys(formData)?.map((field, index) => {
+                                return (
+                                    <React.Fragment key={index}>
+                                        <Input
+                                            name={formData[field].label}
+                                            setName={(val) => handleFieldClick(formData[field].name)}
+                                            label={formData[field].labelText}
+                                            inputValue={formData[field].value}
+                                            nameRef={formData[field].ref ?? null}
+                                            setInputValue={(val) => handleInput(formData[field].name, val)}
+                                            fieldRequired={true}
+                                            fieldType={formData[field].type}
+                                            isSubmitting={isSubmitting}
+                                            placeholder={formData[field].placeholder}
+                                            fieldClick={(e) => {
+                                                e.stopPropagation();
+                                                handleFieldClick(formData[field].name);
+                                            }}
+                                        />
+
+                                        {index < Object.keys(formData).length - 1 && <Divider type="toe" />}
+                                    </React.Fragment>
+                                )
+                            })
+                        }
 
                         <Divider type="toe" />
 
-                        <Input
-                            name={email}
-                            setName={setEmail}
-                            label='Email'
-                            inputValue={emailText}
-                            nameRef={emailRef}
-                            setInputValue={setEmailText}
-                            fieldRequired={true}
-                            fieldType='email'
-                            placeholder='email'
-                            fieldClick={(e) => {
+                        <textarea
+                            className='w-full p-3'
+                            rows={4}
+                            placeholder='Message'
+                            required
+                            value={contactMessage}
+                            onChange={(e) => setContactMessage(e.target.value)}
+                            onClick={(e) => {
                                 e.stopPropagation();
-                                setEmail(true)
-                                setName(false)
-                                setMobile(false)
-                                setTimeout(() => {
-                                    emailRef.current?.focus()
-                                }, 0);
+                                handleResetFocus();
                             }}
-                        />
-
-                        <Divider type="toe" />
-
-                        <Input
-                            name={mobile}
-                            setName={setMobile}
-                            label='Mobile Number'
-                            inputValue={mobileNumber}
-                            nameRef={mobileRef}
-                            setInputValue={setMobileNumber}
-                            fieldRequired={true}
-                            fieldType='number'
-                            placeholder='+91 00000 00000'
-                            fieldClick={(e) => {
-                                e.stopPropagation();
-                                setMobile(true)
-                                setName(false);
-                                setEmail(false);
-                                setTimeout(() => {
-                                    mobileRef.current?.focus()
-                                }, 0);
-                            }}
-                        />
-
-                        <Divider type="toe" />
-
-                        <textarea className='w-full p-3' rows={4} placeholder='Message' >
+                        >
 
                         </textarea>
                     </div>
@@ -101,7 +153,8 @@ const ContactForm = () => {
                         type='submit'
                         buttonType='primary'
                         className='font-semibold w-40 h-12 text-lg px-6 py-2 flex gap-5'
-                        handleClick={() => { }}
+                        isSubmitting={isSubmitting}
+                        handleClick={() => handleSubmit()}
                     >
                         {isSubmitting ?
                             <SyncLoader size={4} color='#fff' />

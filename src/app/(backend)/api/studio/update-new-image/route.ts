@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({
             message: "Image successfully Uploaded",
             success: true,
-            savedImage
+            data: {}
         })
 
     } catch (error: any) {

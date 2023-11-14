@@ -24,7 +24,7 @@ export default function StudioLayout({
     return (
         <div className="w-full min-h-[90vh] h-auto flex relative select-none">
             <div className="bg-white rounded-lg w-full flex">
-                <div className={`h-full relative flex flex-col min-w-[60px] ${sideBarOpen === 'close' && 'items-center'} ${sideBarOpen === 'open' ? 'w-[18%] sm:w-[15%]' : 'w-[60px] md:w-[80px]'}`}>
+                <div className={`h-full relative flex flex-col min-w-[60px] ${sideBarOpen === 'close' && 'items-center z-[9]'} ${sideBarOpen === 'open' ? 'w-[18%] sm:w-[15%]' : 'w-[60px] md:w-[80px]'}`}>
                     <SideNav
                         sideBarOpen={sideBarOpen}
                         pathname={pathname}

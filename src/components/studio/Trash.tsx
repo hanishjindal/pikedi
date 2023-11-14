@@ -9,6 +9,7 @@ import SearchBar from '../common/SearchBar'
 
 const Trash = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
     const [images, setImages] = useState<any[]>([])
     const [threeDotMenu, setThreeDotMenu] = useState<number>(-1)
 
@@ -33,7 +34,7 @@ const Trash = () => {
     const handleRestoreImage = async (idx: number) => {
         const imageId = images[idx].imageId
         try {
-            setIsLoading(true)
+            setIsSubmitting(true)
             const res = await axios.post("/api/studio/restore-image", { imageId })
             if (!res.data.success) {
                 toast.error(res.data.message ?? 'Somthing went wrong')
@@ -43,7 +44,7 @@ const Trash = () => {
         } catch (error: any) {
             toast.error(error?.response?.data?.error ?? 'Somthing went wrong')
         } finally {
-            setIsLoading(false)
+            setIsSubmitting(false)
         }
     }
 
@@ -85,11 +86,17 @@ const Trash = () => {
                                         {threeDotMenu === idx &&
                                             <div
                                                 className='py-2 shadow-lg absolute top-[80%] right-4 rounded-md bg-white flex flex-col gap-1 text-black font-medium w-32 z-[99]'
-                                                onClick={() => setThreeDotMenu(-1)}
+                                                onClick={() => {
+                                                    if (!isSubmitting)
+                                                        setThreeDotMenu(-1)
+                                                }}
                                             >
                                                 <span
                                                     className='cursor-pointer mx-1 px-1 rounded-md hover:bg-lighest-theme'
-                                                    onClick={() => handleRestoreImage(idx)}
+                                                    onClick={() => {
+                                                        if (!isSubmitting)
+                                                            handleRestoreImage(idx)
+                                                    }}
                                                 >Restore</span>
                                             </div>
                                         }
