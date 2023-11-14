@@ -70,6 +70,7 @@ const Project = () => {
         } catch (error: any) {
             toast.error(error?.response?.data?.error ?? 'Somthing went wrong')
         } finally {
+            toast.dismiss()
             setIsSubmitting(false)
         }
     }

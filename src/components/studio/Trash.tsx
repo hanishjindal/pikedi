@@ -42,8 +42,9 @@ const Trash = () => {
             }
             setImages(prevImages => prevImages.filter((image, index) => index !== idx));
             toast.dismiss()
-            toast.success('Image moved to projects')
+            toast.success('Image restored')
         } catch (error: any) {
+            toast.dismiss()
             toast.error(error?.response?.data?.error ?? 'Somthing went wrong')
         } finally {
             setIsSubmitting(false)
