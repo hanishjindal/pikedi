@@ -25,10 +25,6 @@ export async function POST(request: NextRequest) {
         if (!images || !Array.isArray(images)) {
             return NextResponse.json(resp)
         }
-        if (!images.length) {
-            resp.message = 'Image not available';
-            return NextResponse.json(resp)
-        }
 
         resp.message = 'Data Loaded';
         resp.success = true;

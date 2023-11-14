@@ -24,7 +24,7 @@ const Navbar = () => {
     const [mobileMenu, setMobileMenu] = useState<boolean>(false)
     return (
         <nav
-            className='sticky top-0 select-none w-full h-16 bg-white shadow-lg z-[9]'
+            className='sticky top-0 select-none w-full h-16 bg-white shadow-lg z-[10]'
             onClick={e => e.stopPropagation()}
             onMouseLeave={() => {
                 setUserIcon(false)
