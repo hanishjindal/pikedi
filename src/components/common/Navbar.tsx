@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import { selectIsAuthenticated, selectUser } from '@/redux/slice/authSlice'
 import { useDispatch } from 'react-redux';
 import Divider from './Divider'
-import { BiSolidUserCircle } from 'react-icons/bi'
+import { BiLogOut, BiSolidUserCircle } from 'react-icons/bi'
 import { logout } from '../utils'
 
 
@@ -92,7 +92,7 @@ const Navbar = () => {
                         }
                         {userIcon &&
                             <div
-                                className='absolute top-full right-0 rounded-lg bg-white shadow-lg z-[9999] w-40 flex flex-col gap-1 py-2 border'
+                                className='absolute top-full right-0 rounded-lg bg-white shadow-lg z-[9999] w-36 flex flex-col gap-1 py-2 border'
                                 onMouseLeave={() => setUserIcon(false)}
                                 onClick={() => setUserIcon(false)}
 
@@ -116,10 +116,10 @@ const Navbar = () => {
                                 <Divider type='tac' />
 
                                 <div
-                                    className='cursor-pointer font-medium mx-4'
+                                    className='cursor-pointer font-medium mx-4 flex items-center justify-between'
                                     onClick={() => logout(setIsLoading, dispatch, router)}
                                 >
-                                    Sign Out
+                                    Sign Out <BiLogOut className='rotate-180' />
                                 </div>
                             </div>
                         }
@@ -224,9 +224,9 @@ const Navbar = () => {
                             }}
                             isSubmitting={isLoading}
                             buttonType='primary'
-                            className='font-semibold text-lg mb-4 py-2 w-full h-12'
+                            className='font-semibold text-lg mb-4 py-2 w-full h-12 flex gap-2 items-center'
                         >
-                            Sign {isAuthenticated ? 'Out' : 'In'}
+                            Sign {isAuthenticated ? <>Out <BiLogOut className='rotate-180' /></> : 'In'}
                         </Button>
                     </div>
                 }
