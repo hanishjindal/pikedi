@@ -7,7 +7,7 @@ import { BiDotsVerticalRounded } from 'react-icons/bi'
 import { SyncLoader } from 'react-spinners'
 import Divider from '../common/Divider'
 
-const Project = () => {
+const Trash = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [images, setImages] = useState<any[]>([])
     const [threeDotMenu, setThreeDotMenu] = useState<number>(-1)
@@ -16,7 +16,7 @@ const Project = () => {
         const handleLoadImages = async () => {
             try {
                 setIsLoading(true)
-                const res = await axios.post("/api/studio/get-images", {})
+                const res = await axios.post("/api/studio/get-trash-images", {})
                 if (!res.data.success) {
                     toast.error(res.data.message ?? 'Somthing went wrong')
                 }
@@ -30,11 +30,11 @@ const Project = () => {
         handleLoadImages();
     }, [])
 
-    const handleDeleteImage = async (idx: number) => {
+    const handleRestoreImage = async (idx: number) => {
         const imageId = images[idx].imageId
         try {
             setIsLoading(true)
-            const res = await axios.post("/api/studio/delete-image", { imageId })
+            const res = await axios.post("/api/studio/restore-image", { imageId })
             if (!res.data.success) {
                 toast.error(res.data.message ?? 'Somthing went wrong')
             }
@@ -87,12 +87,10 @@ const Project = () => {
                                                 className='py-2 shadow-lg absolute top-[80%] right-4 rounded-md bg-white flex flex-col gap-1 text-black font-medium w-32 z-[99]'
                                                 onClick={() => setThreeDotMenu(-1)}
                                             >
-                                                <span className='cursor-pointer px-2'>Rename</span>
-                                                <Divider type='tac' />
                                                 <span
                                                     className='cursor-pointer px-2'
-                                                    onClick={() => handleDeleteImage(idx)}
-                                                >Delete</span>
+                                                    onClick={() => handleRestoreImage(idx)}
+                                                >Restore</span>
                                             </div>
                                         }
                                     </div>
@@ -100,7 +98,7 @@ const Project = () => {
                             )
                         })
                         :
-                        <div className='col-span-12'>Upload some images...</div>
+                        <div className='col-span-12'>Trash is empty...</div>
                     }
                 </div>
             }
@@ -109,4 +107,4 @@ const Project = () => {
     )
 }
 
-export default Project
+export default Trash
