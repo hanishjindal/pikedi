@@ -5,8 +5,6 @@ import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { BiDotsVerticalRounded } from 'react-icons/bi'
 import { SyncLoader } from 'react-spinners'
-import Divider from '../common/Divider'
-import Modal from '../common/Modal'
 
 const Trash = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
