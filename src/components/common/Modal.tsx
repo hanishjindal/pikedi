@@ -14,7 +14,7 @@ const Modal: React.FC<ModalProps> = ({
             className='absolute w-screen h-screen top-0 left-0 flex justify-center items-center backdrop-blur-[2px]'
             onClick={reset}
         >
-            <div className='bg-white border rounded-lg p-10 shadow-lg'
+            <div className='bg-white border rounded-lg p-10 shadow-lg z-[10]'
                 onClick={e => e.stopPropagation()}
             >
                 {children}
