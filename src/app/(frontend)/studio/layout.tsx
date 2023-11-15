@@ -14,12 +14,13 @@ export default function StudioLayout({
     const sideBarOpen = searchParam.get('nav')
     let isMobileOrTablet: boolean = false;
     useEffect(() => {
-        isMobileOrTablet = document.documentElement.clientWidth <= 768;
+        isMobileOrTablet = document.documentElement.clientWidth <= 870;
         if (!sideBarOpen) {
             router.push(`${pathname}/?nav=${isMobileOrTablet ? "close" : "open"}`)
         } else if (sideBarOpen === 'open' && isMobileOrTablet) {
             router.push(`${pathname}/?nav=close`)
         }
+        console.log(isMobileOrTablet)
     }, [sideBarOpen])
     return (
         <div className="w-full min-h-[90vh] h-auto flex relative select-none">
