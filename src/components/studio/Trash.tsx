@@ -11,6 +11,7 @@ const Trash = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
     const [images, setImages] = useState<any[]>([])
+    const [originalList, setOriginalList] = useState<any[]>([]);
     const [threeDotMenu, setThreeDotMenu] = useState<number>(-1)
 
     useEffect(() => {
@@ -41,6 +42,7 @@ const Trash = () => {
                 toast.error(res.data.message ?? 'Somthing went wrong')
             }
             setImages(prevImages => prevImages.filter((image, index) => index !== idx));
+            setOriginalList(prevImages => prevImages.filter(image => image.imageId !== imageId));
             toast.dismiss()
             toast.success('Image restored')
         } catch (error: any) {
@@ -57,6 +59,8 @@ const Trash = () => {
                 <SearchBar
                     list={images}
                     setList={setImages}
+                    originalList={originalList}
+                    setOriginalList={setOriginalList}
                 />
             </div>
             {isLoading ?

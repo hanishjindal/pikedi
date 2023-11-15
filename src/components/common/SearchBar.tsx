@@ -12,10 +12,16 @@ type sortType = 'acc' | 'dec';
 interface SearchBarProps {
     list: any[];
     setList: (value: any[]) => void;
+    originalList: any[];
+    setOriginalList: (value: any[]) => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ list, setList }) => {
-    const [originalList, setOriginalList] = useState<any[]>([]);
+const SearchBar: React.FC<SearchBarProps> = ({
+    list,
+    setList,
+    originalList,
+    setOriginalList
+}) => {
     const [selectionRange, setSelectionRange] = useState<any>({
         startDate: new Date(),
         endDate: new Date(),
@@ -30,6 +36,24 @@ const SearchBar: React.FC<SearchBarProps> = ({ list, setList }) => {
         if (!originalList.length)
             setOriginalList(list);
     }, [list]);
+
+    useEffect(() => {
+        window.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    });
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            handleSearch();
+        } else if (event.key === 'Escape') {
+            event.preventDefault();
+            handleReset();
+        }
+    };
 
     const handleReset = () => {
         setList(originalList);
@@ -75,6 +99,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ list, setList }) => {
 
     const handleSearch = () => {
         if (!searchInput.trim()) {
+            handleReset();
             return;
         }
 
@@ -120,7 +145,12 @@ const SearchBar: React.FC<SearchBarProps> = ({ list, setList }) => {
                     className='px-2 rounded-md w-full text-sm'
                     placeholder='search'
                     value={searchInput}
-                    onChange={(e) => setSearchInput(e.target.value)}
+                    onChange={(e) => {
+                        if (e.target.value === '') {
+                            handleReset();
+                        }
+                        setSearchInput(e.target.value);
+                    }}
                 />
                 <FaSearch size={20} onClick={handleSearch} className='cursor-pointer' />
             </div>
