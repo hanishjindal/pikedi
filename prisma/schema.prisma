@@ -1,0 +1,103 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String    @id @default(cuid()) @map("_id") @db.String
+  name           String
+  email          String    @unique
+  emailVerified  DateTime?
+  mobile         String?   @unique
+  mobileVerified DateTime?
+  hashedPassword String
+  image          String?
+  role           Role
+  isVerified     Boolean   @default(false)
+  isAdmin        Boolean   @default(false)
+  isActive       Boolean   @default(true)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  // accounts Account[]
+  // sessions Session[]
+  images Image[]
+}
+
+// model Account {
+//   id                String  @id @default(auto()) @map("_id") @db.ObjectId
+//   userId            String  @db.String
+//   type              String
+//   provider          String
+//   providerAccountId String
+//   refresh_token     String? @db.String
+//   access_token      String? @db.String
+//   expires_at        Int?
+//   token_type        String?
+//   scope             String?
+//   id_token          String? @db.String
+//   session_state     String?
+
+//   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+//   @@unique([provider, providerAccountId])
+// }
+
+// model Session {
+//   id           String   @id @default(cuid()) @map("_id") @db.String
+//   sessionToken String   @unique
+//   userId       String   @db.String
+//   expires      DateTime
+//   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   createdAt    DateTime @default(now())
+//   updatedAt    DateTime @updatedAt
+// }
+
+// model VerificationToken {
+//   id         String   @id @default(auto()) @map("_id") @db.ObjectId
+//   identifier String
+//   token      String   @unique
+//   expires    DateTime
+//   createdAt  DateTime @default(now())
+//   updatedAt  DateTime @updatedAt
+
+//   @@unique([identifier, token])
+// }
+
+model Image {
+  imageId   String   @id @default(uuid()) @map("_id") @db.String
+  userId    String   @db.String
+  user      User     @relation(fields: [userId], references: [id])
+  name      String   @default("Untitled")
+  summary   String?
+  email     String
+  url       String
+  reasons   String[]
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Contact {
+  contactId  String   @id @default(uuid()) @map("_id") @db.String
+  name       String
+  email      String
+  mobile     String
+  message    String
+  isAnswered Boolean  @default(false)
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+enum Role {
+  EDITOR
+  STUDIO
+}

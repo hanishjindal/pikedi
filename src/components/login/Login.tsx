@@ -47,7 +47,7 @@ const Login = () => {
                 <div className="flex gap-10 w-full h-full lg:h-full justify-around items-center py-10 px-8 lg:px-10 overflow-hidden">
                     <LoginForm
                         back={async () => handleLoginRoute()}
-                        WhoIsLogin='Editor'
+                        WhoIsLogin='EDITOR'
                     />
                 </div>
             }
@@ -56,7 +56,7 @@ const Login = () => {
                 <div className="flex gap-10 w-full h-full lg:h-full justify-around items-center py-10 px-8 lg:px-10 overflow-hidden">
                     <SignUpForm
                         back={async () => handleLoginRoute()}
-                        WhoIsLogin='Editor'
+                        WhoIsLogin='EDITOR'
                     />
                 </div>
             }
@@ -65,7 +65,7 @@ const Login = () => {
                 <div className="flex gap-10 w-full h-full lg:h-full justify-around items-center py-10 px-8 lg:px-10 overflow-hidden">
                     <LoginForm
                         back={async () => handleLoginRoute()}
-                        WhoIsLogin='Studio'
+                        WhoIsLogin='STUDIO'
                     />
                 </div>
             }
@@ -74,7 +74,7 @@ const Login = () => {
                 <div className="flex gap-10 w-full h-full lg:h-full justify-around items-center py-10 px-8 lg:px-10 overflow-hidden">
                     <SignUpForm
                         back={async () => handleLoginRoute()}
-                        WhoIsLogin='Studio'
+                        WhoIsLogin='STUDIO'
                     />
                 </div>
             }

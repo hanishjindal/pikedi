@@ -1,28 +1,33 @@
-import { connect } from "@/dbConfig/dbConfig";
-import ImageModel from "@/models/imageModal";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server"
+import prisma from "@/libs/prismadb";
 import { getDataFromToken } from "@/helpers/getDataFromToken";
 
-connect()
+const resp: any = {
+    message: "",
+    success: false,
+    data: {}
+}
 
 export async function POST(request: NextRequest) {
     try {
+        const user = await getDataFromToken(request);
         const reqBody = await request.json()
-        const { userId, email } = (await getDataFromToken(request));
 
-        let images = await ImageModel.find({ email, userId, isActive: true }).select('-_id -__v');
+        if (!user) {
+            resp.message = "Unauthorized"
+            return new NextResponse(JSON.stringify(resp), { status: 400 });
+        }
 
-        const resp: {
-            message: string;
-            success: boolean;
-            data: any[];
-        } = {
-            message: "Something went wrong",
-            success: false,
-            data: []
-        };
+        let images = await prisma.image.findMany({
+            where: {
+                email: user?.email,
+                userId: user?.id,
+                isActive: true
+            }
+        })
 
         if (!images || !Array.isArray(images)) {
+            resp.message = "No image found"
             return NextResponse.json(resp)
         }
 
@@ -30,14 +35,11 @@ export async function POST(request: NextRequest) {
         resp.success = true;
         resp.data = images;
 
-        const response = NextResponse.json({
-            message: "Data Loaded",
-            success: true,
-            data: images
-        });
+        const response = NextResponse.json(resp);
         return response;
 
     } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 })
+        resp.message = error.message
+        return NextResponse.json(resp, { status: 500 })
     }
 }

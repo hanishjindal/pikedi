@@ -1,77 +1,89 @@
-import { connect } from "@/dbConfig/dbConfig";
-import User from "@/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
-import bcryptjs from "bcryptjs";
-import jwt from "jsonwebtoken";
+import bcryptjs from "bcryptjs"
+import prisma from "@/libs/prismadb";
+import getFilteredData from "@/helpers/getFilteredData";
+import { getDataFromToken } from "@/helpers/getDataFromToken";
 
-connect();
+const resp: any = {
+    message: "",
+    success: false,
+    data: {}
+}
 
 export async function POST(request: NextRequest) {
     try {
         const reqBody = await request.json();
-        const { email, password, fullName, mobile, role, profilePic } = reqBody;
+        const userData = await getDataFromToken(request);
+        const { password, name, mobile, image } = reqBody;
 
-        // Check if the user exists
-        const user = await User.findOne({ email, role }).select("-updatedAt -createdAt");
-        if (!user) {
-            return NextResponse.json({ error: "User does not exist" }, { status: 400 });
+        if (!userData) {
+            resp.message = 'Unauthorized';
+            return new NextResponse(JSON.stringify(resp), { status: 401 });
         }
-        if (!user.isActive) {
-            return NextResponse.json({ error: "User is inactive" }, { status: 400 });
+
+        const user = await prisma.user.findUnique({
+            where: {
+                email: userData?.email,
+                role: userData?.role
+            }
+        })
+
+        if (!user) {
+            resp.message = 'Unauthorized';
+            return new NextResponse(JSON.stringify(resp), { status: 401 });
+        }
+
+        if (!user?.isActive) {
+            resp.message = "User is inactive";
+            return NextResponse.json(resp, { status: 400 });
+        }
+
+        const update: any = {
+
         }
 
         // Check if password update is requested
         if (password && password.update) {
             const { old, new: newPassword, confirm } = password.data;
 
-            // Verify old password
-            const validPassword = await bcryptjs.compare(old, user.password);
+            const validPassword = await bcryptjs.compare(old, user.hashedPassword);
             if (!validPassword) {
-                return NextResponse.json({ error: "Incorrect password" }, { status: 400 });
+                resp.message = "Incorrect password";
+                return NextResponse.json(resp, { status: 400 });
             }
 
             // Check if the new and confirm passwords match
             if (newPassword !== confirm) {
-                return NextResponse.json({ error: "New password and confirm password do not match" }, { status: 400 });
+                resp.message = "New password and confirm password do not match";
+                return NextResponse.json(resp, { status: 400 });
             }
 
             // Hash and update the new password
-            const hashedNewPassword = await bcryptjs.hash(newPassword, 10);
-            user.password = hashedNewPassword;
+            const salt = await bcryptjs.genSalt(10)
+            const hashedNewPassword = await bcryptjs.hash(password, salt)
+            update['password'] = hashedNewPassword;
         }
 
-        // Update other user details (fullName, mobile, etc.)
-        if (fullName) user.fullName = fullName;
-        if (mobile) user.mobile = mobile;
-        if (profilePic) user.profilePic = profilePic;
+        // Update other user details (name, mobile, etc.)
+        if (name) update['name'] = name;
+        if (mobile) update['mobile'] = mobile;
+        if (image) update['image'] = image;
 
         // Save the updated user
-        await user.save();
-
-        // Create token data
-        const tokenData = {
-            id: user._id,
-            userId: user.userId,
-            fullName: user.fullName,
-            email: user.email,
-        };
-
-        // Create token
-        const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET!, { expiresIn: "1d" });
-
-        const userDataWithPassword = user.toObject();
-        delete userDataWithPassword.password;
-
-        const response = NextResponse.json({
-            message: "User details updated successfully",
-            success: true,
-            data: userDataWithPassword,
+        const updatedUser = await prisma.user.update({
+            where: {
+                email: user.email
+            },
+            data: update,
         });
-        response.cookies.set("token", token, {
-            httpOnly: true,
-        });
+
+        resp.message = "User details updated successfully";
+        resp.success = true;
+        resp.data = getFilteredData(updatedUser);
+        const response = NextResponse.json(resp);
         return response;
     } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        resp.message = error.message
+        return NextResponse.json(resp, { status: 500 })
     }
 }

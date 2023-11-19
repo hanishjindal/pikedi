@@ -1,39 +1,38 @@
+import { NextRequest, NextResponse } from "next/server"
+import prisma from "@/libs/prismadb";
 import { getDataFromToken } from "@/helpers/getDataFromToken";
+import getFilteredData from "@/helpers/getFilteredData";
 
-import { NextRequest, NextResponse } from "next/server";
-import User from "@/models/userModel";
-import { connect } from "@/dbConfig/dbConfig";
-
-connect();
+const resp: any = {
+    message: "",
+    success: false,
+    data: {}
+}
 
 export async function POST(request: NextRequest) {
 
     try {
         if (!request.cookies.get("token")?.value) {
-            return NextResponse.json({
-                data: {},
-                active: false,
-                state:1
-            })
-        }
-        const userId = (await getDataFromToken(request)).id;
-        const user = await User.findOne({ _id: userId }).select("-password -updatedAt -createdAt");
-
-        if (!user || !user.isActive) {
-            const response = NextResponse.json({
-                data: {},
-                active: false,
-                state:2
-            })
-            response.cookies.set('token', "", { expires: new Date(0) });
-            return response;
+            return NextResponse.json(resp)
         }
 
-        return NextResponse.json({
-            data: user,
-            active: true,
-            state:3
+        const userData = await getDataFromToken(request);
+        const user = await prisma.user.findUnique({
+            where: {
+                email: userData.email
+            }
         })
+
+        if (!user) {
+            throw new Error("User does not exist")
+        }
+        if (!user.isActive) {
+            throw new Error("User is inactive")
+        }
+
+        resp.success = true;
+        resp.data = getFilteredData(user);
+        return NextResponse.json(resp);
     } catch (error: any) {
         const response = NextResponse.json({
             data: error.message,

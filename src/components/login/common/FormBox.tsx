@@ -2,11 +2,11 @@ import Divider from '@/components/common/Divider';
 import Input from '@/components/common/Input';
 import React from 'react';
 import { BsArrowLeftCircleFill } from 'react-icons/bs';
-import { fieldType } from '../../utils'
+import { fieldType, roleType } from '../../utils'
 
 interface FormBoxProps {
     back: () => void;
-    WhoIsLogin: 'Editor' | 'Studio';
+    WhoIsLogin: roleType;
     heading: string;
     handleResetFocus: () => void;
     handleInput: (field: fieldType, value: string) => void;

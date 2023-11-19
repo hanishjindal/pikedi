@@ -11,7 +11,7 @@ import toast from 'react-hot-toast';
 
 const ContactForm = () => {
     const [formData, setFormData] = useState<any>({
-        fullName: {
+        name: {
             label: false,
             value: '',
             ref: useRef<HTMLInputElement | null>(null),
@@ -19,7 +19,7 @@ const ContactForm = () => {
             type: 'text',
             placeholder: 'Full Name',
             required: true,
-            name: 'fullName'
+            name: 'name'
         },
         mobile: {
             label: false,
@@ -53,7 +53,7 @@ const ContactForm = () => {
     const handleFieldClick = (type: fieldType) => {
         setFormData({
             ...formData,
-            fullName: { ...formData.fullName, label: (type === 'fullName') },
+            name: { ...formData.name, label: (type === 'name') },
             mobile: { ...formData.mobile, label: (type === 'mobile') },
             email: { ...formData.email, label: (type === 'email') },
         })
@@ -62,7 +62,7 @@ const ContactForm = () => {
     const handleFieldInputData = () => {
         setFormData({
             ...formData,
-            fullName: { ...formData.fullName, value: '', label: false },
+            name: { ...formData.name, value: '', label: false },
             mobile: { ...formData.mobile, value: '', label: false },
             email: { ...formData.email, value: '', label: false },
         })
@@ -73,7 +73,7 @@ const ContactForm = () => {
         try {
             setIsSubmitting(true)
             await axios.post("/api/contact", {
-                fullName: formData.fullName.value,
+                name: formData.name.value,
                 mobile: formData.mobile.value,
                 email: formData.email.value,
                 message: contactMessage
@@ -81,7 +81,8 @@ const ContactForm = () => {
             handleFieldInputData()
             toast.success('Success submitted, We will contact you soon...')
         } catch (error: any) {
-            toast.error(error?.response?.data?.error ?? 'Somthing went wrong')
+            console.log(error)
+            toast.error(error?.response?.data?.message ?? 'Somthing went wrong')
         } finally {
             setIsSubmitting(false)
         }
@@ -90,7 +91,7 @@ const ContactForm = () => {
     const handleResetFocus = () => {
         setFormData({
             ...formData,
-            fullName: { ...formData.fullName, label: false },
+            name: { ...formData.name, label: false },
             mobile: { ...formData.mobile, label: false },
             email: { ...formData.email, label: false },
         })

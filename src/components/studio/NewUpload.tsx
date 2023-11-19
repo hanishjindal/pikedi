@@ -36,7 +36,7 @@ const NewUpload = () => {
             handleReset()
             toast.success('Uploaded successfully')
         } catch (error: any) {
-            toast.error(error?.response?.data?.error ?? 'Somthing went wrong')
+            toast.error(error?.response?.data?.message ?? 'Somthing went wrong')
         } finally {
             setIsSubmitting(false)
         }
@@ -91,6 +91,7 @@ const NewUpload = () => {
                                 placeholder='Enter image name'
                                 value={imageName}
                                 onChange={(e) => { setImageName(e.target.value) }}
+                                required
                             />
                         </div>
                         <div>
@@ -101,6 +102,7 @@ const NewUpload = () => {
                                 className='w-full text-black border-[1.5px] p-[6px] pb-2 rounded-md text-base px-2'
                                 value={summary}
                                 onChange={(e) => setSummary(e.target.value)}
+                                required
                             />
                         </div>
                     </div>

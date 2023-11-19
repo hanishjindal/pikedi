@@ -20,7 +20,6 @@ export default function StudioLayout({
         } else if (sideBarOpen === 'open' && isMobileOrTablet) {
             router.push(`${pathname}/?nav=close`)
         }
-        console.log(isMobileOrTablet)
     }, [sideBarOpen])
     return (
         <div className="w-full min-h-[90vh] h-auto flex relative select-none">

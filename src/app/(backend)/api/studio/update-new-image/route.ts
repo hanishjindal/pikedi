@@ -1,45 +1,46 @@
-import { connect } from "@/dbConfig/dbConfig"
-import ImageModel from "@/models/imageModal"
-import User from "@/models/userModel"
 import { NextRequest, NextResponse } from "next/server"
-import { randomUUID } from "crypto"
-import { getDataFromToken } from "@/helpers/getDataFromToken"
+import prisma from "@/libs/prismadb";
+import { getDataFromToken } from "@/helpers/getDataFromToken";
 
-connect()
+const resp: any = {
+    message: "",
+    success: false,
+    data: {}
+}
 
 export async function POST(request: NextRequest) {
     try {
+        const user = await getDataFromToken(request);
         const reqBody = await request.json()
-        const { userId, email } = (await getDataFromToken(request));
         const { url, reasons, name, summary } = reqBody;
 
-        // if user exist
-        const user = await User.findOne({ email, userId })
-
         if (!user) {
-            return NextResponse.json({ error: "User doesn't exists" }, { status: 400 })
+            resp.message = "Unauthorized"
+            return new NextResponse(JSON.stringify(resp), { status: 400 });
         }
 
+        if (!url || !reasons || !name || !summary) {
+            resp.message = 'Missing  info'
+            return new NextResponse(JSON.stringify(resp), { status: 400 })
+        }
 
-        const newImage = new ImageModel({
-            userId,
-            email,
-            url,
-            reasons,
-            imageId: randomUUID(),
-            name,
-            summary
+        const savedImage = await prisma.image.create({
+            data: {
+                userId: user.id,
+                name,
+                summary,
+                url,
+                reasons,
+                email: user.email
+            }
         })
 
-        const savedImage = await newImage.save()
-
-        return NextResponse.json({
-            message: "Image successfully Uploaded",
-            success: true,
-            data: {}
-        })
+        resp.message = "Image successfully Uploaded";
+        resp.success = true;
+        return NextResponse.json(resp)
 
     } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 })
+        resp.message = error.message
+        return NextResponse.json(resp, { status: 500 })
     }
 }
