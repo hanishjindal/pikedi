@@ -48,9 +48,14 @@ export async function POST(request: NextRequest) {
 
 
         //check if password is correct
-        const validPassword = await bcryptjs.compare(password, user.hashedPassword)
-        if (!validPassword) {
-            resp.message = "Invalid password"
+        if (user.hashedPassword) {
+            const validPassword = await bcryptjs.compare(password, user.hashedPassword)
+            if (!validPassword) {
+                resp.message = "Invalid password"
+                return new NextResponse(JSON.stringify(resp), { status: 400 });
+            }
+        } else {
+            resp.message = "Login with google or create a password"
             return new NextResponse(JSON.stringify(resp), { status: 400 });
         }
 
@@ -59,6 +64,7 @@ export async function POST(request: NextRequest) {
             id: user.id,
             name: user.name,
             email: user.email,
+            role: user.role
         };
         //create token
         const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET!, { expiresIn: "1d" })
