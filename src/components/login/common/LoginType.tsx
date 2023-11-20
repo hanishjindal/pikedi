@@ -19,7 +19,7 @@ const LoginType: React.FC<LoginTypeProps> = ({ who, content, loginButton, signup
     const router = useRouter()
     return (
         <div
-            className='py-7 px-8 lg:py-5 lg:px-7 flex flex-col justify-center items-center shadow-lg gap-5 lg:gap-7 w-full lg:w-[45%] h-full rounded-lg bg-white overflow-hidden'
+            className='py-7 px-8 lg:py-16 lg:px-7 flex flex-col justify-center items-center shadow-lg gap-5 lg:gap-7 w-full lg:w-[45%] h-full rounded-lg bg-white overflow-hidden'
         >
             <h1 className='font-bold text-3xl lg:text-5xl'>
                 <span className='text-theme'>
