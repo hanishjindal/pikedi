@@ -1,6 +1,11 @@
 import React from 'react';
 import { LOGIN_DATA } from "../../config"
 import Button from '../../common/Button';
+import AuthSocialButton from '@/components/common/AuthSocialButton';
+import { FcGoogle } from 'react-icons/fc';
+import { socialLogin } from '@/components/utils';
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/navigation';
 
 interface LoginTypeProps {
     who: string;
@@ -10,6 +15,8 @@ interface LoginTypeProps {
 }
 
 const LoginType: React.FC<LoginTypeProps> = ({ who, content, loginButton, signupButton }) => {
+    const dispatch = useDispatch()
+    const router = useRouter()
     return (
         <div
             className='py-7 px-8 lg:py-5 lg:px-7 flex flex-col justify-center items-center shadow-lg gap-5 lg:gap-7 w-full lg:w-[45%] h-full rounded-lg bg-white overflow-hidden'
@@ -41,6 +48,14 @@ const LoginType: React.FC<LoginTypeProps> = ({ who, content, loginButton, signup
                 >
                     {LOGIN_DATA.signupText}
                 </span>
+            </div>
+            <div className="flex flex-col gap-6 justify-center items-center w-full lg:w-[50%] relative">
+                <span className='text-xs'>---OR---</span>
+                <AuthSocialButton
+                    icon={FcGoogle}
+                    name='oogle'
+                    onClick={() => socialLogin(dispatch, router)}
+                />
             </div>
         </div>
     )

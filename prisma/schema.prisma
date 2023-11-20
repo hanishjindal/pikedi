@@ -17,7 +17,7 @@ model User {
   emailVerified  DateTime?
   mobile         String?   @unique
   mobileVerified DateTime?
-  hashedPassword String
+  hashedPassword String?
   image          String?
   role           Role
   isVerified     Boolean   @default(false)

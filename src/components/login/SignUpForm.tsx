@@ -88,7 +88,6 @@ const SignUpForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
             toast.success('Success')
             router.push(`/login?page=signin&type=${WhoIsLogin.toLocaleLowerCase()}`)
         } catch (error: any) {
-            console.log(error.response)
             toast.error(error?.response?.data?.message ?? 'Somthing went wrong')
         } finally {
             setIsSubmitting(false)

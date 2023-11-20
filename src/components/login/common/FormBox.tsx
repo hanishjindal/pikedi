@@ -2,7 +2,11 @@ import Divider from '@/components/common/Divider';
 import Input from '@/components/common/Input';
 import React from 'react';
 import { BsArrowLeftCircleFill } from 'react-icons/bs';
-import { fieldType, roleType } from '../../utils'
+import { fieldType, roleType, socialLogin } from '../../utils'
+import AuthSocialButton from '@/components/common/AuthSocialButton';
+import { FcGoogle } from 'react-icons/fc';
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/navigation';
 
 interface FormBoxProps {
     back: () => void;
@@ -25,9 +29,10 @@ const FormBox: React.FC<FormBoxProps> = ({
     handleFieldClick,
     isSubmitting,
     handleSubmit,
-    formData
+    formData,
 }) => {
-
+    const dispatch = useDispatch()
+    const router = useRouter()
     return (
         <div
             className="py-20 px-7 shadow-lg flex justify-center items-center gap-6 lg:gap-8 w-full lg:w-[50%] h-[60%] lg:h-full rounded-lg bg-white relative flex-col"
@@ -71,6 +76,14 @@ const FormBox: React.FC<FormBoxProps> = ({
                     })
                 }
             </form>
+            <div className="flex flex-col gap-6 justify-center items-center w-full lg:w-[50%] relative">
+                <span className='text-xs'>---OR---</span>
+                <AuthSocialButton
+                    icon={FcGoogle}
+                    name='oogle'
+                    onClick={() => socialLogin(dispatch, router)}
+                />
+            </div>
         </div>
     );
 };

@@ -6,6 +6,8 @@ import axios from 'axios'
 import toast from 'react-hot-toast';
 import { Dispatch } from 'redux';
 import { IconType } from 'react-icons';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { auth } from '@/libs/firebase'
 
 export type roleType = 'STUDIO' | 'EDITOR'
 export type sideNavType = 'Main' | 'Studio' | 'Project' | 'Users' | 'Profile' | 'Trash' | 'Sign Out';
@@ -32,6 +34,41 @@ export const logout = async (setIsLoading: (value: boolean) => void, dispatch: D
     } finally {
         setIsLoading(false)
     }
+}
+
+export const socialLogin = (dispatch: Dispatch, router: any) => {
+    const provider = new GoogleAuthProvider();
+    toast.loading('Authenticating...')
+    signInWithPopup(auth, provider)
+        .then(async (result: any) => {
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+
+            const data = {
+                name: result?._tokenResponse?.fullName,
+                email: result?._tokenResponse?.email,
+                image: result?._tokenResponse?.photoUrl
+            }
+
+            const resp = await axios.post('/api/users/google-auth', data)
+            if (resp?.data?.success) {
+                toast.dismiss()
+                dispatch(signIn(resp.data.data))
+                toast.success('Success')
+                if (resp.data?.data?.role === 'STUDIO') {
+                    router.push('/studio')
+                } else {
+                    router.push('/editor')
+                }
+            }
+
+        }).catch((error) => {
+            toast.dismiss()
+            const credential = GoogleAuthProvider.credentialFromError(error);
+            toast.error('Somthing went wrong')
+            // logout(() => { }, dispatch, router)
+        });
+
 }
 
 export const SIDE_NAV_CONFIG: MenuItem[] = [

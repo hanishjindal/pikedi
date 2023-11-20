@@ -33,6 +33,10 @@ const config: Config = {
       gradientColorStops: {
         "lighest-theme": "#b9e9dd",
         "theme": "#00d3b7",
+      },
+      ringColor: {
+        "lighest-theme": "#b9e9dd",
+        "theme": "#00d3b7",
       }
     },
   },

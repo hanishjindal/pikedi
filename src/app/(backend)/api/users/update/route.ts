@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
         }
 
         // Check if password update is requested
-        if (password && password.update) {
+        if (password && password.update && user.hashedPassword) {
             const { old, new: newPassword, confirm } = password.data;
 
             const validPassword = await bcryptjs.compare(old, user.hashedPassword);
