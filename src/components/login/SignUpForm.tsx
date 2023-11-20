@@ -3,17 +3,17 @@ import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import FormBox from './common/FormBox';
-import { fieldType } from '../utils'
+import { fieldType, roleType } from '../utils'
 
 interface SignupFormProps {
     back: () => {}; // Use React.Dispatch to accept setState
-    WhoIsLogin: 'Editor' | 'Studio';
+    WhoIsLogin: roleType;
 }
 
 const SignUpForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
     const router = useRouter()
     const [formData, setFormData] = useState({
-        fullName: {
+        name: {
             label: false,
             value: '',
             ref: useRef<HTMLInputElement | null>(null),
@@ -21,7 +21,7 @@ const SignUpForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
             type: 'text',
             placeholder: 'Full Name',
             required: true,
-            name: 'fullName'
+            name: 'name'
         },
         mobile: {
             label: false,
@@ -54,7 +54,7 @@ const SignUpForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
 
     useEffect(() => {
-        formData.fullName.ref.current?.focus()
+        formData.name.ref.current?.focus()
     }, [])
 
     const handleInput = (type: fieldType, val: string) => {
@@ -67,7 +67,7 @@ const SignUpForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
     const handleFieldClick = (type: fieldType) => {
         setFormData({
             ...formData,
-            fullName: { ...formData.fullName, label: (type === 'fullName') },
+            name: { ...formData.name, label: (type === 'name') },
             mobile: { ...formData.mobile, label: (type === 'mobile') },
             email: { ...formData.email, label: (type === 'email') },
             password: { ...formData.password, label: (type === 'password') },
@@ -79,16 +79,17 @@ const SignUpForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
         try {
             setIsSubmitting(true)
             await axios.post("/api/users/signup", {
-                fullName: formData.fullName.value,
+                name: formData.name.value,
                 mobile: formData.mobile.value,
                 email: formData.email.value,
                 password: formData.password.value,
-                role: WhoIsLogin.toLocaleLowerCase()
+                role: WhoIsLogin
             })
             toast.success('Success')
             router.push(`/login?page=signin&type=${WhoIsLogin.toLocaleLowerCase()}`)
         } catch (error: any) {
-            toast.error(error?.response?.data?.error ?? 'Somthing went wrong')
+            console.log(error.response)
+            toast.error(error?.response?.data?.message ?? 'Somthing went wrong')
         } finally {
             setIsSubmitting(false)
         }
@@ -97,7 +98,7 @@ const SignUpForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
     const handleResetFocus = () => {
         setFormData({
             ...formData,
-            fullName: { ...formData.fullName, label: false },
+            name: { ...formData.name, label: false },
             mobile: { ...formData.mobile, label: false },
             email: { ...formData.email, label: false },
             password: { ...formData.password, label: false },

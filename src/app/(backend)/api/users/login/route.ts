@@ -1,10 +1,14 @@
-import { connect } from "@/dbConfig/dbConfig";
-import User from "@/models/userModel";
-import { NextRequest, NextResponse } from "next/server";
-import bcryptjs from "bcryptjs";
+import { NextRequest, NextResponse } from "next/server"
+import bcryptjs from "bcryptjs"
+import prisma from "@/libs/prismadb";
 import jwt from "jsonwebtoken";
+import getFilteredData from "@/helpers/getFilteredData";
 
-connect()
+const resp: any = {
+    message: "",
+    success: false,
+    data: {}
+}
 
 export async function POST(request: NextRequest) {
     try {
@@ -12,46 +16,64 @@ export async function POST(request: NextRequest) {
         const reqBody = await request.json()
         const { email, password, role } = reqBody;
 
+        if (!email || !password || !role) {
+            resp.message = 'Missing  info'
+            return new NextResponse(JSON.stringify(resp), { status: 400 })
+        }
+
+        // Validate email format using regex
+        const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+        if (!email || !emailRegex.test(email)) {
+            resp.message = 'Invalid email format'
+            return new NextResponse(JSON.stringify(resp), { status: 400 });
+        }
+
         //check if user exists
-        const user = await User.findOne({ email, role }).select("-updatedAt -createdAt")
+        const user = await prisma.user.findUnique({
+            where: {
+                email,
+                role
+            }
+        })
+
+
         if (!user) {
-            return NextResponse.json({ error: "User does not exist" }, { status: 400 })
+            resp.message = "User does not exist"
+            return new NextResponse(JSON.stringify(resp), { status: 400 });
         }
         if (!user.isActive) {
-            return NextResponse.json({ error: "User is inactive" }, { status: 400 })
+            resp.message = "User is inactive"
+            return new NextResponse(JSON.stringify(resp), { status: 400 });
         }
 
 
         //check if password is correct
-        const validPassword = await bcryptjs.compare(password, user.password)
+        const validPassword = await bcryptjs.compare(password, user.hashedPassword)
         if (!validPassword) {
-            return NextResponse.json({ error: "Invalid password" }, { status: 400 })
+            resp.message = "Invalid password"
+            return new NextResponse(JSON.stringify(resp), { status: 400 });
         }
 
         //create token data
         const tokenData = {
-            id: user._id,
-            userId: user.userId,
-            fullName: user.fullName,
+            id: user.id,
+            name: user.name,
             email: user.email,
         };
         //create token
         const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET!, { expiresIn: "1d" })
 
-        const userDataWithPassword = user.toObject();
-        delete userDataWithPassword.password;
-
-        const response = NextResponse.json({
-            message: "Login successful",
-            success: true,
-            data: userDataWithPassword
-        })
+        resp.message = "Login successful"
+        resp.success = true
+        resp.data = getFilteredData(user);
+        const response = NextResponse.json(resp)
         response.cookies.set("token", token, {
             httpOnly: true,
         })
         return response;
 
     } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 })
+        resp.message = error.message
+        return NextResponse.json(resp, { status: 500 })
     }
 }

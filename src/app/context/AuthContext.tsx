@@ -19,7 +19,7 @@ const ApiDataFetcher: React.FC = () => {
         const fetchData = async () => {
             try {
                 const res = await axios.post('/api/users/active', {});
-                if (res.data.active) {
+                if (res.data.success) {
                     dispatch(signIn(res.data.data))
                 }
             } catch (error: any) {

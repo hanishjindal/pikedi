@@ -1,43 +1,71 @@
-import { connect } from "@/dbConfig/dbConfig"
-import User from "@/models/userModel"
 import { NextRequest, NextResponse } from "next/server"
 import bcryptjs from "bcryptjs"
+import prisma from "@/libs/prismadb";
 
-connect()
+const resp: any = {
+    message: "",
+    success: false,
+    data: {}
+}
 
 export async function POST(request: NextRequest) {
     try {
         const reqBody = await request.json()
-        const { fullName, email, mobile, password, role } = reqBody;
+        const { name, email, mobile, password, role } = reqBody;
 
-        // if user exist
-        const user = await User.findOne({ email })
+        if (!email || !name || !password || !role || !mobile) {
+            resp.message = 'Missing  info'
+            return new NextResponse(JSON.stringify(resp), { status: 400 })
+        }
 
-        if (user) {
-            return NextResponse.json({ error: "User already exists" }, { status: 400 })
+        // Validate email format using regex
+        const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+        if (!email || !emailRegex.test(email)) {
+            resp.message = 'Invalid email format'
+            return new NextResponse(JSON.stringify(resp), { status: 400 });
+        }
+
+        let mobileTrim = mobile.split('').join('')
+        // Validate mobile format using regex
+        const mobileRegex = /^(\+\d{1,4})?(\d{10,11})$/;
+        if (!mobileTrim || !mobileRegex.test(mobileTrim)) {
+            resp.message = 'Invalid mobile format'
+            return new NextResponse(JSON.stringify(resp), { status: 400 });
+        }
+
+        const checkUser = await prisma.user.findUnique({
+            where: {
+                email,
+                role
+            }
+        })
+
+        if (checkUser) {
+            resp.message = 'Account already exist, try login';
+            return new NextResponse(JSON.stringify(resp), { status: 400 });
         }
 
         // hash password
         const salt = await bcryptjs.genSalt(10)
         const hashedPassword = await bcryptjs.hash(password, salt)
 
-        const newUser = new User({
-            fullName,
-            email,
-            mobile,
-            password: hashedPassword,
-            role
-        })
+        const user = await prisma.user.create({
+            data: {
+                email: email.toLowerCase(),
+                mobile: mobileTrim,
+                name: name.trim(),
+                hashedPassword,
+                role
+            }
+        });
 
-        const savedUser = await newUser.save()
-
-        return NextResponse.json({
-            message: "User successfully created",
-            success: true,
-            savedUser
-        })
+        resp.message = "User successfully created"
+        resp.success = true
+        resp.data = user
+        return NextResponse.json(resp)
 
     } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 })
+        resp.message = error.message
+        return NextResponse.json(resp, { status: 500 })
     }
 }

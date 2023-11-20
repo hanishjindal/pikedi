@@ -7,7 +7,7 @@ interface User {
   fullName: string;
   email: string;
   mobile: number;
-  profilePic: string;
+  image: string;
   // Add other user properties as needed
 }
 

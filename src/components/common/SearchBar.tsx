@@ -12,10 +12,16 @@ type sortType = 'acc' | 'dec';
 interface SearchBarProps {
     list: any[];
     setList: (value: any[]) => void;
+    originalList: any[];
+    setOriginalList: (value: any[]) => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ list, setList }) => {
-    const [originalList, setOriginalList] = useState<any[]>([]);
+const SearchBar: React.FC<SearchBarProps> = ({
+    list,
+    setList,
+    originalList,
+    setOriginalList
+}) => {
     const [selectionRange, setSelectionRange] = useState<any>({
         startDate: new Date(),
         endDate: new Date(),
@@ -30,6 +36,24 @@ const SearchBar: React.FC<SearchBarProps> = ({ list, setList }) => {
         if (!originalList.length)
             setOriginalList(list);
     }, [list]);
+
+    useEffect(() => {
+        window.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    });
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            handleSearch();
+        } else if (event.key === 'Escape') {
+            event.preventDefault();
+            handleReset();
+        }
+    };
 
     const handleReset = () => {
         setList(originalList);
@@ -75,6 +99,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ list, setList }) => {
 
     const handleSearch = () => {
         if (!searchInput.trim()) {
+            handleReset();
             return;
         }
 
@@ -111,7 +136,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ list, setList }) => {
                 <select
                     name="searchType"
                     id="searchType"
-                    className='h-full border-r-2 p-1 text-sm whitespace-nowrap rounded-l-md bg-white'
+                    className='h-full border-r-2 p-1 text-xs whitespace-nowrap rounded-l-md bg-white'
                 >
                     <option value="value">Name</option>
                     <option value="id">Id</option>
@@ -120,16 +145,21 @@ const SearchBar: React.FC<SearchBarProps> = ({ list, setList }) => {
                     className='px-2 rounded-md w-full text-sm'
                     placeholder='search'
                     value={searchInput}
-                    onChange={(e) => setSearchInput(e.target.value)}
+                    onChange={(e) => {
+                        if (e.target.value === '') {
+                            handleReset();
+                        }
+                        setSearchInput(e.target.value);
+                    }}
                 />
                 <FaSearch size={20} onClick={handleSearch} className='cursor-pointer' />
             </div>
-            <div className='flex gap-1 lg:gap-4 items-center justify-end'
+            <div className='flex gap-1 lg:gap-4 items-center justify-between'
                 onMouseLeave={() => showDate && handleDate(false)}
             >
-                <div className='relative'>
+                <div className='relative w-full'>
                     <div
-                        className='bg-white border-2 border-theme text-sm lg:text-base px-3 py-1 rounded-md flex items-center gap-1 lg:gap-2 cursor-pointer'
+                        className='bg-white border-2 border-theme text-xs lg:text-base px-3 py-1 rounded-md flex items-center gap-1 lg:gap-2 cursor-pointer'
                         onClick={() => handleDate(!showDate)}
                     >
                         <PiCalendarThin className={`text-theme`} /> Date <HiChevronDown className={showDate ? '' : 'rotate-180'} />
@@ -144,14 +174,14 @@ const SearchBar: React.FC<SearchBarProps> = ({ list, setList }) => {
                 </div>
 
                 <div
-                    className='bg-white border-2 border-theme text-sm lg:text-base p-3 py-1 rounded-md cursor-pointer flex items-center gap-1 lg:gap-2'
+                    className='bg-white border-2 border-theme text-xs lg:text-base p-3 py-1 rounded-md cursor-pointer flex items-center gap-1 lg:gap-2 w-full'
                     onClick={handleSort}
                 >
                     <FaSortAmountDown className={`text-theme ${sort === 'acc' ? 'rotate-180' : ''}`} /> Sort
                 </div>
 
                 <div
-                    className='bg-white border-2 border-theme text-sm lg:text-base p-3 py-1 rounded-md cursor-pointer flex items-center gap-1 lg:gap-2'
+                    className='bg-white border-2 border-theme text-xs lg:text-base p-3 py-1 rounded-md cursor-pointer flex items-center gap-1 lg:gap-2 w-full'
                     onClick={handleReset}
                 >
                     <RxReset className={`text-theme`} /> Reset

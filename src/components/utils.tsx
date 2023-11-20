@@ -7,9 +7,10 @@ import toast from 'react-hot-toast';
 import { Dispatch } from 'redux';
 import { IconType } from 'react-icons';
 
+export type roleType = 'STUDIO' | 'EDITOR'
 export type sideNavType = 'Main' | 'Studio' | 'Project' | 'Users' | 'Profile' | 'Trash' | 'Sign Out';
 export type openCloseTyee = 'open' | 'close';
-export type fieldType = 'fullName' | 'mobile' | 'email' | 'password'
+export type fieldType = 'name' | 'mobile' | 'email' | 'password'
 export type passFieldType = 'old' | 'new' | 'confirm'
 
 interface MenuItem {

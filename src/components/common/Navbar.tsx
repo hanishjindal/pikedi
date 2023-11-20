@@ -19,7 +19,7 @@ const Navbar = () => {
     const dispatch = useDispatch()
     const isAuthenticated = useSelector(selectIsAuthenticated);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const profilePic = useSelector(selectUser)?.profilePic;
+    const profilePic = useSelector(selectUser)?.image;
     const [userIcon, setUserIcon] = useState<boolean>(false);
     const [mobileMenu, setMobileMenu] = useState<boolean>(false)
     return (

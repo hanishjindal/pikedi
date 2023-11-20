@@ -14,6 +14,7 @@ const Project = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
     const [images, setImages] = useState<any[]>([])
+    const [originalList, setOriginalList] = useState<any[]>([]);
     const [deleteModal, setDeleteModal] = useState<number>(-1)
     const [threeDotMenu, setThreeDotMenu] = useState<number>(-1)
 
@@ -65,6 +66,7 @@ const Project = () => {
                 toast.error(res.data.message ?? 'Somthing went wrong')
             }
             setImages(prevImages => prevImages.filter((image, index) => index !== idx));
+            setOriginalList(prevImages => prevImages.filter(image => image.imageId !== imageId));
             toast.dismiss()
             toast.success('Image moved to trash')
         } catch (error: any) {
@@ -81,6 +83,8 @@ const Project = () => {
                 <SearchBar
                     list={images}
                     setList={setImages}
+                    originalList={originalList}
+                    setOriginalList={setOriginalList}
                 />
             </div>
             {isLoading ?

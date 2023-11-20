@@ -24,14 +24,14 @@ const Profile = () => {
     }, [userRedux])
 
     const [formData, setFormData] = useState<any>({
-        fullName: {
+        name: {
             label: false,
             value: '',
             labelText: 'Name',
             type: 'text',
             placeholder: 'Full Name',
             required: true,
-            name: 'fullName'
+            name: 'name'
         },
         mobile: {
             label: false,
@@ -85,7 +85,7 @@ const Profile = () => {
     const handleResetFormDataFromRedux = () => {
         setFormData({
             ...formData,
-            fullName: { ...formData.fullName, value: userData?.fullName ?? '' },
+            name: { ...formData.name, value: userData?.name ?? '' },
             mobile: { ...formData.mobile, value: userData?.mobile ?? '' },
             email: { ...formData.email, value: userData?.email ?? '' },
         })
@@ -127,7 +127,7 @@ const Profile = () => {
         } else {
             setFormData({
                 ...formData,
-                fullName: { ...formData.fullName, label: (type === 'fullName') },
+                name: { ...formData.name, label: (type === 'name') },
                 mobile: { ...formData.mobile, label: (type === 'mobile') },
                 email: { ...formData.email, label: (type === 'email') },
             })
@@ -139,7 +139,7 @@ const Profile = () => {
         try {
             setIsSubmitting(true)
             const payload = {
-                fullName: formData.fullName.value,
+                name: formData.name.value,
                 mobile: formData.mobile.value,
                 email: formData.email.value,
                 password: {
@@ -160,7 +160,7 @@ const Profile = () => {
             toast.success('Updated successfully')
             //     router.push(`/login?page=signin&type=${WhoIsLogin.toLocaleLowerCase()}`)
         } catch (error: any) {
-            toast.error(error?.response?.data?.error ?? 'Somthing went wrong')
+            toast.error(error?.response?.data?.message ?? 'Somthing went wrong')
         } finally {
             setIsSubmitting(false)
         }
@@ -171,7 +171,7 @@ const Profile = () => {
             setIsSubmitting(true)
             const payload = {
                 email: formData.email.value,
-                profilePic: result?.info?.url,
+                image: result?.info?.url,
                 role: userData?.role
             }
             const res = await axios.post("/api/users/update", payload)
@@ -181,7 +181,7 @@ const Profile = () => {
             dispatch(signIn(res.data.data))
             toast.success('Uploaded successfully')
         } catch (error: any) {
-            toast.error(error?.response?.data?.error ?? 'Somthing went wrong')
+            toast.error(error?.response?.data?.message ?? 'Somthing went wrong')
         } finally {
             setIsSubmitting(false)
         }
@@ -190,7 +190,7 @@ const Profile = () => {
     const handleResetFocus = () => {
         setFormData({
             ...formData,
-            fullName: { ...formData.fullName, label: false },
+            name: { ...formData.name, label: false },
             mobile: { ...formData.mobile, label: false },
             email: { ...formData.email, label: false },
         })
@@ -210,10 +210,10 @@ const Profile = () => {
 
                 <div className='col-span-12 lg:col-span-3 w-full h-auto lg:h-[80vh]'>
                     <div className='flex flex-col gap-5 py-8 lg:py-10 justify-center items-center'>
-                        {userData?.profilePic ?
+                        {userData?.image ?
                             <div className='border rounded-xl flex justify-center items-center w-[180px] h-[180px] p-4'>
                                 <Image
-                                    src={userData?.profilePic}
+                                    src={userData?.image}
                                     alt=''
                                     width={200}
                                     height={200}

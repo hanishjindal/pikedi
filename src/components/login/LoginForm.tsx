@@ -5,10 +5,10 @@ import axios from 'axios';
 import FormBox from './common/FormBox';
 import { useDispatch } from 'react-redux';
 import { signIn } from '@/redux/slice/authSlice';
-import { fieldType } from '../utils'
+import { fieldType, roleType } from '../utils'
 interface SignupFormProps {
     back: () => {}; // Use React.Dispatch to accept setState
-    WhoIsLogin: 'Editor' | 'Studio';
+    WhoIsLogin: roleType;
 }
 
 const LoginForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
@@ -65,18 +65,18 @@ const LoginForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
             const user = {
                 email: formData.email.value,
                 password: formData.password.value,
-                role: WhoIsLogin.toLocaleLowerCase()
+                role: WhoIsLogin
             }
             const res = await axios.post("/api/users/login", user)
             dispatch(signIn(res.data.data))
             toast.success('Success')
-            if (WhoIsLogin === 'Studio') {
+            if (WhoIsLogin === 'STUDIO') {
                 router.push('/studio')
             } else {
                 router.push('/editor')
             }
         } catch (error: any) {
-            toast.error(error?.response?.data?.error ?? 'Somthing went wrong')
+            toast.error(error?.response?.data?.message ?? 'Somthing went wrong')
         } finally {
             setIsSubmitting(false)
         }
