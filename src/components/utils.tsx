@@ -38,7 +38,7 @@ export const logout = async (setIsLoading: (value: boolean) => void, dispatch: D
 
 export const socialLogin = (dispatch: Dispatch, router: any) => {
     const provider = new GoogleAuthProvider();
-
+    toast.loading('Authenticating...')
     signInWithPopup(auth, provider)
         .then(async (result: any) => {
             // This gives you a Google Access Token. You can use it to access the Google API.
@@ -52,6 +52,7 @@ export const socialLogin = (dispatch: Dispatch, router: any) => {
 
             const resp = await axios.post('/api/users/google-auth', data)
             if (resp?.data?.success) {
+                toast.dismiss()
                 dispatch(signIn(resp.data.data))
                 toast.success('Success')
                 if (resp.data?.data?.role === 'STUDIO') {
@@ -62,8 +63,9 @@ export const socialLogin = (dispatch: Dispatch, router: any) => {
             }
 
         }).catch((error) => {
+            toast.dismiss()
             const credential = GoogleAuthProvider.credentialFromError(error);
-            toast.error(error?.message ?? 'Somthing went wrong')
+            toast.error('Somthing went wrong')
             // logout(() => { }, dispatch, router)
         });
 
