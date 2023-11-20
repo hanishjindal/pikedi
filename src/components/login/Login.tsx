@@ -24,7 +24,7 @@ const Login = () => {
 
     return (
         <div className='w-full h-[90vh]'>
-            <div className="flex flex-col lg:flex-row gap-10 w-full min-h-full h-full justify-around items-center py-10 px-6 sm:px-8 lg:px-10 overflow-hidden">
+            <div className="flex flex-col lg:flex-row gap-10 w-full min-h-full lg:h-full justify-around items-center py-10 px-6 sm:px-8 lg:px-10 overflow-hidden">
                 {!((page === 'signin' || page === 'signup') && (type === 'editor' || type === 'studio')) &&
                     <LoginType
                         who={LOGIN_DATA.studioText}
