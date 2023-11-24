@@ -20,11 +20,11 @@ const Trash = () => {
                 setIsLoading(true)
                 const res = await axios.post("/api/studio/get-trash-images", {})
                 if (!res.data.success) {
-                    toast.error(res.data.message ?? 'Somthing went wrong')
+                    toast.error(res.data.message ?? 'Something went wrong')
                 }
                 setImages(res.data.data)
             } catch (error: any) {
-                toast.error(error?.response?.data?.error ?? 'Somthing went wrong')
+                toast.error(error?.response?.data?.error ?? 'Something went wrong')
             } finally {
                 setIsLoading(false)
             }
@@ -39,7 +39,7 @@ const Trash = () => {
             toast.loading('Restoring Image...')
             const res = await axios.post("/api/studio/restore-image", { imageId })
             if (!res.data.success) {
-                toast.error(res.data.message ?? 'Somthing went wrong')
+                toast.error(res.data.message ?? 'Something went wrong')
             }
             setImages(prevImages => prevImages.filter((image, index) => index !== idx));
             setOriginalList(prevImages => prevImages.filter(image => image.imageId !== imageId));
@@ -47,7 +47,7 @@ const Trash = () => {
             toast.success('Image restored')
         } catch (error: any) {
             toast.dismiss()
-            toast.error(error?.response?.data?.error ?? 'Somthing went wrong')
+            toast.error(error?.response?.data?.error ?? 'Something went wrong')
         } finally {
             setIsSubmitting(false)
         }

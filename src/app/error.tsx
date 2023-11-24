@@ -1,6 +1,7 @@
 'use client' // Error components must be Client Components
 
 import Button from '@/components/common/Button'
+import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
 export default function Error({
@@ -10,6 +11,7 @@ export default function Error({
     error: Error & { digest?: string }
     reset: () => void
 }) {
+    const router = useRouter()
     useEffect(() => {
         // Log the error to an error reporting service
         console.error(error)
@@ -28,6 +30,15 @@ export default function Error({
                     handleClick={() => reset()}
                 >
                     Try again
+                </Button>
+                <Button
+                    type='submit'
+                    buttonType='secondary'
+                    className='font-semibold w-40 h-12 text-lg px-6 py-2 flex gap-5'
+                    isSubmitting={false}
+                    handleClick={() => { router.push('/') }}
+                >
+                    Home
                 </Button>
             </div>
         </div>

@@ -3,18 +3,19 @@ import { LOGIN_DATA } from "../../config"
 import Button from '../../common/Button';
 import AuthSocialButton from '@/components/common/AuthSocialButton';
 import { FcGoogle } from 'react-icons/fc';
-import { socialLogin } from '@/components/utils';
+import { roleType, socialLogin } from '@/components/utils';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 
 interface LoginTypeProps {
     who: string;
+    WhoIsLogin: roleType;
     content: string;
     loginButton: () => {};
     signupButton: () => {};
 }
 
-const LoginType: React.FC<LoginTypeProps> = ({ who, content, loginButton, signupButton }) => {
+const LoginType: React.FC<LoginTypeProps> = ({ who, WhoIsLogin, content, loginButton, signupButton }) => {
     const dispatch = useDispatch()
     const router = useRouter()
     return (
@@ -54,7 +55,7 @@ const LoginType: React.FC<LoginTypeProps> = ({ who, content, loginButton, signup
                 <AuthSocialButton
                     icon={FcGoogle}
                     name='oogle'
-                    onClick={() => socialLogin(dispatch, router)}
+                    onClick={() => socialLogin(dispatch, router, WhoIsLogin)}
                 />
             </div>
         </div>

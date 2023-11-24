@@ -36,7 +36,7 @@ const NewUpload = () => {
             handleReset()
             toast.success('Uploaded successfully')
         } catch (error: any) {
-            toast.error(error?.response?.data?.message ?? 'Somthing went wrong')
+            toast.error(error?.response?.data?.message ?? 'Something went wrong')
         } finally {
             setIsSubmitting(false)
         }

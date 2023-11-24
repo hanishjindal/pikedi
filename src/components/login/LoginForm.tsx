@@ -76,7 +76,7 @@ const LoginForm: React.FC<SignupFormProps> = ({ back, WhoIsLogin }) => {
                 router.push('/editor')
             }
         } catch (error: any) {
-            toast.error(error?.response?.data?.message ?? 'Somthing went wrong')
+            toast.error(error?.response?.data?.message ?? 'Something went wrong')
         } finally {
             setIsSubmitting(false)
         }

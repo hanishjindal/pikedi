@@ -82,7 +82,7 @@ const ContactForm = () => {
             toast.success('Success submitted, We will contact you soon...')
         } catch (error: any) {
             console.log(error)
-            toast.error(error?.response?.data?.message ?? 'Somthing went wrong')
+            toast.error(error?.response?.data?.message ?? 'Something went wrong')
         } finally {
             setIsSubmitting(false)
         }

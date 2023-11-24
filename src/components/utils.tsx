@@ -36,7 +36,7 @@ export const logout = async (setIsLoading: (value: boolean) => void, dispatch: D
     }
 }
 
-export const socialLogin = (dispatch: Dispatch, router: any) => {
+export const socialLogin = (dispatch: Dispatch, router: any, role: roleType) => {
     const provider = new GoogleAuthProvider();
     toast.loading('Authenticating...')
     signInWithPopup(auth, provider)
@@ -47,7 +47,8 @@ export const socialLogin = (dispatch: Dispatch, router: any) => {
             const data = {
                 name: result?._tokenResponse?.fullName,
                 email: result?._tokenResponse?.email,
-                image: result?._tokenResponse?.photoUrl
+                image: result?._tokenResponse?.photoUrl,
+                role: role
             }
 
             const resp = await axios.post('/api/users/google-auth', data)
@@ -65,7 +66,7 @@ export const socialLogin = (dispatch: Dispatch, router: any) => {
         }).catch((error) => {
             toast.dismiss()
             const credential = GoogleAuthProvider.credentialFromError(error);
-            toast.error('Somthing went wrong')
+            toast.error('Something went wrong')
             // logout(() => { }, dispatch, router)
         });
 
@@ -129,3 +130,19 @@ export const checkActive = async (setUserData: any, dispatch: Dispatch, router: 
         setIsLoading(false)
     }
 };
+
+export const copyData = (data: string) => {
+    const textArea = document.createElement('textarea');
+    textArea.value = data;
+    document.body.appendChild(textArea);
+
+    try {
+        textArea.select();
+        document.execCommand('copy');
+        toast.success('Copied!');
+    } catch (error: any) {
+        toast.error(error.message ?? 'Something went wrong!');
+    } finally {
+        document.body.removeChild(textArea);
+    }
+}
