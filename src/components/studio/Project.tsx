@@ -82,6 +82,10 @@ const Project = () => {
         }
     }
 
+    const handleOpenImage = (item: { imageId: string }) => {
+        router.push(`${pathname}/${item.imageId}?nav=${sideBarOpen}`)
+    }
+
     return (
         <div className='w-full h-full flex flex-col gap-8'>
             <div>
@@ -107,7 +111,7 @@ const Project = () => {
                                             src={item?.url}
                                             alt=''
                                             className='max-h-full h-auto object-contain object-center'
-                                            onClick={() => { router.push(`${pathname}/${item.imageId}?nav=${sideBarOpen}`) }}
+                                            onDoubleClick={() => { handleOpenImage(item) }}
                                         />
                                     </div>
                                     <div
@@ -133,7 +137,12 @@ const Project = () => {
                                                         setThreeDotMenu(-1)
                                                 }}
                                             >
-                                                <span className='cursor-pointer mx-1 px-1 rounded-md hover:bg-lighest-theme'>Open</span>
+                                                <span
+                                                    className='cursor-pointer mx-1 px-1 rounded-md hover:bg-lighest-theme'
+                                                    onClick={() => { handleOpenImage(item) }}
+                                                >
+                                                    Open
+                                                </span>
                                                 <Divider type='toe' />
                                                 <span
                                                     className='cursor-pointer mx-1 px-1 rounded-md hover:bg-lighest-theme'

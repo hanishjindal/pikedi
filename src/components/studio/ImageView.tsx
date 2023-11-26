@@ -50,7 +50,7 @@ const ImageView: React.FC<imageProps> = ({ imageId }) => {
                 <div>
                     <div className='bg-lighest-theme border border-theme p-3 md:p-2 md:px-4 rounded-xl flex flex-col md:flex-row gap-2 justify-between w-full'>
                         <div className='grid grid-cols-10 items-stretch border-2 border-gray-700 rounded-md whitespace-nowrap overflow-hidden'>
-                            <span className='text-sm text-right font-medium bg-gray-600 text-white border-r-2 border-gray-700 p-1 col-span-3 sm:col-span-2'>
+                            <span className='text-sm text-right font-medium bg-gray-600 text-white border-r-2 border-gray-700 p-1 px-2 col-span-3 sm:col-span-2'>
                                 Image Id:
                             </span>
                             <span className='text-xs flex items-center bg-gray-200 w-full p-1 col-span-6 sm:col-span-7 overflow-x-hidden'>
@@ -61,10 +61,10 @@ const ImageView: React.FC<imageProps> = ({ imageId }) => {
                             </span>
                         </div>
                         <div className='flex items-center border-2 border-gray-700 rounded-md whitespace-nowrap w-fit overflow-hidden'>
-                            <span className='text-sm text-right font-medium bg-gray-600 text-white border-r-2 border-gray-700 p-1'>
+                            <span className='text-sm text-right font-medium bg-gray-600 text-white border-r-2 border-gray-700 p-1 px-2'>
                                 Status:
                             </span>
-                            <span className='text-xs flex items-center bg-gray-200 h-full p-1 overflow-x-hidden'>
+                            <span className='text-xs flex items-center bg-gray-200 h-full p-1 overflow-x-hidden px-2'>
                                 In progress
                             </span>
                         </div>

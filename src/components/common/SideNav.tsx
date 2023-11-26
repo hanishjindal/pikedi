@@ -10,6 +10,7 @@ interface SideNavProps {
     isMobileOrTablet: boolean;
 }
 
+
 const SideNav: React.FC<SideNavProps> = ({ sideBarOpen, pathname, isMobileOrTablet }) => {
     const router = useRouter()
     const dispatch = useDispatch()
@@ -20,7 +21,12 @@ const SideNav: React.FC<SideNavProps> = ({ sideBarOpen, pathname, isMobileOrTabl
             {SIDE_NAV_CONFIG.map((menuItem, index) => (
                 <React.Fragment key={index}>
                     <div
-                        className={`link p-2 text-base justify-center md:justify-normal text-gray-500 flex gap-2 items-center ${sideBarOpen === 'close' && 'justify-center'} ${('/studio/' + pathname.split('/')[2]) === menuItem.route && "bg-theme text-white rounded-lg"} relative cursor-pointer`}
+                        className={`link p-2 text-base justify-center md:justify-normal text-gray-500 flex gap-2 items-center ${sideBarOpen === 'close' && 'justify-center'}
+                        ${('/studio' + (pathname.split('/')[2] ? ('/' + pathname.split('/')[2]) : '')) === menuItem.route
+                            &&
+                            "bg-theme text-white rounded-lg"
+                            }
+                        relative cursor-pointer`}
                         onClick={(event) => {
                             if (menuItem.onClick) {
                                 menuItem.onClick(setIsLoading, dispatch, router)
