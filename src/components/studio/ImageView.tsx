@@ -71,29 +71,33 @@ const ImageView: React.FC<imageProps> = ({ imageId }) => {
                     </div>
                     <div className='w-full flex flex-col gap-2'>
                         <div className='grid grid-cols-12 gap-4 h-[50vh]'>
-                            <div className='col-span-12 lg:col-span-6 border-2 border-gray-400 rounded-md flex flex-col items-center overflow-hidden bg-gray-200'>
+                            <div className='col-span-12 lg:col-span-6 border-2 border-gray-400 rounded-md flex flex-col items-center overflow-hidden bg-slate-200'>
                                 <span className='w-full text-sm bg-gray-700 text-white text-center py-[1px]'>
                                     INPUT
                                 </span>
-                                <Image
-                                    src={imageData?.url ?? ''}
-                                    alt=''
-                                    width={500}
-                                    height={500}
-                                    className='h-full max-w-full w-auto rounded-lg object-cover'
-                                />
+                                <div className='flex justify-center items-center h-full w-full'>
+                                    <Image
+                                        src={imageData?.url ?? ''}
+                                        alt=''
+                                        width={500}
+                                        height={500}
+                                        className='max-h-full h-auto w-full object-contain object-center'
+                                    />
+                                </div>
                             </div>
-                            <div className='col-span-12 lg:col-span-6 border-2 border-gray-400 rounded-md flex flex-col items-center overflow-hidden bg-gray-200'>
+                            <div className='col-span-12 lg:col-span-6 border-2 border-gray-400 rounded-md flex flex-col items-center overflow-hidden bg-slate-200'>
                                 <span className='w-full text-sm bg-gray-700 text-white text-center py-[1px]'>
                                     EDITED
                                 </span>
-                                <Image
-                                    src={imageData?.url ?? ''}
-                                    alt=''
-                                    width={500}
-                                    height={500}
-                                    className='h-full max-w-full w-auto rounded-lg object-cover'
-                                />
+                                <div className='flex justify-center items-center h-full w-full'>
+                                    <Image
+                                        src={imageData?.editedUrl ?? ''}
+                                        alt=''
+                                        width={500}
+                                        height={500}
+                                        className='max-h-full h-auto w-full object-contain object-center'
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>

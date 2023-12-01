@@ -79,6 +79,7 @@ model Image {
   summary   String?
   email     String
   url       String
+  editedUrl String   @default("")
   reasons   String[]
   isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
