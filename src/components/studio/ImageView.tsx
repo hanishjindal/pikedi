@@ -43,11 +43,11 @@ const ImageView: React.FC<imageProps> = ({ imageId }) => {
     }, [])
 
     return (
-        <div className='w-full h-full flex flex-col gap-8'>
+        <div>
             {isLoading ?
                 <div className="flex gap-4 items-center">Loading <SyncLoader size={4} /></div>
                 :
-                <div>
+                <div className='w-full h-full flex flex-col gap-8'>
                     <div className='bg-lighest-theme border border-theme p-3 md:p-2 md:px-4 rounded-xl flex flex-col md:flex-row gap-2 justify-between w-full'>
                         <div className='grid grid-cols-10 items-stretch border-2 border-gray-700 rounded-md whitespace-nowrap overflow-hidden'>
                             <span className='text-sm text-right font-medium bg-gray-600 text-white border-r-2 border-gray-700 p-1 px-2 col-span-3 sm:col-span-2'>
@@ -69,13 +69,33 @@ const ImageView: React.FC<imageProps> = ({ imageId }) => {
                             </span>
                         </div>
                     </div>
-                    <div className=''>
-                        <Image
-                            src={imageData?.url ?? ''}
-                            alt=''
-                            width={500}
-                            height={500}
-                        />
+                    <div className='w-full flex flex-col gap-2'>
+                        <div className='grid grid-cols-12 gap-4 h-[50vh]'>
+                            <div className='col-span-12 lg:col-span-6 border-2 border-gray-400 rounded-md flex flex-col items-center overflow-hidden bg-gray-200'>
+                                <span className='w-full text-sm bg-gray-700 text-white text-center py-[1px]'>
+                                    INPUT
+                                </span>
+                                <Image
+                                    src={imageData?.url ?? ''}
+                                    alt=''
+                                    width={500}
+                                    height={500}
+                                    className='h-full max-w-full w-auto rounded-lg object-cover'
+                                />
+                            </div>
+                            <div className='col-span-12 lg:col-span-6 border-2 border-gray-400 rounded-md flex flex-col items-center overflow-hidden bg-gray-200'>
+                                <span className='w-full text-sm bg-gray-700 text-white text-center py-[1px]'>
+                                    EDITED
+                                </span>
+                                <Image
+                                    src={imageData?.url ?? ''}
+                                    alt=''
+                                    width={500}
+                                    height={500}
+                                    className='h-full max-w-full w-auto rounded-lg object-cover'
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
             }
