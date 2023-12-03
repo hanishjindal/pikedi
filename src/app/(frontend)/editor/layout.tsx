@@ -29,7 +29,7 @@ export default function StudioLayout({
                         sideBarOpen={sideBarOpen}
                         pathname={pathname}
                         isMobileOrTablet={isMobileOrTablet}
-                        type='STUDIO'
+                        type='EDITOR'
                     />
                 </div>
 

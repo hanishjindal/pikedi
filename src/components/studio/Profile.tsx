@@ -160,7 +160,7 @@ const Profile = () => {
             toast.success('Updated successfully')
             //     router.push(`/login?page=signin&type=${WhoIsLogin.toLocaleLowerCase()}`)
         } catch (error: any) {
-            toast.error(error?.response?.data?.message ?? 'Somthing went wrong')
+            toast.error(error?.response?.data?.message ?? 'Something went wrong')
         } finally {
             setIsSubmitting(false)
         }
@@ -181,7 +181,7 @@ const Profile = () => {
             dispatch(signIn(res.data.data))
             toast.success('Uploaded successfully')
         } catch (error: any) {
-            toast.error(error?.response?.data?.message ?? 'Somthing went wrong')
+            toast.error(error?.response?.data?.message ?? 'Something went wrong')
         } finally {
             setIsSubmitting(false)
         }

@@ -28,6 +28,7 @@ const Login = () => {
                 {!((page === 'signin' || page === 'signup') && (type === 'editor' || type === 'studio')) &&
                     <LoginType
                         who={LOGIN_DATA.studioText}
+                        WhoIsLogin='STUDIO'
                         content={LOGIN_DATA.studioContent}
                         loginButton={async () => handleLoginRoute('signin', 'studio')}
                         signupButton={async () => handleLoginRoute('signup', 'studio')}

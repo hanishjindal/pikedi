@@ -33,15 +33,21 @@ export async function POST(request: NextRequest) {
             return new NextResponse(JSON.stringify(resp), { status: 400 });
         }
 
-        const checkUser = await prisma.user.findUnique({
+        const checkUser = await prisma.user.findFirst({
             where: {
-                email,
-                role
-            }
-        })
+                OR: [
+                    {
+                        email,
+                    },
+                    {
+                        mobile,
+                    },
+                ],
+            },
+        });
 
         if (checkUser) {
-            resp.message = 'Account already exist, try login';
+            resp.message = `Account already exist as ${checkUser?.role}`;
             return new NextResponse(JSON.stringify(resp), { status: 400 });
         }
 

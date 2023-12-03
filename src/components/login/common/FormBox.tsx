@@ -81,7 +81,7 @@ const FormBox: React.FC<FormBoxProps> = ({
                 <AuthSocialButton
                     icon={FcGoogle}
                     name='oogle'
-                    onClick={() => socialLogin(dispatch, router)}
+                    onClick={() => socialLogin(dispatch, router, WhoIsLogin)}
                 />
             </div>
         </div>

@@ -13,9 +13,9 @@ const resp: any = {
 export async function POST(request: NextRequest) {
     try {
         const reqBody = await request.json()
-        const { name, email, image } = reqBody;
+        const { name, email, image, role } = reqBody;
 
-        if (!email || !name || !image) {
+        if (!email || !name || !image || !role) {
             resp.message = 'Missing  info'
             return new NextResponse(JSON.stringify(resp), { status: 400 })
         }
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
                 data: {
                     email: email.toLowerCase(),
                     name: name.trim(),
-                    role: "STUDIO",
+                    role,
                     image
                 }
             });

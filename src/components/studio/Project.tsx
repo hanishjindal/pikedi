@@ -9,8 +9,13 @@ import Divider from '../common/Divider'
 import Modal from '../common/Modal'
 import Button from '../common/Button'
 import SearchBar from '../common/SearchBar'
+import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 
 const Project = () => {
+    const router = useRouter()
+    const pathname = usePathname()
+    const searchParam = useSearchParams()
+    const sideBarOpen = searchParam.get('nav')
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
     const [images, setImages] = useState<any[]>([])
@@ -46,11 +51,12 @@ const Project = () => {
             setIsLoading(true)
             const res = await axios.post("/api/studio/get-images", {})
             if (!res.data.success) {
-                toast.error(res.data.message ?? 'Somthing went wrong')
+                toast.error(res.data.message ?? 'Something went wrong')
+            } else {
+                setImages(res.data.data)
             }
-            setImages(res.data.data)
         } catch (error: any) {
-            toast.error(error?.response?.data?.error ?? 'Somthing went wrong')
+            toast.error(error?.response?.data?.error ?? 'Something went wrong')
         } finally {
             setIsLoading(false)
         }
@@ -63,18 +69,23 @@ const Project = () => {
             toast.loading('Deleting Image...')
             const res = await axios.post("/api/studio/delete-image", { imageId })
             if (!res.data.success) {
-                toast.error(res.data.message ?? 'Somthing went wrong')
+                toast.error(res.data.message ?? 'Something went wrong')
+            } else {
+                setImages(prevImages => prevImages.filter((image, index) => index !== idx));
+                setOriginalList(prevImages => prevImages.filter(image => image.imageId !== imageId));
+                toast.dismiss()
+                toast.success('Image moved to trash')
             }
-            setImages(prevImages => prevImages.filter((image, index) => index !== idx));
-            setOriginalList(prevImages => prevImages.filter(image => image.imageId !== imageId));
-            toast.dismiss()
-            toast.success('Image moved to trash')
         } catch (error: any) {
             toast.dismiss()
-            toast.error(error?.response?.data?.error ?? 'Somthing went wrong')
+            toast.error(error?.response?.data?.error ?? 'Something went wrong')
         } finally {
             setIsSubmitting(false)
         }
+    }
+
+    const handleOpenImage = (item: { imageId: string }) => {
+        router.push(`${pathname}/${item.imageId}?nav=${sideBarOpen}`)
     }
 
     return (
@@ -92,7 +103,7 @@ const Project = () => {
                 :
                 <div className='grid grid-cols-12 gap-5'>
                     {images.length ?
-                        images.map((item: { url: string, name: string }, idx: number) => {
+                        images.map((item: { url: string, name: string, imageId: string }, idx: number) => {
                             return (
                                 <div key={idx} className='col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3 border-2 border-gray-700 rounded-lg flex flex-col bg-slate-200 relative'>
                                     <div className='flex justify-center items-center overflow-hidden h-40 md:h-48'>
@@ -102,6 +113,7 @@ const Project = () => {
                                             src={item?.url}
                                             alt=''
                                             className='max-h-full h-auto object-contain object-center'
+                                            onDoubleClick={() => { handleOpenImage(item) }}
                                         />
                                     </div>
                                     <div
@@ -127,7 +139,12 @@ const Project = () => {
                                                         setThreeDotMenu(-1)
                                                 }}
                                             >
-                                                <span className='cursor-pointer mx-1 px-1 rounded-md hover:bg-lighest-theme'>Rename</span>
+                                                <span
+                                                    className='cursor-pointer mx-1 px-1 rounded-md hover:bg-lighest-theme'
+                                                    onClick={() => { handleOpenImage(item) }}
+                                                >
+                                                    Open
+                                                </span>
                                                 <Divider type='toe' />
                                                 <span
                                                     className='cursor-pointer mx-1 px-1 rounded-md hover:bg-lighest-theme'

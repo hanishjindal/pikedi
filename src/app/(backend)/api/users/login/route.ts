@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
 
 
         if (!user) {
-            resp.message = "User does not exist"
+            resp.message = `User does not exist as ${role}`
             return new NextResponse(JSON.stringify(resp), { status: 400 });
         }
         if (!user.isActive) {
