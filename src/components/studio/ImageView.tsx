@@ -9,6 +9,7 @@ import { copyData } from '../utils';
 import Select, { MultiValue } from "react-select";
 import Image from 'next/image';
 import { EDIT_REASONS } from '../config';
+import { assign } from '@prisma/client';
 
 interface imageProps {
     imageId: string;
@@ -49,6 +50,20 @@ const ImageView: React.FC<imageProps> = ({ imageId }) => {
         setSelectReason(selections);
     };
 
+    const handleStatus = (status: assign) => {
+        try {
+            if (status === 'ASSIGNED' || status === 'REASSIGNED') {
+                return (<>In Progress</>)
+            } else if (status === 'UNASSIGNED') {
+                return (<>Awaited</>)
+            } else {
+                return (<>Ready</>)
+            }
+        } catch (error) {
+            return (<></>)
+        }
+    }
+
     return (
         <div>
             {isLoading ?
@@ -72,7 +87,7 @@ const ImageView: React.FC<imageProps> = ({ imageId }) => {
                                 Status:
                             </span>
                             <span className='text-xs flex items-center bg-gray-200 h-full p-1 overflow-x-hidden px-2'>
-                                In progress
+                                {handleStatus(imageData?.assigned)}
                             </span>
                         </div>
                     </div>
