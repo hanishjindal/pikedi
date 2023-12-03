@@ -81,6 +81,8 @@ model Image {
   url       String
   editedUrl String   @default("")
   reasons   String[]
+  assigned  assign   @default(UNASSIGNED)
+  editorId  String?  @db.String
   isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -101,4 +103,11 @@ model Contact {
 enum Role {
   EDITOR
   STUDIO
+}
+
+enum assign {
+  UNASSIGNED
+  ASSIGNED
+  REASSIGNED
+  EDITED
 }

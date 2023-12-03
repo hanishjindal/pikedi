@@ -6,7 +6,9 @@ import toast from 'react-hot-toast';
 import { SyncLoader } from 'react-spinners';
 import { MdContentCopy } from "react-icons/md";
 import { copyData } from '../utils';
+import Select, { MultiValue } from "react-select";
 import Image from 'next/image';
+import { EDIT_REASONS } from '../config';
 
 interface imageProps {
     imageId: string;
@@ -19,6 +21,7 @@ const ImageView: React.FC<imageProps> = ({ imageId }) => {
     const sideBarOpen = searchParam.get('nav')
     let isMobileOrTablet: boolean = false;
     const [imageData, setImageData] = useState<any>(null)
+    const [selectReason, setSelectReason] = useState<MultiValue<typeof EDIT_REASONS[0]>>([])
     const searchImage = async () => {
         try {
             IetisLoading(true)
@@ -41,6 +44,10 @@ const ImageView: React.FC<imageProps> = ({ imageId }) => {
         isMobileOrTablet = document.documentElement.clientWidth <= 870;
         searchImage()
     }, [])
+
+    const handleChange = (selections: MultiValue<typeof EDIT_REASONS[0]>) => {
+        setSelectReason(selections);
+    };
 
     return (
         <div>
@@ -69,7 +76,7 @@ const ImageView: React.FC<imageProps> = ({ imageId }) => {
                             </span>
                         </div>
                     </div>
-                    <div className='w-full flex flex-col gap-2'>
+                    <div className='w-full flex flex-col gap-4'>
                         <div className='grid grid-cols-12 gap-4 h-[50vh]'>
                             <div className='col-span-12 lg:col-span-6 border-2 border-gray-400 rounded-md flex flex-col items-center overflow-hidden bg-slate-200'>
                                 <span className='w-full text-sm bg-gray-700 text-white text-center py-[1px]'>
@@ -90,15 +97,44 @@ const ImageView: React.FC<imageProps> = ({ imageId }) => {
                                     EDITED
                                 </span>
                                 <div className='flex justify-center items-center h-full w-full'>
-                                    <Image
-                                        src={imageData?.editedUrl ?? ''}
-                                        alt=''
-                                        width={500}
-                                        height={500}
-                                        className='max-h-full h-auto w-full object-contain object-center'
-                                    />
+                                    {imageData?.editedUrl ?
+                                        <Image
+                                            src={imageData?.editedUrl ?? ''}
+                                            alt=''
+                                            width={500}
+                                            height={500}
+                                            className='max-h-full h-auto w-full object-contain object-center'
+                                        />
+                                        :
+                                        <span className='font-medium uppercase'>Pending</span>
+                                    }
                                 </div>
                             </div>
+                        </div>
+
+                        <div className='w-full border-2 border-gray-400 bg-gray-200 rounded-md p-8'>
+                            <table className='w-full'>
+                                <tbody className='w-full border-2 flex flex-col gap-4'>
+                                    <tr className='w-full grid grid-cols-12'>
+                                        <td className='col-span-6 px-2'>Name</td>
+                                        <td className='col-span-6 px-2'>{imageData?.name}</td>
+                                    </tr>
+                                    <tr className='w-full grid grid-cols-12'>
+                                        <td className='col-span-6 px-2'>Reason</td>
+                                        <td className='col-span-6 px-2'>
+                                            <Select
+                                                isMulti
+                                                onChange={handleChange}
+                                                options={EDIT_REASONS}
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr className='w-full grid grid-cols-12'>
+                                        <td className='col-span-6 px-2'>Summary</td>
+                                        <td className='col-span-6 px-2'>{imageData?.summary}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

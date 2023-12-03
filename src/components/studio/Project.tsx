@@ -52,8 +52,9 @@ const Project = () => {
             const res = await axios.post("/api/studio/get-images", {})
             if (!res.data.success) {
                 toast.error(res.data.message ?? 'Something went wrong')
+            } else {
+                setImages(res.data.data)
             }
-            setImages(res.data.data)
         } catch (error: any) {
             toast.error(error?.response?.data?.error ?? 'Something went wrong')
         } finally {
@@ -69,11 +70,12 @@ const Project = () => {
             const res = await axios.post("/api/studio/delete-image", { imageId })
             if (!res.data.success) {
                 toast.error(res.data.message ?? 'Something went wrong')
+            } else {
+                setImages(prevImages => prevImages.filter((image, index) => index !== idx));
+                setOriginalList(prevImages => prevImages.filter(image => image.imageId !== imageId));
+                toast.dismiss()
+                toast.success('Image moved to trash')
             }
-            setImages(prevImages => prevImages.filter((image, index) => index !== idx));
-            setOriginalList(prevImages => prevImages.filter(image => image.imageId !== imageId));
-            toast.dismiss()
-            toast.success('Image moved to trash')
         } catch (error: any) {
             toast.dismiss()
             toast.error(error?.response?.data?.error ?? 'Something went wrong')
