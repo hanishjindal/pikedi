@@ -98,12 +98,12 @@ const Assigned = () => {
                         </div>
                     </div>
                     <div className='w-full flex flex-col gap-5'>
-                        <div className='grid grid-cols-12 gap-4 h-[50vh]'>
+                        <div className='grid grid-cols-12 gap-4'>
                             <div className='col-span-12 lg:col-span-6 border-2 border-gray-400 rounded-md flex flex-col items-center overflow-hidden bg-slate-200'>
                                 <span className='w-full text-sm bg-gray-700 text-white text-center py-[1px]'>
                                     INPUT
                                 </span>
-                                <div className='flex justify-center items-center h-full w-full relative'>
+                                <div className='flex justify-center items-center h-[30vh] lg:h-[50vh] w-full relative'>
                                     <Image
                                         src={imageData?.url ?? ''}
                                         alt=''
@@ -128,14 +128,14 @@ const Assigned = () => {
                                         options={{ folder: 'pikediNewPicEdited', sources: ['local', 'google_drive', 'camera'], showPoweredBy: false, showSkipCropButton: true, maxFiles: 1 }}
                                         onUpload={handleUrl}
                                         uploadPreset="pikedi"
-                                        className='h-full w-full p-4'
+                                        className='h-[30vh] lg:h-[50vh] w-full p-4'
                                     >
                                         <div className='flex justify-center items-center h-full w-full border-2 border-dashed border-theme text-theme font-semibold text-lg'>
                                             Click to upload
                                         </div>
                                     </CldUploadButton>
                                     :
-                                    <div className='flex justify-center items-center h-full w-full relative'>
+                                    <div className='flex justify-center items-center h-[30vh] lg:h-[50vh] w-full relative'>
                                         <Image
                                             src={uploadedImage ?? ''}
                                             alt=''
