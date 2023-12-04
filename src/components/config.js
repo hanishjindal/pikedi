@@ -153,6 +153,7 @@ export const FOOTER_CONFIG = {
             title: 'Join Us',
             links: [
                 { text: 'Apply to be an Editor', url: '/login?page=signup&type=editor' },
+                { text: 'Login as an Editor', url: '/login?page=signin&type=editor' },
                 { text: 'Pricing', url: '#' },
             ],
         },

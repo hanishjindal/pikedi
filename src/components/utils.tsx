@@ -1,4 +1,5 @@
 import { FcHome, FcOldTimeCamera, FcOpenedFolder, FcPortraitMode, FcFullTrash } from 'react-icons/fc';
+import { CgAssign } from "react-icons/cg";
 import { FaUserFriends } from 'react-icons/fa'
 import { BiLogOut } from 'react-icons/bi';
 import { signOut, signIn } from '@/redux/slice/authSlice';
@@ -124,7 +125,7 @@ export const EDITOR_SIDE_NAV_CONFIG: MenuItem[] = [
     },
     {
         label: 'Assigned',
-        icon: FcFullTrash,
+        icon: CgAssign,
         route: '/editor/assigned',
     },
     {
