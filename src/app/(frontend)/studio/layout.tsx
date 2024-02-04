@@ -1,7 +1,9 @@
 'use client'
 import SideNav from '@/components/common/SideNav'
+import { selectUser } from '@/redux/slice/authSlice'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
 export default function StudioLayout({
     children,
@@ -13,6 +15,16 @@ export default function StudioLayout({
     const router = useRouter()
     const sideBarOpen = searchParam.get('nav')
     let isMobileOrTablet: boolean = false;
+
+    const userRedux = useSelector(selectUser)
+
+    useEffect(() => {
+        if (userRedux?.role === 'EDITOR') {
+            router.push('/editor')
+        }
+    })
+
+
     useEffect(() => {
         isMobileOrTablet = document.documentElement.clientWidth <= 870;
         if (!sideBarOpen) {
@@ -21,6 +33,7 @@ export default function StudioLayout({
             router.push(`${pathname}/?nav=close`)
         }
     }, [sideBarOpen])
+
     return (
         <div className="w-full min-h-[90vh] h-auto flex relative select-none">
             <div className="bg-white rounded-lg w-full flex">

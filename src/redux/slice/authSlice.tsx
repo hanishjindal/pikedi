@@ -8,6 +8,7 @@ interface User {
   email: string;
   mobile: number;
   image: string;
+  role?: string;
   // Add other user properties as needed
 }
 
